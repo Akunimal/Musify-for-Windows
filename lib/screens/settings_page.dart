@@ -151,6 +151,74 @@ class SettingsPage extends StatelessWidget {
             );
           },
         ),
+        // Animated Background toggle
+        ValueListenableBuilder<bool>(
+          valueListenable: animatedBgEnabled,
+          builder: (_, value, __) {
+            return CustomBar(
+              'Animated background',
+              AppIcon.sun,
+              description: 'Canvas particle effects that change with music',
+              trailing: Switch(
+                value: value,
+                onChanged: (v) {
+                  animatedBgEnabled.value = v;
+                  addOrUpdateData<bool>('settings', 'animatedBgEnabled', v);
+                },
+              ),
+            );
+          },
+        ),
+        // Quick accent color squares
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Accent colors',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              const SizedBox(height: 8),
+              SizedBox(
+                height: 36,
+                child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: availableColors.length,
+                  separatorBuilder: (_, __) => const SizedBox(width: 8),
+                  itemBuilder: (context, i) {
+                    final color = availableColors[i];
+                    final isSelected = color == primaryColorSetting;
+                    return GestureDetector(
+                      onTap: () {
+                        addOrUpdateData<int>('settings', 'accentColor', color.toARGB32());
+                        Musify.updateAppState(context, newAccentColor: color, useSystemColor: false);
+                      },
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 200),
+                        width: 36, height: 36,
+                        decoration: BoxDecoration(
+                          color: color,
+                          borderRadius: BorderRadius.circular(8),
+                          border: isSelected
+                              ? Border.all(color: Theme.of(context).colorScheme.onSurface, width: 2.5)
+                              : null,
+                        ),
+                        child: isSelected
+                            ? Icon(AppIcon.check, size: 18,
+                                color: color.computeLuminance() > 0.5 ? Colors.black : Colors.white)
+                            : null,
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
         ValueListenableBuilder<bool>(
           valueListenable: useProxy,
           builder: (_, value, __) {

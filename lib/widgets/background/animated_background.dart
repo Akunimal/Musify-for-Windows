@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:musify/main.dart';
+import 'package:musify/services/settings_manager.dart';
 
 /// Lightweight animated canvas background that responds to music playback.
 ///
@@ -63,7 +64,7 @@ class _AnimatedBackgroundState extends State<AnimatedBackground>
 
   @override
   Widget build(BuildContext context) {
-    if (_current.isEmpty) return const SizedBox.shrink();
+    if (_current.isEmpty || !animatedBgEnabled.value) return const SizedBox.shrink();
     final cs = Theme.of(context).colorScheme;
     // Use the surface color as particle color for visibility on dark themes.
     // On a "total black" theme the surface is dark, so particles use a contrasting

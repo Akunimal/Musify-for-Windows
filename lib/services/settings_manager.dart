@@ -126,3 +126,7 @@ var sleepTimerNotifier = ValueNotifier<Duration?>(null);
 // Server-Notifiers
 
 final announcementURL = ValueNotifier<String?>(null);
+
+final animatedBgEnabled = ValueNotifier<bool>(
+  Hive.box('settings').get('animatedBgEnabled', defaultValue: true),
+);
