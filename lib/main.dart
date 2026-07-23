@@ -20,6 +20,7 @@
  */
 
 import 'dart:async';
+import 'dart:io' show Platform;
 
 import 'package:app_links/app_links.dart';
 import 'package:audio_service/audio_service.dart';
@@ -47,6 +48,7 @@ import 'package:musify/utilities/flutter_toast.dart';
 import 'package:musify/utilities/language_utils.dart';
 import 'package:musify/utilities/playlist_utils.dart';
 import 'package:musify/utilities/sharing_intent.dart';
+import 'package:musify/widgets/background/animated_background.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:receive_sharing_intent/receive_sharing_intent.dart';
 
@@ -233,23 +235,29 @@ class _MusifyState extends State<Musify> with WidgetsBindingObserver {
           lightColorScheme,
           darkColorScheme,
         );
+        final isDesktop = !Platform.isAndroid && !Platform.isIOS;
 
         return AnnotatedRegion<SystemUiOverlayStyle>(
-          value: SystemUiOverlayStyle(
-            statusBarColor: Colors.transparent,
-            systemNavigationBarColor: Colors.transparent,
-            systemNavigationBarContrastEnforced: true,
-            statusBarBrightness: brightness == Brightness.dark
-                ? Brightness.light
-                : Brightness.dark,
-            statusBarIconBrightness: brightness == Brightness.dark
-                ? Brightness.light
-                : Brightness.dark,
-            systemNavigationBarIconBrightness: brightness == Brightness.dark
-                ? Brightness.light
-                : Brightness.dark,
-          ),
-          child: MaterialApp.router(
+          value: isDesktop
+              ? SystemUiOverlayStyle()
+              : SystemUiOverlayStyle(
+                  statusBarColor: Colors.transparent,
+                  systemNavigationBarColor: Colors.transparent,
+                  systemNavigationBarContrastEnforced: true,
+                  statusBarBrightness: brightness == Brightness.dark
+                      ? Brightness.light
+                      : Brightness.dark,
+                  statusBarIconBrightness: brightness == Brightness.dark
+                      ? Brightness.light
+                      : Brightness.dark,
+                  systemNavigationBarIconBrightness: brightness == Brightness.dark
+                      ? Brightness.light
+                      : Brightness.dark,
+                ),
+          child: Stack(
+            children: [
+              const AnimatedBackground(),
+              MaterialApp.router(
             themeMode: themeMode,
             darkTheme: getAppTheme(colorScheme),
             theme: getAppTheme(colorScheme),
@@ -262,6 +270,8 @@ class _MusifyState extends State<Musify> with WidgetsBindingObserver {
             supportedLocales: appSupportedLocales,
             locale: languageSetting,
             routerConfig: NavigationManager.router,
+          ),
+            ],
           ),
         );
       },

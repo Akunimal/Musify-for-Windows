@@ -30,7 +30,6 @@ import 'package:musify/services/settings_manager.dart';
 import 'package:musify/utilities/app_icon.dart';
 import 'package:musify/utilities/flutter_bottom_sheet.dart'
     show closeCurrentBottomSheet;
-import 'package:musify/widgets/background/animated_background.dart';
 import 'package:musify/widgets/mini_player.dart';
 
 class BottomNavigationPage extends StatefulWidget {
@@ -117,8 +116,6 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
                             return Stack(
                               alignment: Alignment.bottomCenter,
                               children: [
-                                // Animated background layer — responds to music
-                                const AnimatedBackground(),
                                 MediaQuery(
                                   data: mediaQuery.copyWith(
                                     padding: mediaQuery.padding.copyWith(
