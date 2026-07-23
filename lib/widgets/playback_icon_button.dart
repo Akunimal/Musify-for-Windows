@@ -25,6 +25,17 @@ import 'package:musify/utilities/app_icon.dart';
 import 'package:musify/extensions/l10n.dart';
 import 'package:musify/main.dart';
 
+DateTime _lastPlayPauseAction = DateTime.fromMillisecondsSinceEpoch(0);
+
+bool _canTogglePlayPause() {
+  final now = DateTime.now();
+  if (now.difference(_lastPlayPauseAction) < const Duration(milliseconds: 200)) {
+    return false;
+  }
+  _lastPlayPauseAction = now;
+  return true;
+}
+
 Widget buildPlaybackIconButton(
   double iconSize,
   Color iconColor,
@@ -64,7 +75,10 @@ Widget buildPlaybackIconButton(
           color: iconColor,
           size: iconSize,
         );
-        onPressed = () => audioHandler.playAgain();
+        onPressed = () {
+          if (!_canTogglePlayPause()) return;
+          audioHandler.playAgain();
+        };
         semanticLabel = context.l10n!.replay;
       } else {
         iconWidget = Icon(
@@ -74,7 +88,15 @@ Widget buildPlaybackIconButton(
           color: iconColor,
           size: iconSize,
         );
-        onPressed = isPlaying ? audioHandler.pause : audioHandler.play;
+        onPressed = isPlaying
+            ? () {
+                if (!_canTogglePlayPause()) return;
+                audioHandler.pause();
+              }
+            : () {
+                if (!_canTogglePlayPause()) return;
+                audioHandler.play();
+              };
         semanticLabel = isPlaying ? context.l10n!.pause : context.l10n!.play;
       }
 

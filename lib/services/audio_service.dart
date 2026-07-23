@@ -89,11 +89,13 @@ class MusifyAudioHandler extends BaseAudioHandler {
   int _currentLoadingIndex = -1;
   int _currentLoadingTransitionId = -1;
   bool _isUpdatingState = false;
-  bool _pendingPlaybackStateUpdate = false;
   int _songTransitionCounter = 0;
+  bool _isTransitioning = false;
+  int? _pendingTransitionIndex;
+  bool _isRemovingFromQueue = false;
+  int? _pendingRemoveIndex;
 
   bool _completionEventPending = false;
-  bool _completionHandlerLoadStarted = false;
 
   String? _lastError;
   int _consecutiveErrors = 0;
@@ -542,7 +544,6 @@ class MusifyAudioHandler extends BaseAudioHandler {
 
   void _updatePlaybackState() {
     if (_isUpdatingState) {
-      _pendingPlaybackStateUpdate = true;
       return;
     }
 
@@ -615,10 +616,6 @@ class MusifyAudioHandler extends BaseAudioHandler {
       );
     } finally {
       _isUpdatingState = false;
-      if (_pendingPlaybackStateUpdate) {
-        _pendingPlaybackStateUpdate = false;
-        _updatePlaybackState();
-      }
     }
   }
 
@@ -647,24 +644,14 @@ class MusifyAudioHandler extends BaseAudioHandler {
                 await _handleSongCompletion();
               }
             } finally {
-              // Only reset if still marked as pending (another event didn't override)
               if (_completionEventPending) {
                 _completionEventPending = false;
-                _completionHandlerLoadStarted = false;
               }
-              // else {
-              //   logger.log(
-              //     '[COMPLETION] Flag already false in finally block (was overridden)',
-              //     null,
-              //     null,
-              //   );
-              // }
             }
           });
         }
       } else if (state == ProcessingState.ready) {
         _completionEventPending = false;
-        _completionHandlerLoadStarted = false;
 
         // Clear the expired flag so future song completions are not
         // blocked after a sleep timer fired in a previous session.
@@ -982,6 +969,14 @@ class MusifyAudioHandler extends BaseAudioHandler {
   }
 
   Future<void> removeFromQueue(int index) async {
+    // Serial: prevent concurrent removes from racing on _queueList
+    if (_isRemovingFromQueue) {
+      _pendingRemoveIndex = index;
+      return;
+    }
+    _isRemovingFromQueue = true;
+    _pendingRemoveIndex = null;
+
     try {
       if (index < 0 || index >= _queueList.length) return;
 
@@ -1019,6 +1014,13 @@ class MusifyAudioHandler extends BaseAudioHandler {
       _updateQueueMediaItems();
     } catch (e, stackTrace) {
       logger.log('Error removing from queue', error: e, stackTrace: stackTrace);
+    } finally {
+      _isRemovingFromQueue = false;
+      if (_pendingRemoveIndex != null) {
+        final nextIndex = _pendingRemoveIndex!;
+        _pendingRemoveIndex = null;
+        unawaited(removeFromQueue(nextIndex));
+      }
     }
   }
 
@@ -1214,21 +1216,20 @@ class MusifyAudioHandler extends BaseAudioHandler {
       return;
     }
 
-    // If already loading any song, skip the request
-    // UNLESS we're in the middle of handling a completion event (allow one load attempt)
-    if (_currentLoadingIndex == index && !_completionEventPending) {
+    // Serial transition queue: if another transition is in progress,
+    // store the most recent request (last-wins) and return.
+    // The pending request is processed after the current one ends.
+    if (_isTransitioning) {
+      _pendingTransitionIndex = index;
       return;
     }
 
-    if (_currentLoadingIndex >= 0 &&
-        _completionEventPending &&
-        !_completionHandlerLoadStarted) {
-      _completionHandlerLoadStarted = true;
-    } else if (_currentLoadingIndex >= 0 &&
-        _completionEventPending &&
-        _completionHandlerLoadStarted) {
-      return;
-    }
+    _isTransitioning = true;
+    _pendingTransitionIndex = null;
+
+    // Clear completion handler flags — a new transition
+    // takes precedence over any queued completion event.
+    _completionEventPending = false;
 
     // Start new transition
     _songTransitionCounter++;
@@ -1286,6 +1287,13 @@ class MusifyAudioHandler extends BaseAudioHandler {
       if (currentTransitionId == _currentLoadingTransitionId) {
         _currentLoadingIndex = -1;
         _currentLoadingTransitionId = -1;
+      }
+      _isTransitioning = false;
+      // Process any transition that was queued while busy (last-wins)
+      if (_pendingTransitionIndex != null) {
+        final nextIndex = _pendingTransitionIndex!;
+        _pendingTransitionIndex = null;
+        unawaited(_playFromQueue(nextIndex));
       }
     }
   }

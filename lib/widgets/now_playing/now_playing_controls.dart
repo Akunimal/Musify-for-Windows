@@ -34,6 +34,30 @@ import 'package:musify/widgets/now_playing/marquee_text_widget.dart';
 import 'package:musify/widgets/playback_icon_button.dart';
 import 'package:musify/widgets/position_slider.dart';
 
+/// Cooldown: prevents re-entering the same action within 200ms.
+final _actionCooldown = _ActionCooldown();
+
+class _ActionCooldown {
+  DateTime _lastSkipNext = DateTime.fromMillisecondsSinceEpoch(0);
+  DateTime _lastSkipPrev = DateTime.fromMillisecondsSinceEpoch(0);
+
+  static const _cooldown = Duration(milliseconds: 200);
+
+  bool canSkipNext() {
+    final now = DateTime.now();
+    if (now.difference(_lastSkipNext) < _cooldown) return false;
+    _lastSkipNext = now;
+    return true;
+  }
+
+  bool canSkipPrev() {
+    final now = DateTime.now();
+    if (now.difference(_lastSkipPrev) < _cooldown) return false;
+    _lastSkipPrev = now;
+    return true;
+  }
+}
+
 class NowPlayingControls extends StatelessWidget {
   const NowPlayingControls({
     super.key,
@@ -455,7 +479,10 @@ class _PlaybackControlsRow extends StatelessWidget {
                         audioHandler.hasPrevious ||
                         repeatMode != AudioServiceRepeatMode.none,
                     tooltip: context.l10n!.skipToPrevious,
-                    onPressed: () => audioHandler.skipToPrevious(),
+                    onPressed: () {
+                      if (!_actionCooldown.canSkipPrev()) return;
+                      audioHandler.skipToPrevious();
+                    },
                     colorScheme: colorScheme,
                     buttonConstraints: buttonConstraints,
                     buttonPadding: buttonPadding,
@@ -476,9 +503,14 @@ class _PlaybackControlsRow extends StatelessWidget {
                         audioHandler.hasNext ||
                         repeatMode == AudioServiceRepeatMode.one,
                     tooltip: context.l10n!.skipToNext,
-                    onPressed: () => repeatMode == AudioServiceRepeatMode.one
-                        ? audioHandler.playAgain()
-                        : audioHandler.skipToNext(),
+                    onPressed: () {
+                      if (!_actionCooldown.canSkipNext()) return;
+                      if (repeatMode == AudioServiceRepeatMode.one) {
+                        audioHandler.playAgain();
+                      } else {
+                        audioHandler.skipToNext();
+                      }
+                    },
                     colorScheme: colorScheme,
                     buttonConstraints: buttonConstraints,
                     buttonPadding: buttonPadding,
