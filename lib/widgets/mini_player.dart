@@ -233,37 +233,7 @@ class _MiniPlayerBodyState extends State<_MiniPlayerBody>
                         ),
                       ),
                       // Video toggle — visible on every screen
-                      ValueListenableBuilder<bool>(
-                        valueListenable: videoModeEnabled,
-                        builder: (context, isVideo, _) {
-                          return GestureDetector(
-                            onTap: () {
-                              final newMode = !isVideo;
-                              videoModeEnabled.value = newMode;
-                              if (newMode) audioHandler.stop();
-                              addOrUpdateData<bool>('settings', 'videoModeEnabled', newMode);
-                            },
-                            child: Container(
-                              width: 32,
-                              height: 32,
-                              margin: const EdgeInsets.only(right: 4),
-                              decoration: BoxDecoration(
-                                color: isVideo
-                                    ? colorScheme.primaryContainer
-                                    : Colors.transparent,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Icon(
-                                isVideo ? AppIcon.video : AppIcon.play,
-                                size: 18,
-                                color: isVideo
-                                    ? colorScheme.onPrimaryContainer
-                                    : colorScheme.onSurfaceVariant,
-                              ),
-                            ),
-                          );
-                        },
-                      ),
+                      _VideoToggleButton(colorScheme: colorScheme),
                       _ControlsWidget(
                         colorScheme: colorScheme,
                         playbackState: state.playbackState,
@@ -365,6 +335,37 @@ class _MetadataWidget extends StatelessWidget {
             ),
           ],
         ],
+      ),
+    );
+  }
+}
+
+class _VideoToggleButton extends StatelessWidget {
+  const _VideoToggleButton({required this.colorScheme});
+  final ColorScheme colorScheme;
+
+  @override
+  Widget build(BuildContext context) {
+    final isVideo = videoModeEnabled.value;
+    return GestureDetector(
+      onTap: () {
+        final newMode = !isVideo;
+        videoModeEnabled.value = newMode;
+        if (newMode) audioHandler.stop();
+        addOrUpdateData<bool>('settings', 'videoModeEnabled', newMode);
+      },
+      child: Container(
+        width: 32, height: 32,
+        margin: const EdgeInsets.only(right: 4),
+        decoration: BoxDecoration(
+          color: isVideo ? colorScheme.primaryContainer : Colors.transparent,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Icon(
+          isVideo ? AppIcon.video : AppIcon.play,
+          size: 18,
+          color: isVideo ? colorScheme.onPrimaryContainer : colorScheme.onSurfaceVariant,
+        ),
       ),
     );
   }
