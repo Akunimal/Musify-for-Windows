@@ -130,3 +130,7 @@ final announcementURL = ValueNotifier<String?>(null);
 final animatedBgEnabled = ValueNotifier<bool>(
   Hive.box('settings').get('animatedBgEnabled', defaultValue: true),
 );
+
+final videoModeEnabled = ValueNotifier<bool>(
+  Hive.box('settings').get('videoModeEnabled', defaultValue: false),
+);

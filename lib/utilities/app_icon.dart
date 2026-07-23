@@ -105,4 +105,5 @@ class AppIcon {
   static const IconData textField = IconData(0xE73F, fontFamily: 'Segoe Fluent Icons');
   static const IconData emptyState = IconData(0xE81C, fontFamily: 'Segoe Fluent Icons');
   static const IconData windows = IconData(0xE782, fontFamily: 'Segoe Fluent Icons');
+  static const IconData video = IconData(0xE116, fontFamily: 'Segoe Fluent Icons');
 }
