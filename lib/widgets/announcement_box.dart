@@ -19,8 +19,8 @@
  *     please visit: https://github.com/gokadzev/Musify
  */
 
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:musify/extensions/l10n.dart';
 import 'package:musify/utilities/url_launcher.dart';
 
@@ -30,7 +30,7 @@ class AnnouncementBox extends StatelessWidget {
     required this.message,
     required this.url,
     this.onDismiss,
-    this.icon = FluentIcons.megaphone_24_regular,
+    this.icon = LucideIcons.megaphone,
   });
   final String message;
   final String url;
@@ -94,7 +94,7 @@ class AnnouncementBox extends StatelessWidget {
                           ),
                           const SizedBox(width: 4),
                           Icon(
-                            FluentIcons.arrow_right_16_regular,
+                            LucideIcons.arrowRight,
                             size: 12,
                             color: colorScheme.onPrimaryContainer.withValues(
                               alpha: 0.7,
@@ -108,7 +108,7 @@ class AnnouncementBox extends StatelessWidget {
                 if (onDismiss != null)
                   IconButton(
                     icon: Icon(
-                      FluentIcons.dismiss_circle_24_regular,
+                      LucideIcons.xCircle,
                       color: colorScheme.onPrimaryContainer.withValues(
                         alpha: 0.7,
                       ),

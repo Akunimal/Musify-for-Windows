@@ -1,5 +1,5 @@
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:musify/extensions/l10n.dart';
 import 'package:musify/utilities/playlist_image_picker.dart';
 
@@ -80,7 +80,7 @@ class _EditPlaylistDialogState extends State<EditPlaylistDialog> {
               decoration: InputDecoration(
                 labelText: context.l10n!.customPlaylistName,
                 prefixIcon: Icon(
-                  FluentIcons.text_field_20_regular,
+                  LucideIcons.type,
                   color: colorScheme.onSurfaceVariant,
                 ),
                 border: OutlineInputBorder(
@@ -97,7 +97,7 @@ class _EditPlaylistDialogState extends State<EditPlaylistDialog> {
                 decoration: InputDecoration(
                   labelText: context.l10n!.customPlaylistImgUrl,
                   prefixIcon: Icon(
-                    FluentIcons.image_20_regular,
+                    LucideIcons.image,
                     color: colorScheme.onSurfaceVariant,
                   ),
                   border: OutlineInputBorder(
@@ -142,7 +142,7 @@ class _EditPlaylistDialogState extends State<EditPlaylistDialog> {
 
             Navigator.pop(context, newPlaylist);
           },
-          icon: const Icon(FluentIcons.save_20_regular),
+          icon: const Icon(LucideIcons.save),
           label: Text(context.l10n!.update),
         ),
       ],

@@ -19,8 +19,8 @@
  *     please visit: https://github.com/gokadzev/Musify
  */
 
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:musify/constants/app_constants.dart';
 import 'package:musify/extensions/l10n.dart';
 import 'package:musify/main.dart' show logger, audioHandler;
@@ -141,10 +141,10 @@ class _UserSongsPageState extends State<UserSongsPage> {
 
   IconData getIcon(String page) {
     return switch (page) {
-      'liked' => FluentIcons.heart_24_regular,
-      'offline' => FluentIcons.cloud_off_24_regular,
-      'recents' => FluentIcons.history_24_regular,
-      _ => FluentIcons.heart_24_regular,
+      'liked' => LucideIcons.heart,
+      'offline' => LucideIcons.cloudOff,
+      'recents' => LucideIcons.history,
+      _ => LucideIcons.heart,
     };
   }
 
@@ -167,7 +167,7 @@ class _UserSongsPageState extends State<UserSongsPage> {
               children: [
                 Expanded(
                   child: FilledButton.icon(
-                    icon: const Icon(FluentIcons.play_24_filled),
+                    icon: const Icon(LucideIcons.play),
                     label: Text(context.l10n!.play),
                     onPressed: () {
                       final songsList = widget.page == 'liked'
@@ -202,7 +202,7 @@ class _UserSongsPageState extends State<UserSongsPage> {
                       backgroundColor: colorScheme.secondaryContainer,
                       foregroundColor: colorScheme.onSecondaryContainer,
                     ),
-                    icon: const Icon(FluentIcons.arrow_shuffle_24_filled),
+                    icon: const Icon(LucideIcons.shuffle),
                     label: Text(context.l10n!.shuffle),
                     onPressed: () async {
                       final songs = widget.page == 'liked'
@@ -276,7 +276,7 @@ class _UserSongsPageState extends State<UserSongsPage> {
 
   Widget _buildClearRecentsButton(Color primaryColor) {
     return IconButton.filledTonal(
-      icon: Icon(FluentIcons.delete_24_regular, color: primaryColor),
+      icon: Icon(LucideIcons.trash2, color: primaryColor),
       iconSize: 24,
       onPressed: () {
         showDialog(
@@ -332,8 +332,8 @@ class _UserSongsPageState extends State<UserSongsPage> {
 
         if (displayList.isEmpty) {
           final emptyIcon = isLikedSongs
-              ? FluentIcons.heart_24_regular
-              : FluentIcons.text_bullet_list_24_filled;
+              ? LucideIcons.heart
+              : LucideIcons.list;
           return EmptyPlaylistState(
             icon: emptyIcon,
             message: context.l10n!.playlistEmpty,

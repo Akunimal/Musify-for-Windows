@@ -21,8 +21,8 @@
 
 import 'dart:async';
 
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:go_router/go_router.dart';
 import 'package:musify/extensions/l10n.dart';
 import 'package:musify/services/artist_service.dart';
@@ -50,7 +50,7 @@ class PlaylistBar extends StatelessWidget {
     this.playlistData,
     this.onPressed,
     this.onDelete,
-    this.cubeIcon = FluentIcons.text_bullet_list_24_filled,
+    this.cubeIcon = LucideIcons.list,
     this.showBuildActions = true,
     this.isAlbum = false,
     this.borderRadius = BorderRadius.zero,
@@ -71,8 +71,8 @@ class PlaylistBar extends StatelessWidget {
   static const double iconSize = 27;
 
   static const likeStatusToIconMapper = {
-    true: FluentIcons.heart_off_24_regular,
-    false: FluentIcons.heart_24_regular,
+    true: LucideIcons.heartOff,
+    false: LucideIcons.heart,
   };
 
   // Helper to determine if this is a folder
@@ -128,7 +128,7 @@ class PlaylistBar extends StatelessWidget {
                               return Padding(
                                 padding: const EdgeInsets.only(right: 6),
                                 child: Icon(
-                                  FluentIcons.pin_24_filled,
+                                  LucideIcons.pin,
                                   size: 13,
                                   color: colorScheme.primary,
                                 ),
@@ -241,8 +241,8 @@ class PlaylistBar extends StatelessWidget {
                         buildPopupMenuItem<String>(
                           value: 'pin',
                           icon: isPinned
-                              ? FluentIcons.pin_off_24_regular
-                              : FluentIcons.pin_24_regular,
+                              ? LucideIcons.pinOff
+                              : LucideIcons.pin,
                           label: isPinned
                               ? context.l10n!.unpinFromLibrary
                               : context.l10n!.pinToLibrary,
@@ -260,14 +260,14 @@ class PlaylistBar extends StatelessWidget {
                       if (_canAddToPlaylist)
                         buildPopupMenuItem<String>(
                           value: 'add_to_playlist',
-                          icon: FluentIcons.album_add_24_regular,
+                          icon: LucideIcons.album,
                           label: context.l10n!.addToPlaylist,
                           colorScheme: colorScheme,
                         ),
                       if (isOffline)
                         buildPopupMenuItem<String>(
                           value: 'remove_offline',
-                          icon: FluentIcons.cloud_off_24_regular,
+                          icon: LucideIcons.cloudOff,
                           label: context.l10n!.removeOffline,
                           colorScheme: colorScheme,
                           iconColor: colorScheme.error,
@@ -278,7 +278,7 @@ class PlaylistBar extends StatelessWidget {
                               playlistData!['source'] == 'user-youtube'))
                         buildPopupMenuItem<String>(
                           value: 'moveToFolder',
-                          icon: FluentIcons.folder_24_regular,
+                          icon: LucideIcons.folder,
                           label: context.l10n!.moveToFolder,
                           colorScheme: colorScheme,
                         ),
@@ -287,7 +287,7 @@ class PlaylistBar extends StatelessWidget {
                               playlistData!['source'] == 'user-created'))
                         buildPopupMenuItem<String>(
                           value: 'edit',
-                          icon: FluentIcons.edit_24_regular,
+                          icon: LucideIcons.pencil,
                           label: isFolder
                               ? context.l10n!.editFolder
                               : context.l10n!.editPlaylist,
@@ -296,7 +296,7 @@ class PlaylistBar extends StatelessWidget {
                       if (onDelete != null)
                         buildPopupMenuItem<String>(
                           value: 'delete',
-                          icon: FluentIcons.delete_24_regular,
+                          icon: LucideIcons.trash2,
                           label: isFolder
                               ? context.l10n!.deleteFolder
                               : context.l10n!.deletePlaylist,
@@ -365,7 +365,7 @@ class PlaylistBar extends StatelessWidget {
               shape: BoxShape.circle,
             ),
             child: Icon(
-              FluentIcons.folder_arrow_right_24_regular,
+              LucideIcons.folderOpen,
               color: colorScheme.secondary,
               size: 28,
             ),
@@ -423,7 +423,7 @@ class PlaylistBar extends StatelessWidget {
                   children: [
                     if (hasLibrary)
                       DialogItem(
-                        icon: FluentIcons.library_24_regular,
+                        icon: LucideIcons.library,
                         iconColor: colorScheme.primary,
                         iconBgColor: colorScheme.primaryContainer,
                         label: context.l10n!.library,
@@ -436,7 +436,7 @@ class PlaylistBar extends StatelessWidget {
                       ),
                     ...availableFolders.map(
                       (folder) => DialogItem(
-                        icon: FluentIcons.folder_24_regular,
+                        icon: LucideIcons.folder,
                         iconColor: colorScheme.secondary,
                         iconBgColor: colorScheme.secondaryContainer,
                         label: folder['name'] as String,
@@ -495,7 +495,7 @@ class PlaylistBar extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: Icon(
-        FluentIcons.folder_24_regular,
+        LucideIcons.folder,
         size: 26,
         color: colorScheme.onSecondaryContainer,
       ),
@@ -653,7 +653,7 @@ class PlaylistBar extends StatelessWidget {
       context: context,
       builder: (context) => AlertDialog(
         icon: Icon(
-          FluentIcons.folder_24_regular,
+          LucideIcons.folder,
           color: colorScheme.primary,
           size: 32,
         ),
@@ -668,7 +668,7 @@ class PlaylistBar extends StatelessWidget {
           decoration: InputDecoration(
             labelText: context.l10n!.folderName,
             prefixIcon: Icon(
-              FluentIcons.text_field_20_regular,
+              LucideIcons.type,
               color: colorScheme.onSurfaceVariant,
             ),
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
@@ -697,7 +697,7 @@ class PlaylistBar extends StatelessWidget {
               );
               showToast(context, result);
             },
-            icon: const Icon(FluentIcons.save_20_regular),
+            icon: const Icon(LucideIcons.save),
             label: Text(context.l10n!.update),
           ),
         ],

@@ -21,8 +21,8 @@
 
 import 'dart:async';
 
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:flutter/services.dart';
 import 'package:musify/constants/app_constants.dart';
 import 'package:musify/extensions/l10n.dart';
@@ -58,7 +58,7 @@ class PlaylistPage extends StatefulWidget {
     super.key,
     this.playlistId,
     this.playlistData,
-    this.cubeIcon = FluentIcons.text_bullet_list_24_filled,
+    this.cubeIcon = LucideIcons.list,
     this.isArtist = false,
   });
 
@@ -197,7 +197,7 @@ class _PlaylistPageState extends State<PlaylistPage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(FluentIcons.arrow_left_24_regular),
+          icon: const Icon(LucideIcons.arrowLeft),
           onPressed: () =>
               Navigator.pop(context, widget.playlistData == _playlist),
           tooltip: context.l10n!.back,
@@ -308,7 +308,7 @@ class _PlaylistPageState extends State<PlaylistPage> {
               children: [
                 Expanded(
                   child: FilledButton.icon(
-                    icon: const Icon(FluentIcons.play_24_filled),
+                    icon: const Icon(LucideIcons.play),
                     label: Text(context.l10n!.play),
                     onPressed: () => audioHandler.playPlaylistSong(
                       playlist: _playlist,
@@ -323,7 +323,7 @@ class _PlaylistPageState extends State<PlaylistPage> {
                       backgroundColor: colorScheme.secondaryContainer,
                       foregroundColor: colorScheme.onSecondaryContainer,
                     ),
-                    icon: const Icon(FluentIcons.arrow_shuffle_24_filled),
+                    icon: const Icon(LucideIcons.shuffle),
                     label: Text(context.l10n!.shuffle),
                     onPressed: () async {
                       final songs = _playlist['list'] as List? ?? [];
@@ -397,7 +397,7 @@ class _PlaylistPageState extends State<PlaylistPage> {
 
   Widget _buildShareButton() {
     return IconButton.filledTonal(
-      icon: const Icon(FluentIcons.share_24_regular),
+      icon: const Icon(LucideIcons.share2),
       iconSize: 24,
       onPressed: () async {
         try {
@@ -429,8 +429,8 @@ class _PlaylistPageState extends State<PlaylistPage> {
       valueListenable: playlistLikeStatus,
       builder: (_, value, __) {
         final icon = value
-            ? FluentIcons.heart_24_filled
-            : FluentIcons.heart_24_regular;
+            ? LucideIcons.heart
+            : LucideIcons.heart;
 
         return value
             ? IconButton.filled(
@@ -469,7 +469,7 @@ class _PlaylistPageState extends State<PlaylistPage> {
 
   Widget _buildSyncButton() {
     return IconButton.filledTonal(
-      icon: const Icon(FluentIcons.arrow_sync_24_filled),
+      icon: const Icon(LucideIcons.refreshCw),
       iconSize: 24,
       onPressed: _handleSyncPlaylist,
       tooltip: context.l10n!.update,
@@ -478,7 +478,7 @@ class _PlaylistPageState extends State<PlaylistPage> {
 
   Widget _buildAddToPlaylistButton() {
     return IconButton.filledTonal(
-      icon: const Icon(FluentIcons.album_add_24_regular),
+      icon: const Icon(LucideIcons.album),
       iconSize: 24,
       onPressed: _handleAddFullPlaylistToPlaylist,
       tooltip: context.l10n!.addToPlaylist,
@@ -500,7 +500,7 @@ class _PlaylistPageState extends State<PlaylistPage> {
 
   Widget _buildEditButton() {
     return IconButton.filledTonal(
-      icon: const Icon(FluentIcons.edit_24_filled),
+      icon: const Icon(LucideIcons.pencil),
       iconSize: 24,
       onPressed: () async {
         final result = await showDialog<Map?>(
@@ -598,7 +598,7 @@ class _PlaylistPageState extends State<PlaylistPage> {
             if (playlistOfflineStatus) {
               return IconButton.filled(
                 icon: Icon(
-                  FluentIcons.arrow_download_off_24_filled,
+                  LucideIcons.downloadCloud,
                   color: Theme.of(context).colorScheme.onPrimary,
                 ),
                 iconSize: 24,
@@ -638,7 +638,7 @@ class _PlaylistPageState extends State<PlaylistPage> {
                         if (!progress.isCancelled)
                           IconButton(
                             icon: const Icon(
-                              FluentIcons.dismiss_24_filled,
+                              LucideIcons.x,
                               size: 16,
                             ),
                             onPressed: () => offlinePlaylistService
@@ -655,7 +655,7 @@ class _PlaylistPageState extends State<PlaylistPage> {
                 }
 
                 return IconButton.filledTonal(
-                  icon: const Icon(FluentIcons.arrow_download_24_filled),
+                  icon: const Icon(LucideIcons.download),
                   iconSize: 24,
                   onPressed: () => offlinePlaylistService.downloadPlaylist(
                     context,

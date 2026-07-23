@@ -19,8 +19,8 @@
  *     please visit: https://github.com/gokadzev/Musify
  */
 
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:musify/constants/app_constants.dart';
 import 'package:musify/extensions/l10n.dart';
 import 'package:musify/services/playlists_manager.dart';
@@ -72,7 +72,7 @@ void showCreatePlaylistDialog(
                 shape: BoxShape.circle,
               ),
               child: Icon(
-                FluentIcons.add_24_filled,
+                LucideIcons.plus,
                 color: colorScheme.primary,
                 size: 32,
               ),
@@ -130,7 +130,7 @@ void showCreatePlaylistDialog(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Icon(
-                                      FluentIcons.globe_20_filled,
+                                      LucideIcons.globe,
                                       size: 20,
                                       color: isYouTubeMode
                                           ? colorScheme.onPrimaryContainer
@@ -179,7 +179,7 @@ void showCreatePlaylistDialog(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Icon(
-                                      FluentIcons.person_20_filled,
+                                      LucideIcons.user,
                                       size: 20,
                                       color: !isYouTubeMode
                                           ? colorScheme.onPrimaryContainer
@@ -211,7 +211,7 @@ void showCreatePlaylistDialog(
                       decoration: InputDecoration(
                         labelText: context.l10n!.youtubePlaylistLinkOrId,
                         prefixIcon: Icon(
-                          FluentIcons.link_20_regular,
+                          LucideIcons.link,
                           color: colorScheme.onSurfaceVariant,
                         ),
                         border: OutlineInputBorder(
@@ -229,7 +229,7 @@ void showCreatePlaylistDialog(
                       decoration: InputDecoration(
                         labelText: context.l10n!.customPlaylistName,
                         prefixIcon: Icon(
-                          FluentIcons.text_field_20_regular,
+                          LucideIcons.type,
                           color: colorScheme.onSurfaceVariant,
                         ),
                         border: OutlineInputBorder(
@@ -249,7 +249,7 @@ void showCreatePlaylistDialog(
                         decoration: InputDecoration(
                           labelText: context.l10n!.customPlaylistImgUrl,
                           prefixIcon: Icon(
-                            FluentIcons.image_20_regular,
+                            LucideIcons.image,
                             color: colorScheme.onSurfaceVariant,
                           ),
                           border: OutlineInputBorder(
@@ -333,7 +333,7 @@ void showCreatePlaylistDialog(
                     );
                   }
                 },
-                icon: const Icon(FluentIcons.add_20_filled),
+                icon: const Icon(LucideIcons.plus),
                 label: Text(context.l10n!.add),
               ),
             ],
@@ -362,7 +362,7 @@ void showAddToPlaylistDialog(
             shape: BoxShape.circle,
           ),
           child: Icon(
-            FluentIcons.album_add_24_filled,
+            LucideIcons.album,
             color: colorScheme.secondary,
             size: 28,
           ),
@@ -444,7 +444,7 @@ void showAddToPlaylistDialog(
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Icon(
-                            FluentIcons.folder_24_regular,
+                            LucideIcons.folder,
                             color: colorScheme.secondary,
                             size: 22,
                           ),
@@ -465,7 +465,7 @@ void showAddToPlaylistDialog(
                                 right: 16,
                               ),
                               child: DialogItem(
-                                icon: FluentIcons.text_bullet_list_24_filled,
+                                icon: LucideIcons.list,
                                 iconColor: colorScheme.tertiary,
                                 iconBgColor: colorScheme.tertiaryContainer,
                                 label: p['title'] ?? '',
@@ -505,7 +505,7 @@ void showAddToPlaylistDialog(
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 6),
                     child: DialogItem(
-                      icon: FluentIcons.text_bullet_list_24_filled,
+                      icon: LucideIcons.list,
                       iconColor: colorScheme.tertiary,
                       iconBgColor: colorScheme.tertiaryContainer,
                       label: playlist['title'] ?? '',
@@ -553,7 +553,7 @@ void showAddToPlaylistDialog(
                 songsToAdd: songs,
               );
             },
-            icon: const Icon(FluentIcons.add_24_regular, size: 18),
+            icon: const Icon(LucideIcons.plus, size: 18),
             label: Text(context.l10n!.addPlaylist),
           ),
         ],

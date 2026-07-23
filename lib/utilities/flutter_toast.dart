@@ -19,8 +19,8 @@
  *     please visit: https://github.com/gokadzev/Musify
  */
 
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:musify/main.dart';
 import 'package:musify/widgets/mini_player.dart';
 
@@ -42,7 +42,7 @@ void showToast(
       content: Row(
         children: [
           Icon(
-            icon ?? FluentIcons.checkmark_circle_20_regular,
+            icon ?? LucideIcons.checkCircle,
             color: colorScheme.onSecondaryContainer,
             size: 20,
           ),
@@ -75,7 +75,7 @@ void showToastWithButton(
       content: Row(
         children: [
           Icon(
-            icon ?? FluentIcons.info_20_regular,
+            icon ?? LucideIcons.info,
             color: colorScheme.onSecondaryContainer,
             size: 20,
           ),

@@ -19,8 +19,8 @@
  *     please visit: https://github.com/gokadzev/Musify
  */
 
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:musify/extensions/l10n.dart';
 import 'package:musify/services/artist_service.dart';
 import 'package:musify/utilities/artwork_provider.dart';
@@ -84,7 +84,7 @@ class ArtistBar extends StatelessWidget {
                 ),
               ),
               Icon(
-                FluentIcons.chevron_right_24_regular,
+                LucideIcons.chevronRight,
                 color: colorScheme.onSurfaceVariant,
                 size: 20,
               ),
@@ -129,7 +129,7 @@ class _ArtistArtwork extends StatelessWidget {
         shape: BoxShape.circle,
       ),
       child: Icon(
-        FluentIcons.person_24_filled,
+        LucideIcons.user,
         size: 26,
         color: colorScheme.onSecondaryContainer,
       ),

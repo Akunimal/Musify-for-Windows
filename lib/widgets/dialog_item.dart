@@ -19,8 +19,8 @@
  *     please visit: https://github.com/gokadzev/Musify
  */
 
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:musify/constants/app_constants.dart';
 
 class DialogItem extends StatelessWidget {
@@ -91,7 +91,7 @@ class DialogItem extends StatelessWidget {
                 ),
                 if (showChevron)
                   Icon(
-                    FluentIcons.chevron_right_24_regular,
+                    LucideIcons.chevronRight,
                     color: colorScheme.onSurfaceVariant,
                     size: 18,
                   ),

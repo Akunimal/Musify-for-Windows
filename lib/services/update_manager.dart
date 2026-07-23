@@ -22,9 +22,9 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:http/http.dart' as http;
 import 'package:musify/constants/version.dart';
 import 'package:musify/extensions/l10n.dart';
@@ -90,7 +90,7 @@ Future<void> checkAppUpdates() async {
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
-                  FluentIcons.arrow_download_24_regular,
+                  LucideIcons.download,
                   color: colorScheme.onPrimaryContainer,
                   size: 32,
                 ),
@@ -159,7 +159,7 @@ Future<void> checkAppUpdates() async {
                   (url) => {launchURL(Uri.parse(url)), Navigator.pop(context)},
                 );
               },
-              icon: const Icon(FluentIcons.arrow_download_20_regular),
+              icon: const Icon(LucideIcons.download),
               label: Text(context.l10n!.download),
             ),
           ],
@@ -179,7 +179,7 @@ void showUpdateCheckDialog(BuildContext context) {
     builder: (context) {
       return AlertDialog(
         icon: Icon(
-          FluentIcons.arrow_sync_circle_24_regular,
+          LucideIcons.refreshCw,
           color: colorScheme.primary,
           size: 40,
         ),

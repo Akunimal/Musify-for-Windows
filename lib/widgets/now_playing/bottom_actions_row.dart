@@ -20,8 +20,8 @@
  */
 
 import 'package:audio_service/audio_service.dart';
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:musify/extensions/l10n.dart';
 import 'package:musify/main.dart';
 import 'package:musify/services/common_services.dart';
@@ -135,8 +135,8 @@ class _BottomActionsRowState extends State<BottomActionsRow> {
           if (!isRadioStation)
             _buildActionButton(
               context: context,
-              icon: FluentIcons.cloud_arrow_down_24_regular,
-              activeIcon: FluentIcons.cloud_off_24_filled,
+              icon: LucideIcons.cloudDownload,
+              activeIcon: LucideIcons.cloudOff,
               colorScheme: colorScheme,
               size: responsiveIconSize,
               statusNotifier: _songOfflineStatus,
@@ -153,7 +153,7 @@ class _BottomActionsRowState extends State<BottomActionsRow> {
           if (!offlineMode.value && !isRadioStation)
             _buildSimpleActionButton(
               context: context,
-              icon: FluentIcons.album_add_24_regular,
+              icon: LucideIcons.album,
               colorScheme: colorScheme,
               size: responsiveIconSize,
               onPressed: () => showAddToPlaylistDialog(
@@ -165,7 +165,7 @@ class _BottomActionsRowState extends State<BottomActionsRow> {
           if (queue.isNotEmpty && !isRadioStation && !widget.isLargeScreen)
             _buildSimpleActionButton(
               context: context,
-              icon: FluentIcons.apps_list_24_filled,
+              icon: LucideIcons.list,
               colorScheme: colorScheme,
               size: responsiveIconSize,
               onPressed: () => showCustomBottomSheet(
@@ -178,7 +178,7 @@ class _BottomActionsRowState extends State<BottomActionsRow> {
             if (!isRadioStation)
               _buildSimpleActionButton(
                 context: context,
-                icon: FluentIcons.text_quote_24_regular,
+                icon: LucideIcons.quote,
                 colorScheme: colorScheme,
                 size: responsiveIconSize,
                 onPressed: widget.lyricsController.flipcard,
@@ -186,8 +186,8 @@ class _BottomActionsRowState extends State<BottomActionsRow> {
               ),
             _buildActionButton(
               context: context,
-              icon: FluentIcons.heart_24_regular,
-              activeIcon: FluentIcons.heart_24_filled,
+              icon: LucideIcons.heart,
+              activeIcon: LucideIcons.heart,
               colorScheme: colorScheme,
               size: responsiveIconSize,
               statusNotifier: _songLikeStatus,
@@ -308,8 +308,8 @@ class _BottomActionsRowState extends State<BottomActionsRow> {
         return IconButton(
           icon: Icon(
             isActive
-                ? FluentIcons.timer_24_filled
-                : FluentIcons.timer_24_regular,
+                ? LucideIcons.timer
+                : LucideIcons.timer,
             color: isActive
                 ? colorScheme.primary
                 : colorScheme.onSurfaceVariant,
@@ -384,7 +384,7 @@ void _showSleepTimerDialog(BuildContext context) {
             title: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(FluentIcons.timer_24_regular, color: colorScheme.primary),
+                Icon(LucideIcons.timer, color: colorScheme.primary),
                 const SizedBox(width: 12),
                 Text(
                   context.l10n!.sleepTimer,
@@ -551,7 +551,7 @@ Widget _buildTimeSelector({
           children: [
             IconButton(
               icon: Icon(
-                FluentIcons.line_horizontal_1_24_regular,
+                LucideIcons.minus,
                 color: colorScheme.onSurfaceVariant,
               ),
               style: IconButton.styleFrom(
@@ -576,7 +576,7 @@ Widget _buildTimeSelector({
             ),
             IconButton(
               icon: Icon(
-                FluentIcons.add_24_regular,
+                LucideIcons.plus,
                 color: colorScheme.onSurfaceVariant,
               ),
               style: IconButton.styleFrom(

@@ -19,8 +19,8 @@
  *     please visit: https://github.com/gokadzev/Musify
  */
 
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 class CustomSearchBar extends StatefulWidget {
   const CustomSearchBar({
@@ -81,7 +81,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
           ),
         ),
         leading: Icon(
-          FluentIcons.search_24_regular,
+          LucideIcons.search,
           color: colorScheme.onSurfaceVariant,
           size: 22,
         ),
@@ -102,7 +102,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
           if (widget.controller.text.isNotEmpty)
             IconButton(
               icon: Icon(
-                FluentIcons.dismiss_24_regular,
+                LucideIcons.x,
                 color: colorScheme.onSurfaceVariant,
                 size: 20,
               ),

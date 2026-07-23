@@ -19,8 +19,8 @@
  *     please visit: https://github.com/gokadzev/Musify
  */
 
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:musify/extensions/l10n.dart';
 
 class ConfirmationDialog extends StatelessWidget {
@@ -45,8 +45,8 @@ class ConfirmationDialog extends StatelessWidget {
     return AlertDialog(
       icon: Icon(
         isDangerous
-            ? FluentIcons.warning_24_regular
-            : FluentIcons.question_circle_24_regular,
+            ? LucideIcons.alertTriangle
+            : LucideIcons.helpCircle,
         color: isDangerous ? colorScheme.error : colorScheme.primary,
         size: 32,
       ),

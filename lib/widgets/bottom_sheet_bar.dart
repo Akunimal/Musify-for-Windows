@@ -19,8 +19,8 @@
  *     please visit: https://github.com/gokadzev/Musify
  */
 
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 class BottomSheetBar extends StatelessWidget {
   const BottomSheetBar(
@@ -90,7 +90,7 @@ class BottomSheetBar extends StatelessWidget {
                 if (isSelected) ...[
                   const SizedBox(width: 8),
                   Icon(
-                    FluentIcons.checkmark_circle_24_regular,
+                    LucideIcons.checkCircle,
                     color: colorScheme.onSecondaryContainer,
                     size: 22,
                   ),

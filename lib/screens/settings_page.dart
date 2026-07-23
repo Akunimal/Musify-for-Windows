@@ -19,9 +19,9 @@
  *     please visit: https://github.com/gokadzev/Musify
  */
 
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:go_router/go_router.dart';
 import 'package:musify/constants/app_constants.dart';
 import 'package:musify/extensions/l10n.dart';
@@ -90,37 +90,37 @@ class SettingsPage extends StatelessWidget {
       children: [
         SectionHeader(
           title: context.l10n!.preferences,
-          icon: FluentIcons.options_24_filled,
+          icon: LucideIcons.moreHorizontal,
         ),
         CustomBar(
           context.l10n!.accentColor,
-          FluentIcons.color_24_regular,
+          LucideIcons.palette,
           borderRadius: commonCustomBarRadiusFirst,
           onTap: () => _showAccentColorPicker(context),
         ),
         CustomBar(
           context.l10n!.themeMode,
-          FluentIcons.weather_sunny_28_regular,
+          LucideIcons.sun,
           onTap: () => _showThemeModePicker(context),
         ),
         CustomBar(
           context.l10n!.language,
-          FluentIcons.translate_24_regular,
+          LucideIcons.languages,
           onTap: () => _showLanguagePicker(context),
         ),
         CustomBar(
           context.l10n!.audioQuality,
-          FluentIcons.music_note_1_24_regular,
+          LucideIcons.music,
           onTap: () => _showAudioQualityPicker(context),
         ),
         CustomBar(
           context.l10n!.equalizer,
-          FluentIcons.data_histogram_24_regular,
+          LucideIcons.barChart2,
           onTap: () => context.push('/settings/equalizer'),
         ),
         CustomBar(
           context.l10n!.dynamicColor,
-          FluentIcons.toggle_left_24_regular,
+          LucideIcons.toggleLeft,
           trailing: Switch(
             value: useSystemColor.value,
             onChanged: (value) => _toggleSystemColor(context, value),
@@ -129,7 +129,7 @@ class SettingsPage extends StatelessWidget {
         if (themeMode == ThemeMode.dark)
           CustomBar(
             context.l10n!.pureBlackTheme,
-            FluentIcons.color_background_24_regular,
+            LucideIcons.palette,
             trailing: Switch(
               value: usePureBlackColor.value,
               onChanged: (value) => _togglePureBlack(context, value),
@@ -140,7 +140,7 @@ class SettingsPage extends StatelessWidget {
           builder: (_, value, __) {
             return CustomBar(
               context.l10n!.predictiveBack,
-              FluentIcons.position_backward_24_regular,
+              LucideIcons.skipBack,
               trailing: Switch(
                 value: value,
                 onChanged: (value) => _togglePredictiveBack(context, value),
@@ -153,7 +153,7 @@ class SettingsPage extends StatelessWidget {
           builder: (_, value, __) {
             return CustomBar(
               context.l10n!.useProxy,
-              FluentIcons.shield_24_regular,
+              LucideIcons.shield,
               description: context.l10n!.useProxyDescription,
               trailing: Switch(
                 value: value,
@@ -171,7 +171,7 @@ class SettingsPage extends StatelessWidget {
           builder: (_, value, __) {
             return CustomBar(
               context.l10n!.listeningStats,
-              FluentIcons.clock_24_regular,
+              LucideIcons.clock,
               description: context.l10n!.listeningStatsDescription,
               trailing: Switch(
                 value: value,
@@ -185,7 +185,7 @@ class SettingsPage extends StatelessWidget {
           builder: (_, value, __) {
             return CustomBar(
               context.l10n!.offlineMode,
-              FluentIcons.cloud_off_24_regular,
+              LucideIcons.cloudOff,
               description: context.l10n!.offlineModeDescription,
               borderRadius: isOffline && isFdroidBuild
                   ? commonCustomBarRadiusLast
@@ -203,7 +203,7 @@ class SettingsPage extends StatelessWidget {
             builder: (_, value, __) {
               return CustomBar(
                 context.l10n!.automaticUpdateChecks,
-                FluentIcons.arrow_sync_24_regular,
+                LucideIcons.refreshCw,
                 description: context.l10n!.automaticUpdateChecksDescription,
                 borderRadius: offlineMode.value
                     ? commonCustomBarRadiusLast
@@ -228,7 +228,7 @@ class SettingsPage extends StatelessWidget {
           builder: (_, value, __) {
             return CustomBar(
               'SponsorBlock',
-              FluentIcons.cut_24_regular,
+              LucideIcons.scissors,
               description: context.l10n!.sponsorBlockDescription,
               trailing: Switch(
                 value: value,
@@ -242,7 +242,7 @@ class SettingsPage extends StatelessWidget {
           builder: (_, value, __) {
             return CustomBar(
               context.l10n!.automaticSongPicker,
-              FluentIcons.music_note_2_play_20_regular,
+              LucideIcons.music,
               description: context.l10n!.automaticSongPickerDescription,
               trailing: Switch(
                 value: value,
@@ -259,7 +259,7 @@ class SettingsPage extends StatelessWidget {
           builder: (_, value, __) {
             return CustomBar(
               context.l10n!.externalRecommendations,
-              FluentIcons.channel_share_24_regular,
+              LucideIcons.share2,
               description: context.l10n!.externalRecommendationsDescription,
               borderRadius: commonCustomBarRadiusLast,
               trailing: Switch(
@@ -282,11 +282,11 @@ class SettingsPage extends StatelessWidget {
       children: [
         SectionHeader(
           title: context.l10n!.tools,
-          icon: FluentIcons.toolbox_24_filled,
+          icon: LucideIcons.wrench,
         ),
         CustomBar(
           context.l10n!.clearCache,
-          FluentIcons.broom_24_regular,
+          LucideIcons.eraser,
           borderRadius: commonCustomBarRadiusFirst,
           onTap: () async {
             final cleared = await clearCache();
@@ -298,7 +298,7 @@ class SettingsPage extends StatelessWidget {
         ),
         CustomBar(
           context.l10n!.clearSearchHistory,
-          FluentIcons.history_24_regular,
+          LucideIcons.history,
           onTap: () => _showConfirmationDialog(
             context: context,
             confirmationMessage: context.l10n!.clearSearchHistoryQuestion,
@@ -311,7 +311,7 @@ class SettingsPage extends StatelessWidget {
         ),
         CustomBar(
           context.l10n!.clearRecentlyPlayed,
-          FluentIcons.receipt_play_24_regular,
+          LucideIcons.listMusic,
           onTap: () => _showConfirmationDialog(
             context: context,
             confirmationMessage: context.l10n!.clearRecentlyPlayedQuestion,
@@ -324,7 +324,7 @@ class SettingsPage extends StatelessWidget {
         ),
         CustomBar(
           context.l10n!.clearListeningStats,
-          FluentIcons.clock_24_regular,
+          LucideIcons.clock,
           onTap: () => _showConfirmationDialog(
             context: context,
             confirmationMessage: context.l10n!.clearListeningStatsQuestion,
@@ -342,7 +342,7 @@ class SettingsPage extends StatelessWidget {
         ),
         CustomBar(
           context.l10n!.deleteDownloads,
-          FluentIcons.delete_24_regular,
+          LucideIcons.trash2,
           onTap: () => _showConfirmationDialog(
             context: context,
             confirmationMessage: context.l10n!.deleteDownloadsQuestion,
@@ -364,12 +364,12 @@ class SettingsPage extends StatelessWidget {
         ),
         CustomBar(
           context.l10n!.backupUserData,
-          FluentIcons.cloud_sync_24_regular,
+          LucideIcons.refreshCw,
           onTap: () => _backupUserData(context),
         ),
         CustomBar(
           context.l10n!.restoreUserData,
-          FluentIcons.cloud_add_24_regular,
+          LucideIcons.cloudDownload,
           onTap: () async {
             try {
               final result = await restoreData(context);
@@ -397,7 +397,7 @@ class SettingsPage extends StatelessWidget {
                   result.message,
                   icon: result.success
                       ? null
-                      : FluentIcons.error_circle_24_regular,
+                      : LucideIcons.alertCircle,
                 );
               }
             } catch (e, str) {
@@ -406,7 +406,7 @@ class SettingsPage extends StatelessWidget {
                 showToast(
                   context,
                   context.l10n!.error,
-                  icon: FluentIcons.error_circle_24_regular,
+                  icon: LucideIcons.alertCircle,
                 );
               }
             }
@@ -415,7 +415,7 @@ class SettingsPage extends StatelessWidget {
         if (!isFdroidBuild)
           CustomBar(
             context.l10n!.downloadAppUpdate,
-            FluentIcons.arrow_download_24_regular,
+            LucideIcons.download,
             borderRadius: commonCustomBarRadiusLast,
             onTap: checkAppUpdates,
           ),
@@ -430,7 +430,7 @@ class SettingsPage extends StatelessWidget {
       children: [
         SectionHeader(
           title: context.l10n!.becomeSponsor,
-          icon: FluentIcons.heart_24_filled,
+          icon: LucideIcons.heart,
         ),
         Card(
           margin: const EdgeInsets.only(bottom: 3),
@@ -464,7 +464,7 @@ class SettingsPage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Icon(
-                            FluentIcons.heart_24_regular,
+                            LucideIcons.heart,
                             color: colorScheme.onPrimaryContainer,
                             size: 24,
                           ),
@@ -489,7 +489,7 @@ class SettingsPage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Icon(
-                            FluentIcons.arrow_right_24_regular,
+                            LucideIcons.arrowRight,
                             color: colorScheme.onPrimaryContainer,
                             size: 16,
                           ),
@@ -511,29 +511,29 @@ class SettingsPage extends StatelessWidget {
       children: [
         SectionHeader(
           title: context.l10n!.others,
-          icon: FluentIcons.more_circle_24_filled,
+          icon: LucideIcons.moreHorizontal,
         ),
         CustomBar(
           context.l10n!.licenses,
-          FluentIcons.document_24_regular,
+          LucideIcons.fileText,
           borderRadius: commonCustomBarRadiusFirst,
           onTap: () => NavigationManager.router.go('/settings/license'),
         ),
         CustomBar(
           context.l10n!.translate,
-          FluentIcons.translate_24_regular,
+          LucideIcons.languages,
           description: context.l10n!.translateDescription,
           onTap: () =>
               launchURL(Uri.parse('https://crowdin.com/project/musify')),
         ),
         CustomBar(
           '${context.l10n!.copyLogs} (${logger.getLogCount()})',
-          FluentIcons.error_circle_24_regular,
+          LucideIcons.alertCircle,
           onTap: () async => showToast(context, await logger.copyLogs(context)),
         ),
         CustomBar(
           context.l10n!.about,
-          FluentIcons.book_information_24_regular,
+          LucideIcons.bookOpen,
           borderRadius: commonCustomBarRadiusLast,
           onTap: () => NavigationManager.router.go('/settings/about'),
         ),
@@ -587,7 +587,7 @@ class SettingsPage extends StatelessWidget {
                 ),
                 child: isSelected
                     ? Icon(
-                        FluentIcons.checkmark_20_filled,
+                        LucideIcons.check,
                         color: color.computeLuminance() > 0.5
                             ? Colors.black
                             : Colors.white,
@@ -605,9 +605,9 @@ class SettingsPage extends StatelessWidget {
   void _showThemeModePicker(BuildContext context) {
     final availableModes = [ThemeMode.system, ThemeMode.light, ThemeMode.dark];
     const modeIcons = [
-      FluentIcons.phone_24_regular,
-      FluentIcons.weather_sunny_24_regular,
-      FluentIcons.weather_moon_24_regular,
+      LucideIcons.phone,
+      LucideIcons.sun,
+      LucideIcons.moon,
     ];
 
     showCustomBottomSheet(
@@ -689,9 +689,9 @@ class SettingsPage extends StatelessWidget {
       context.l10n!.audioQualityHigh,
     ];
     const qualityIcons = [
-      FluentIcons.speaker_1_24_regular,
-      FluentIcons.speaker_2_24_regular,
-      FluentIcons.speaker_2_24_filled,
+      LucideIcons.volume1,
+      LucideIcons.volume2,
+      LucideIcons.volume2,
     ];
 
     showCustomBottomSheet(
@@ -835,7 +835,7 @@ class SettingsPage extends StatelessWidget {
         builder: (BuildContext context) {
           return AlertDialog(
             icon: Icon(
-              FluentIcons.info_24_regular,
+              LucideIcons.info,
               color: colorScheme.primary,
               size: 32,
             ),
@@ -859,7 +859,7 @@ class SettingsPage extends StatelessWidget {
         showToast(
           context,
           result.message,
-          icon: result.success ? null : FluentIcons.error_circle_24_regular,
+          icon: result.success ? null : LucideIcons.alertCircle,
         );
       }
     } catch (e, stackTrace) {
@@ -868,7 +868,7 @@ class SettingsPage extends StatelessWidget {
         showToast(
           context,
           context.l10n!.error,
-          icon: FluentIcons.error_circle_24_regular,
+          icon: LucideIcons.alertCircle,
         );
       }
     }

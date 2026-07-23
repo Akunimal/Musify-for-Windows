@@ -19,8 +19,8 @@
  *     please visit: https://github.com/gokadzev/Musify
  */
 
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 class OverflowMenuButton<T> extends StatelessWidget {
   const OverflowMenuButton({
@@ -51,7 +51,7 @@ class OverflowMenuButton<T> extends StatelessWidget {
       onSelected: onSelected,
       itemBuilder: itemBuilder,
       icon: Icon(
-        icon ?? FluentIcons.more_vertical_24_regular,
+        icon ?? LucideIcons.moreVertical,
         size: iconSize,
         color: color ?? colorScheme.onSurfaceVariant,
       ),

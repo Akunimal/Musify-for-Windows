@@ -19,13 +19,13 @@
  *     please visit: https://github.com/gokadzev/Musify
  */
 
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 class EmptyPlaylistState extends StatelessWidget {
   const EmptyPlaylistState({
     super.key,
-    this.icon = FluentIcons.text_bullet_list_24_filled,
+    this.icon = LucideIcons.list,
     required this.message,
   });
 

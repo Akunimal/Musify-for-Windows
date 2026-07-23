@@ -23,9 +23,9 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:go_router/go_router.dart';
 import 'package:musify/extensions/l10n.dart';
 import 'package:musify/main.dart';
@@ -68,21 +68,21 @@ List<PopupMenuEntry<String>> _buildSongMenuItems({
     if (showQueueActions)
       buildPopupMenuItem<String>(
         value: 'play_next',
-        icon: FluentIcons.receipt_play_24_regular,
+        icon: LucideIcons.listMusic,
         label: playNextText,
         colorScheme: colorScheme,
       ),
     if (showGoToArtist)
       buildPopupMenuItem<String>(
         value: 'go_to_artist',
-        icon: FluentIcons.person_24_regular,
+        icon: LucideIcons.user,
         label: l10n.goToArtist,
         colorScheme: colorScheme,
       ),
     if (showQueueActions)
       buildPopupMenuItem<String>(
         value: 'add_to_queue',
-        icon: FluentIcons.text_bullet_list_add_24_regular,
+        icon: LucideIcons.listPlus,
         label: addToQueueText,
         colorScheme: colorScheme,
       ),
@@ -111,28 +111,28 @@ List<PopupMenuEntry<String>> _buildSongMenuItems({
     if (canRename)
       buildPopupMenuItem<String>(
         value: 'rename',
-        icon: FluentIcons.edit_24_regular,
+        icon: LucideIcons.pencil,
         label: renameSongText,
         colorScheme: colorScheme,
       ),
     if (canRemove)
       buildPopupMenuItem<String>(
         value: 'remove',
-        icon: FluentIcons.delete_24_regular,
+        icon: LucideIcons.trash2,
         label: removeFromPlaylistText,
         colorScheme: colorScheme,
       ),
     if (!offlineMode.value)
       buildPopupMenuItem<String>(
         value: 'add_to_playlist',
-        icon: FluentIcons.album_add_24_regular,
+        icon: LucideIcons.album,
         label: addToPlaylistText,
         colorScheme: colorScheme,
       ),
     if (isRecentSong)
       buildPopupMenuItem<String>(
         value: 'remove_from_recents',
-        icon: FluentIcons.delete_24_regular,
+        icon: LucideIcons.trash2,
         label: removeFromRecentlyPlayedText,
         colorScheme: colorScheme,
       ),
@@ -146,8 +146,8 @@ List<PopupMenuEntry<String>> _buildSongMenuItems({
               children: [
                 Icon(
                   value
-                      ? FluentIcons.cloud_dismiss_24_regular
-                      : FluentIcons.cloud_arrow_down_24_regular,
+                      ? LucideIcons.cloudOff
+                      : LucideIcons.cloudDownload,
                   color: colorScheme.primary,
                 ),
                 const SizedBox(width: 8),
@@ -317,8 +317,8 @@ class SongBar extends StatefulWidget {
 
 class _SongBarState extends State<SongBar> {
   static const likeStatusToIconMapper = {
-    true: FluentIcons.heart_off_24_regular,
-    false: FluentIcons.heart_24_regular,
+    true: LucideIcons.heartOff,
+    false: LucideIcons.heart,
   };
 
   late final ValueNotifier<bool> _songLikeStatus;
@@ -619,7 +619,7 @@ class _SongInfo extends StatelessWidget {
                 ),
               ),
               Icon(
-                FluentIcons.headphones_20_filled,
+                LucideIcons.headphones,
                 size: 12,
                 color: colorScheme.primary,
               ),
@@ -679,7 +679,7 @@ class _OfflineArtwork extends StatelessWidget {
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
-                  FluentIcons.cloud_off_24_filled,
+                  LucideIcons.cloudOff,
                   size: 11,
                   color: colorScheme.onTertiaryContainer,
                 ),
@@ -753,7 +753,7 @@ class _OnlineArtwork extends StatelessWidget {
                           shape: BoxShape.circle,
                         ),
                         child: Icon(
-                          FluentIcons.cloud_off_24_filled,
+                          LucideIcons.cloudOff,
                           size: 11,
                           color: colorScheme.onTertiaryContainer,
                         ),
@@ -771,7 +771,7 @@ class _OnlineArtwork extends StatelessWidget {
                           shape: BoxShape.circle,
                         ),
                         child: Icon(
-                          FluentIcons.heart_24_filled,
+                          LucideIcons.heart,
                           size: 11,
                           color: colorScheme.onPrimaryContainer,
                         ),

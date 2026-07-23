@@ -19,8 +19,8 @@
  *     please visit: https://github.com/gokadzev/Musify
  */
 
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:musify/models/radio_model.dart';
 import 'package:musify/services/common_services.dart';
 import 'package:musify/utilities/artwork_provider.dart';
@@ -111,7 +111,7 @@ class _RadioStationCardState extends State<RadioStationCard> {
                     height: 56,
                     color: colorScheme.primaryContainer,
                     child: Icon(
-                      FluentIcons.sound_source_24_regular,
+                      LucideIcons.volume2,
                       color: colorScheme.onPrimaryContainer,
                       size: 26,
                     ),
@@ -154,8 +154,8 @@ class _RadioStationCardState extends State<RadioStationCard> {
                     onPressed: _handleFavoriteTap,
                     icon: Icon(
                       isFavorited
-                          ? FluentIcons.heart_24_filled
-                          : FluentIcons.heart_24_regular,
+                          ? LucideIcons.heart
+                          : LucideIcons.heart,
                       size: 18,
                     ),
                     style: IconButton.styleFrom(
@@ -174,7 +174,7 @@ class _RadioStationCardState extends State<RadioStationCard> {
               const SizedBox(width: 5),
               IconButton.filled(
                 onPressed: widget.onPressed,
-                icon: const Icon(FluentIcons.play_24_filled, size: 18),
+                icon: const Icon(LucideIcons.play, size: 18),
                 style: IconButton.styleFrom(
                   backgroundColor: colorScheme.primary.withValues(alpha: 0.15),
                   foregroundColor: colorScheme.primary,

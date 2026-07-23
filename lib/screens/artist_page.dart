@@ -19,8 +19,8 @@
  *     please visit: https://github.com/gokadzev/Musify
  */
 
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:musify/main.dart' show logger;
 import 'package:musify/screens/playlist_page.dart';
 import 'package:musify/services/artist_service.dart';
@@ -144,7 +144,7 @@ class _ArtistPageState extends State<ArtistPage> {
           key: ValueKey('artist_${artist['ytid']}_${artist['catalogStatus']}'),
           playlistId: artist['ytid']?.toString() ?? widget.artistId,
           playlistData: artist,
-          cubeIcon: FluentIcons.person_24_filled,
+          cubeIcon: LucideIcons.user,
           isArtist: true,
         );
       },
@@ -157,7 +157,7 @@ class _ArtistPageState extends State<ArtistPage> {
       body: const CustomScrollView(
         slivers: [
           EmptyPlaylistState(
-            icon: FluentIcons.person_24_filled,
+            icon: LucideIcons.user,
             message: 'Not found',
           ),
           SliverMiniPlayerBottomSpace(),

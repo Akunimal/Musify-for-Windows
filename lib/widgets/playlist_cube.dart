@@ -19,8 +19,8 @@
  *     please visit: https://github.com/gokadzev/Musify
  */
 
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:musify/extensions/l10n.dart';
 import 'package:musify/widgets/playlist_artwork.dart';
 
@@ -29,7 +29,7 @@ class PlaylistCube extends StatelessWidget {
     this.playlist, {
     super.key,
     this.playlistData,
-    this.cubeIcon = FluentIcons.text_bullet_list_24_filled,
+    this.cubeIcon = LucideIcons.list,
     this.size = 220,
     this.borderRadius = 16,
     this.showTypeLabel = true,

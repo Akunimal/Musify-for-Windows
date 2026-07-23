@@ -24,8 +24,8 @@ import 'dart:io';
 
 import 'package:audio_service/audio_service.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:musify/extensions/l10n.dart';
 import 'package:musify/main.dart';
 import 'package:musify/widgets/confirmation_dialog.dart';
@@ -169,7 +169,7 @@ class _QueueWidgetState extends State<QueueWidget> {
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(
-              FluentIcons.apps_list_24_regular,
+              LucideIcons.list,
               color: colorScheme.onPrimaryContainer,
               size: compact ? 20.0 : 22.0,
             ),
@@ -210,7 +210,7 @@ class _QueueWidgetState extends State<QueueWidget> {
           if (_queue.isNotEmpty)
             FilledButton.tonalIcon(
               onPressed: () => _confirmClearQueue(context),
-              icon: const Icon(FluentIcons.dismiss_24_regular, size: 18),
+              icon: const Icon(LucideIcons.x, size: 18),
               label: Text(context.l10n!.clear),
               style: FilledButton.styleFrom(
                 padding: const EdgeInsets.symmetric(
@@ -263,7 +263,7 @@ class _QueueWidgetState extends State<QueueWidget> {
                 shape: BoxShape.circle,
               ),
               child: Icon(
-                FluentIcons.music_note_1_24_regular,
+                LucideIcons.music,
                 color: colorScheme.onSurfaceVariant,
                 size: 40,
               ),
@@ -454,7 +454,7 @@ class QueueTile extends StatelessWidget {
                 const SizedBox(width: 8),
                 if (isCurrentSong) ...[
                   Icon(
-                    FluentIcons.music_note_2_24_regular,
+                    LucideIcons.music,
                     color: colorScheme.primary,
                     size: 16,
                   ),
@@ -468,7 +468,7 @@ class QueueTile extends StatelessWidget {
                       vertical: 14,
                     ),
                     child: Icon(
-                      FluentIcons.re_order_24_regular,
+                      LucideIcons.gripVertical,
                       color: colorScheme.onSurfaceVariant,
                     ),
                   ),
@@ -571,7 +571,7 @@ class _DismissBackground extends StatelessWidget {
         borderRadius: BorderRadius.circular(14),
       ),
       child: Icon(
-        FluentIcons.delete_24_regular,
+        LucideIcons.trash2,
         color: colorScheme.onErrorContainer,
         size: 22,
       ),

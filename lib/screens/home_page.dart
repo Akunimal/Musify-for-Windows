@@ -19,8 +19,8 @@
  *     please visit: https://github.com/gokadzev/Musify
  */
 
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:go_router/go_router.dart';
 import 'package:musify/constants/app_constants.dart';
 import 'package:musify/extensions/l10n.dart';
@@ -93,8 +93,8 @@ class _HomePageState extends State<HomePage> {
                     ? context.l10n!.sponsorProject
                     : context.l10n!.newAnnouncement;
                 final _icon = isSponsorshipAnnouncement
-                    ? FluentIcons.heart_24_filled
-                    : FluentIcons.megaphone_24_filled;
+                    ? LucideIcons.heart
+                    : LucideIcons.megaphone;
 
                 return AnnouncementBox(
                   message: _message,
@@ -160,8 +160,8 @@ class _HomePageState extends State<HomePage> {
         SectionHeader(
           title: sectionTitle,
           icon: showOnlyLiked
-              ? FluentIcons.heart_24_filled
-              : FluentIcons.list_24_filled,
+              ? LucideIcons.heart
+              : LucideIcons.list,
         ),
         ConstrainedBox(
           constraints: BoxConstraints(maxHeight: playlistHeight),
@@ -244,7 +244,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             SectionHeader(
               title: context.l10n!.timeMachine,
-              icon: FluentIcons.data_trending_24_filled,
+              icon: LucideIcons.trendingUp,
             ),
             ListeningRecapCard(
               periodLabel: periodLabel,
@@ -258,7 +258,7 @@ class _HomePageState extends State<HomePage> {
                 width: double.infinity,
                 child: FilledButton.tonalIcon(
                   onPressed: () => context.push('/home/timeMachine'),
-                  icon: const Icon(FluentIcons.arrow_right_24_regular),
+                  icon: const Icon(LucideIcons.arrowRight),
                   label: Text(context.l10n!.listeningStats),
                 ),
               ),
@@ -290,7 +290,7 @@ class _HomePageState extends State<HomePage> {
       children: [
         SectionHeader(
           title: recommendedTitle,
-          icon: FluentIcons.sparkle_24_filled,
+          icon: LucideIcons.sparkles,
           actionButton: IconButton(
             onPressed: () async {
               await audioHandler.playPlaylistSong(
@@ -299,7 +299,7 @@ class _HomePageState extends State<HomePage> {
               );
             },
             icon: Icon(
-              FluentIcons.play_circle_24_filled,
+              LucideIcons.play,
               color: Theme.of(context).colorScheme.primary,
               size: 30,
             ),

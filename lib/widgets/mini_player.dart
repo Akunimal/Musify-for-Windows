@@ -22,8 +22,8 @@
 import 'dart:math' as math;
 
 import 'package:audio_service/audio_service.dart';
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:musify/main.dart';
 import 'package:musify/models/full_player_state.dart';
 import 'package:musify/models/position_data.dart';
@@ -366,7 +366,7 @@ class _ControlsWidget extends StatelessWidget {
             splashColor: Colors.transparent,
             highlightColor: Colors.transparent,
             icon: Icon(
-              FluentIcons.next_24_filled,
+              LucideIcons.skipForward,
               color: colorScheme.onSurfaceVariant,
               size: 24,
             ),
@@ -431,10 +431,10 @@ class _CircularPlayButton extends StatelessWidget {
               highlightColor: Colors.transparent,
               icon: Icon(
                 isCompleted
-                    ? FluentIcons.arrow_counterclockwise_24_filled
+                    ? LucideIcons.refreshCcw
                     : (isPlaying
-                          ? FluentIcons.pause_16_filled
-                          : FluentIcons.play_16_filled),
+                          ? LucideIcons.pause
+                          : LucideIcons.play),
                 color: colorScheme.primary,
                 size: 22,
               ),

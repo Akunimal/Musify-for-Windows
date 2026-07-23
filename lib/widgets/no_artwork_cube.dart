@@ -19,13 +19,13 @@
  *     please visit: https://github.com/gokadzev/Musify
  */
 
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 class NullArtworkWidget extends StatelessWidget {
   const NullArtworkWidget({
     super.key,
-    this.icon = FluentIcons.music_note_1_24_regular,
+    this.icon = LucideIcons.music,
     this.size = 220,
     this.iconSize,
     this.title,
