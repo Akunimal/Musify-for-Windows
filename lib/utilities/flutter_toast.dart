@@ -20,7 +20,7 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:musify/utilities/app_icon.dart';
 import 'package:musify/main.dart';
 import 'package:musify/widgets/mini_player.dart';
 
@@ -42,7 +42,7 @@ void showToast(
       content: Row(
         children: [
           Icon(
-            icon ?? LucideIcons.checkCircle,
+            icon ?? AppIcon.checkCircle,
             color: colorScheme.onSecondaryContainer,
             size: 20,
           ),
@@ -75,7 +75,7 @@ void showToastWithButton(
       content: Row(
         children: [
           Icon(
-            icon ?? LucideIcons.info,
+            icon ?? AppIcon.info,
             color: colorScheme.onSecondaryContainer,
             size: 20,
           ),

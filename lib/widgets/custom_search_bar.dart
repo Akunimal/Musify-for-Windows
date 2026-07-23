@@ -20,7 +20,7 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:musify/utilities/app_icon.dart';
 
 class CustomSearchBar extends StatefulWidget {
   const CustomSearchBar({
@@ -81,7 +81,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
           ),
         ),
         leading: Icon(
-          LucideIcons.search,
+          AppIcon.search,
           color: colorScheme.onSurfaceVariant,
           size: 22,
         ),
@@ -102,7 +102,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
           if (widget.controller.text.isNotEmpty)
             IconButton(
               icon: Icon(
-                LucideIcons.x,
+                AppIcon.close,
                 color: colorScheme.onSurfaceVariant,
                 size: 20,
               ),

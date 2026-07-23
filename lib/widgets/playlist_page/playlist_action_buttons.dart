@@ -21,7 +21,7 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:musify/utilities/app_icon.dart';
 import 'package:musify/extensions/l10n.dart';
 
 class PlaylistActionButtons extends StatelessWidget {
@@ -48,7 +48,7 @@ class PlaylistActionButtons extends StatelessWidget {
         children: [
           Expanded(
             child: FilledButton.icon(
-              icon: const Icon(LucideIcons.play),
+              icon: const Icon(AppIcon.play),
               label: Text(context.l10n!.play),
               onPressed: onPlay,
             ),
@@ -60,7 +60,7 @@ class PlaylistActionButtons extends StatelessWidget {
                 backgroundColor: colorScheme.secondaryContainer,
                 foregroundColor: colorScheme.onSecondaryContainer,
               ),
-              icon: const Icon(LucideIcons.shuffle),
+              icon: const Icon(AppIcon.shuffle),
               label: Text(context.l10n!.shuffle),
               onPressed: songs.isEmpty ? null : onShuffle,
             ),

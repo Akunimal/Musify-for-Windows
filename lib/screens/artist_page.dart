@@ -20,7 +20,7 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:musify/utilities/app_icon.dart';
 import 'package:musify/main.dart' show logger;
 import 'package:musify/screens/playlist_page.dart';
 import 'package:musify/services/artist_service.dart';
@@ -144,7 +144,7 @@ class _ArtistPageState extends State<ArtistPage> {
           key: ValueKey('artist_${artist['ytid']}_${artist['catalogStatus']}'),
           playlistId: artist['ytid']?.toString() ?? widget.artistId,
           playlistData: artist,
-          cubeIcon: LucideIcons.user,
+          cubeIcon: AppIcon.person,
           isArtist: true,
         );
       },
@@ -157,7 +157,7 @@ class _ArtistPageState extends State<ArtistPage> {
       body: const CustomScrollView(
         slivers: [
           EmptyPlaylistState(
-            icon: LucideIcons.user,
+            icon: AppIcon.person,
             message: 'Not found',
           ),
           SliverMiniPlayerBottomSpace(),

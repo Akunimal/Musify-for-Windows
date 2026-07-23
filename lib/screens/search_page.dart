@@ -22,7 +22,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:musify/utilities/app_icon.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:musify/constants/app_constants.dart';
@@ -291,7 +291,7 @@ class _SearchPageState extends State<SearchPage> {
 
                                   return CustomBar(
                                     query,
-                                    LucideIcons.search,
+                                    AppIcon.search,
                                     borderRadius: borderRadius,
                                     onTap: () async {
                                       await _submitSearch(query.toString());
@@ -343,7 +343,7 @@ class _SearchPageState extends State<SearchPage> {
         SectionTitle(
           context.l10n!.artists,
           primaryColor,
-          icon: LucideIcons.user,
+          icon: AppIcon.person,
         ),
       );
 
@@ -377,7 +377,7 @@ class _SearchPageState extends State<SearchPage> {
         SectionTitle(
           context.l10n!.songs,
           primaryColor,
-          icon: LucideIcons.music,
+          icon: AppIcon.musicNote,
         ),
       );
 
@@ -406,7 +406,7 @@ class _SearchPageState extends State<SearchPage> {
         SectionTitle(
           context.l10n!.albums,
           primaryColor,
-          icon: LucideIcons.album,
+          icon: AppIcon.album,
         ),
       );
 
@@ -424,7 +424,7 @@ class _SearchPageState extends State<SearchPage> {
             playlist['title'],
             playlistId: playlist['ytid'],
             playlistArtwork: playlist['image'],
-            cubeIcon: LucideIcons.disc3,
+            cubeIcon: AppIcon.album,
             isAlbum: true,
             borderRadius: borderRadius,
           ),
@@ -438,7 +438,7 @@ class _SearchPageState extends State<SearchPage> {
         SectionTitle(
           context.l10n!.playlists,
           primaryColor,
-          icon: LucideIcons.list,
+          icon: AppIcon.list,
         ),
       );
 
@@ -459,7 +459,7 @@ class _SearchPageState extends State<SearchPage> {
               playlist['title'],
               playlistId: playlist['ytid'],
               playlistArtwork: playlist['image'],
-              cubeIcon: LucideIcons.list,
+              cubeIcon: AppIcon.list,
               borderRadius: borderRadius,
             ),
           ),
@@ -473,7 +473,7 @@ class _SearchPageState extends State<SearchPage> {
         SectionTitle(
           'Radio Stations',
           primaryColor,
-          icon: LucideIcons.volume2,
+          icon: AppIcon.volume,
         ),
       );
 

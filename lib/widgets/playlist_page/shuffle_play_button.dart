@@ -20,7 +20,7 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:musify/utilities/app_icon.dart';
 import 'package:musify/main.dart';
 
 class ShufflePlayButton extends StatelessWidget {
@@ -31,7 +31,7 @@ class ShufflePlayButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton.filledTonal(
-      icon: const Icon(LucideIcons.shuffle),
+      icon: const Icon(AppIcon.shuffle),
       iconSize: 24,
       tooltip: 'Shuffle play',
       onPressed: () async {

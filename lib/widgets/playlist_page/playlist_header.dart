@@ -20,7 +20,7 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:musify/utilities/app_icon.dart';
 import 'package:musify/extensions/l10n.dart';
 
 class PlaylistHeader extends StatelessWidget {
@@ -81,7 +81,7 @@ class PlaylistHeader extends StatelessWidget {
             children: [
               if (isArtist)
                 _Chip(
-                  icon: LucideIcons.user,
+                  icon: AppIcon.person,
                   label: context.l10n!.artist,
                   color: colorScheme.primaryContainer,
                   onColor: colorScheme.onPrimaryContainer,
@@ -90,8 +90,8 @@ class PlaylistHeader extends StatelessWidget {
               else if (isAlbum != null)
                 _Chip(
                   icon: isAlbum!
-                      ? LucideIcons.disc3
-                      : LucideIcons.list,
+                      ? AppIcon.album
+                      : AppIcon.list,
                   label: isAlbum!
                       ? context.l10n!.album
                       : context.l10n!.playlist,
@@ -100,7 +100,7 @@ class PlaylistHeader extends StatelessWidget {
                   theme: theme,
                 ),
               _Chip(
-                icon: LucideIcons.list,
+                icon: AppIcon.list,
                 label: '$songsLength ${context.l10n!.songs}',
                 color: colorScheme.secondaryContainer,
                 onColor: colorScheme.onSecondaryContainer,

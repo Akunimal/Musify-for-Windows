@@ -21,7 +21,7 @@
 
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:musify/utilities/app_icon.dart';
 import 'package:flutter_flip_card/flutter_flip_card.dart';
 import 'package:musify/main.dart';
 import 'package:musify/widgets/now_playing/bottom_actions_row.dart';
@@ -99,7 +99,7 @@ class _NowPlayingPageState extends State<NowPlayingPage> {
         children: [
           IconButton(
             iconSize: 26,
-            icon: const Icon(LucideIcons.chevronDown),
+            icon: const Icon(AppIcon.more),
             style: IconButton.styleFrom(
               backgroundColor: colorScheme.surfaceContainerHighest,
               shape: RoundedRectangleBorder(

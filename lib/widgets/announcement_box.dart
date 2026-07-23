@@ -20,7 +20,7 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:musify/utilities/app_icon.dart';
 import 'package:musify/extensions/l10n.dart';
 import 'package:musify/utilities/url_launcher.dart';
 
@@ -30,7 +30,7 @@ class AnnouncementBox extends StatelessWidget {
     required this.message,
     required this.url,
     this.onDismiss,
-    this.icon = LucideIcons.megaphone,
+    this.icon = AppIcon.megaphone,
   });
   final String message;
   final String url;
@@ -94,7 +94,7 @@ class AnnouncementBox extends StatelessWidget {
                           ),
                           const SizedBox(width: 4),
                           Icon(
-                            LucideIcons.arrowRight,
+                            AppIcon.forward,
                             size: 12,
                             color: colorScheme.onPrimaryContainer.withValues(
                               alpha: 0.7,
@@ -108,7 +108,7 @@ class AnnouncementBox extends StatelessWidget {
                 if (onDismiss != null)
                   IconButton(
                     icon: Icon(
-                      LucideIcons.xCircle,
+                      AppIcon.closeCircle,
                       color: colorScheme.onPrimaryContainer.withValues(
                         alpha: 0.7,
                       ),

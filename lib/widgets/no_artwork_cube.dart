@@ -20,12 +20,12 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:musify/utilities/app_icon.dart';
 
 class NullArtworkWidget extends StatelessWidget {
   const NullArtworkWidget({
     super.key,
-    this.icon = LucideIcons.music,
+    this.icon = AppIcon.musicNote,
     this.size = 220,
     this.iconSize,
     this.title,

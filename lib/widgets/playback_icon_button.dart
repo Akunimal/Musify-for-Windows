@@ -21,7 +21,7 @@
 
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:musify/utilities/app_icon.dart';
 import 'package:musify/extensions/l10n.dart';
 import 'package:musify/main.dart';
 
@@ -60,7 +60,7 @@ Widget buildPlaybackIconButton(
         semanticLabel = context.l10n!.loading;
       } else if (processingState == AudioProcessingState.completed) {
         iconWidget = Icon(
-          LucideIcons.refreshCcw,
+          AppIcon.syncIcon,
           color: iconColor,
           size: iconSize,
         );
@@ -69,8 +69,8 @@ Widget buildPlaybackIconButton(
       } else {
         iconWidget = Icon(
           isPlaying
-              ? LucideIcons.pause
-              : LucideIcons.play,
+              ? AppIcon.pause
+              : AppIcon.play,
           color: iconColor,
           size: iconSize,
         );

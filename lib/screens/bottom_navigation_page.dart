@@ -23,11 +23,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:musify/constants/app_constants.dart';
 import 'package:musify/extensions/l10n.dart';
 import 'package:musify/main.dart';
 import 'package:musify/services/settings_manager.dart';
+import 'package:musify/utilities/app_icon.dart';
 import 'package:musify/utilities/flutter_bottom_sheet.dart'
     show closeCurrentBottomSheet;
 import 'package:musify/widgets/mini_player.dart';
@@ -170,8 +170,8 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
   List<_NavigationItem> _getNavigationItems(bool isOfflineMode) {
     final items = <_NavigationItem>[
       _NavigationItem(
-        icon: LucideIcons.home,
-        selectedIcon: LucideIcons.home,
+        icon: AppIcon.home,
+        selectedIcon: AppIcon.home,
         label: context.l10n?.home ?? 'Home',
         route: '/home',
         shellIndex: 0,
@@ -182,8 +182,8 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
     if (!isOfflineMode) {
       items.add(
         _NavigationItem(
-          icon: LucideIcons.search,
-          selectedIcon: LucideIcons.search,
+          icon: AppIcon.search,
+          selectedIcon: AppIcon.search,
           label: context.l10n?.search ?? 'Search',
           route: '/search',
           shellIndex: 1,
@@ -193,15 +193,15 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
 
     items.addAll([
       _NavigationItem(
-        icon: LucideIcons.library,
-        selectedIcon: LucideIcons.library,
+        icon: AppIcon.library,
+        selectedIcon: AppIcon.library,
         label: context.l10n?.library ?? 'Library',
         route: '/library',
         shellIndex: 2,
       ),
       _NavigationItem(
-        icon: LucideIcons.settings,
-        selectedIcon: LucideIcons.settings,
+        icon: AppIcon.settings,
+        selectedIcon: AppIcon.settings,
         label: context.l10n?.settings ?? 'Settings',
         route: '/settings',
         shellIndex: 3,

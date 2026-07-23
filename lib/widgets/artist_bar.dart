@@ -20,7 +20,7 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:musify/utilities/app_icon.dart';
 import 'package:musify/extensions/l10n.dart';
 import 'package:musify/services/artist_service.dart';
 import 'package:musify/utilities/artwork_provider.dart';
@@ -84,7 +84,7 @@ class ArtistBar extends StatelessWidget {
                 ),
               ),
               Icon(
-                LucideIcons.chevronRight,
+                AppIcon.forward,
                 color: colorScheme.onSurfaceVariant,
                 size: 20,
               ),
@@ -129,7 +129,7 @@ class _ArtistArtwork extends StatelessWidget {
         shape: BoxShape.circle,
       ),
       child: Icon(
-        LucideIcons.user,
+        AppIcon.person,
         size: 26,
         color: colorScheme.onSecondaryContainer,
       ),

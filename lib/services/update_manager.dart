@@ -24,7 +24,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:musify/utilities/app_icon.dart';
 import 'package:http/http.dart' as http;
 import 'package:musify/constants/version.dart';
 import 'package:musify/extensions/l10n.dart';
@@ -90,7 +90,7 @@ Future<void> checkAppUpdates() async {
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
-                  LucideIcons.download,
+                  AppIcon.download,
                   color: colorScheme.onPrimaryContainer,
                   size: 32,
                 ),
@@ -159,7 +159,7 @@ Future<void> checkAppUpdates() async {
                   (url) => {launchURL(Uri.parse(url)), Navigator.pop(context)},
                 );
               },
-              icon: const Icon(LucideIcons.download),
+              icon: const Icon(AppIcon.download),
               label: Text(context.l10n!.download),
             ),
           ],
@@ -179,7 +179,7 @@ void showUpdateCheckDialog(BuildContext context) {
     builder: (context) {
       return AlertDialog(
         icon: Icon(
-          LucideIcons.refreshCw,
+          AppIcon.syncIcon,
           color: colorScheme.primary,
           size: 40,
         ),

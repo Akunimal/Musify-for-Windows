@@ -20,7 +20,7 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:musify/utilities/app_icon.dart';
 import 'package:musify/extensions/l10n.dart';
 
 class OfflineSearchPlaceholder extends StatelessWidget {
@@ -35,7 +35,7 @@ class OfflineSearchPlaceholder extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              LucideIcons.cloudOff,
+              AppIcon.cloudOff,
               size: 64,
               color: Theme.of(
                 context,

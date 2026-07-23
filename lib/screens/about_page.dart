@@ -20,7 +20,7 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:musify/utilities/app_icon.dart';
 import 'package:musify/constants/app_constants.dart';
 import 'package:musify/constants/version.dart';
 import 'package:musify/extensions/l10n.dart';
@@ -140,7 +140,7 @@ class AboutPage extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         _SocialButton(
-                          icon: LucideIcons.code,
+                          icon: AppIcon.code,
                           tooltip: 'Github',
                           onPressed: () {
                             launchURL(Uri.parse('https://github.com/gokadzev'));
@@ -148,7 +148,7 @@ class AboutPage extends StatelessWidget {
                         ),
                         const SizedBox(width: 8),
                         _SocialButton(
-                          icon: LucideIcons.globe,
+                          icon: AppIcon.globe,
                           tooltip: 'Website',
                           onPressed: () {
                             launchURL(Uri.parse('https://gokadzev.github.io'));

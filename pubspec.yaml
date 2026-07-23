@@ -18,9 +18,6 @@ dependencies:
   cached_network_image: ^3.4.1
   dynamic_color: ^1.8.1
   file_picker: ^11.0.2
-  fluentui_system_icons: ^1.1.273
-  font_awesome_flutter: ^11.0.0
-  lucide_icons_flutter: ^3.1.15
   flutter:
     sdk: flutter
   flutter_flip_card: ^0.0.6

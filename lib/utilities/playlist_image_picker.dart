@@ -22,7 +22,7 @@
 import 'dart:convert';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:musify/utilities/app_icon.dart';
 import 'package:musify/extensions/l10n.dart';
 
 Future<String?> pickImage() async {
@@ -92,7 +92,7 @@ Widget buildImagePreview({
       height: height,
       fit: BoxFit.cover,
       errorBuilder: (context, _, __) => Icon(
-        LucideIcons.imageOff,
+        AppIcon.imageOff,
         color: Theme.of(context).colorScheme.onSurfaceVariant,
       ),
     );
@@ -133,8 +133,8 @@ Widget buildImagePickerRow(
         padding: const EdgeInsets.only(left: 4),
         child: Icon(
           isImagePicked
-              ? LucideIcons.checkCircle
-              : LucideIcons.imagePlus,
+              ? AppIcon.checkCircle
+              : AppIcon.imagePlus,
           size: 20,
         ),
       ),

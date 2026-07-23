@@ -22,7 +22,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:musify/utilities/app_icon.dart';
 import 'package:musify/constants/app_constants.dart';
 import 'package:musify/extensions/l10n.dart';
 import 'package:musify/main.dart' show logger;
@@ -87,7 +87,7 @@ class _LibraryPageState extends State<LibraryPage> {
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
-                      LucideIcons.cloudOff,
+                      AppIcon.cloudOff,
                       size: 40,
                       color: colorScheme.onPrimaryContainer,
                     ),
@@ -167,7 +167,7 @@ class _LibraryPageState extends State<LibraryPage> {
       SliverToBoxAdapter(
         child: SectionHeader(
           title: context.l10n!.pinnedPlaylists,
-          icon: LucideIcons.pin,
+          icon: AppIcon.pin,
         ),
       ),
       _buildSliverPlaylistList(items),
@@ -218,7 +218,7 @@ class _LibraryPageState extends State<LibraryPage> {
             children: [
               SectionHeader(
                 title: context.l10n!.customPlaylists,
-                icon: LucideIcons.library,
+                icon: AppIcon.library,
                 actionButton: isOffline
                     ? null
                     : Row(
@@ -228,7 +228,7 @@ class _LibraryPageState extends State<LibraryPage> {
                             padding: const EdgeInsets.symmetric(horizontal: 2),
                             onPressed: _showCreateFolderDialog,
                             icon: Icon(
-                              LucideIcons.folderPlus,
+                              AppIcon.folderPlus,
                               color: colorScheme.onSurfaceVariant,
                             ),
                             tooltip: context.l10n!.createFolder,
@@ -237,7 +237,7 @@ class _LibraryPageState extends State<LibraryPage> {
                             padding: const EdgeInsets.symmetric(horizontal: 2),
                             onPressed: () => showCreatePlaylistDialog(context),
                             icon: Icon(
-                              LucideIcons.plus,
+                              AppIcon.add,
                               color: colorScheme.onSurfaceVariant,
                             ),
                           ),
@@ -249,7 +249,7 @@ class _LibraryPageState extends State<LibraryPage> {
                   context.l10n!.recentlyPlayed,
                   onPressed: () =>
                       NavigationManager.router.go('/library/userSongs/recents'),
-                  cubeIcon: LucideIcons.history,
+                  cubeIcon: AppIcon.history,
                   borderRadius: commonCustomBarRadiusFirst,
                   showBuildActions: false,
                 ),
@@ -257,21 +257,21 @@ class _LibraryPageState extends State<LibraryPage> {
                   context.l10n!.likedSongs,
                   onPressed: () =>
                       NavigationManager.router.go('/library/userSongs/liked'),
-                  cubeIcon: LucideIcons.heart,
+                  cubeIcon: AppIcon.heart,
                   showBuildActions: false,
                 ),
                 PlaylistBar(
                   context.l10n!.offlineSongs,
                   onPressed: () =>
                       NavigationManager.router.go('/library/userSongs/offline'),
-                  cubeIcon: LucideIcons.cloudOff,
+                  cubeIcon: AppIcon.cloudOff,
                   showBuildActions: false,
                 ),
                 PlaylistBar(
                   context.l10n!.radioStations,
                   onPressed: () =>
                       NavigationManager.router.go('/library/radioStations'),
-                  cubeIcon: LucideIcons.volume2,
+                  cubeIcon: AppIcon.volume,
                   borderRadius: hasCustomPlaylists || hasFolders
                       ? BorderRadius.zero
                       : commonCustomBarRadiusLast,
@@ -301,7 +301,7 @@ class _LibraryPageState extends State<LibraryPage> {
           SliverToBoxAdapter(
             child: SectionHeader(
               title: context.l10n!.offlinePlaylists,
-              icon: LucideIcons.cloudOff,
+              icon: AppIcon.cloudOff,
             ),
           ),
         )
@@ -317,12 +317,12 @@ class _LibraryPageState extends State<LibraryPage> {
             children: [
               SectionHeader(
                 title: context.l10n!.addedPlaylists,
-                icon: LucideIcons.plusCircle,
+                icon: AppIcon.addCircle,
                 actionButton: IconButton(
                   padding: const EdgeInsets.only(right: 5),
                   onPressed: () => showCreatePlaylistDialog(context),
                   icon: Icon(
-                    LucideIcons.plus,
+                    AppIcon.add,
                     color: colorScheme.onSurfaceVariant,
                   ),
                 ),
@@ -357,7 +357,7 @@ class _LibraryPageState extends State<LibraryPage> {
       SliverToBoxAdapter(
         child: SectionHeader(
           title: context.l10n!.likedPlaylists,
-          icon: LucideIcons.heart,
+          icon: AppIcon.heart,
         ),
       ),
       _buildSliverPlaylistList(likedPlaylists),
@@ -371,7 +371,7 @@ class _LibraryPageState extends State<LibraryPage> {
       SliverToBoxAdapter(
         child: SectionHeader(
           title: context.l10n!.artist,
-          icon: LucideIcons.user,
+          icon: AppIcon.person,
         ),
       ),
       _buildSliverPlaylistList(likedArtists),
@@ -403,8 +403,8 @@ class _LibraryPageState extends State<LibraryPage> {
             playlistId: playlist['ytid'],
             playlistArtwork: playlist['image'],
             cubeIcon: isArtist
-                ? LucideIcons.user
-                : LucideIcons.list,
+                ? AppIcon.person
+                : AppIcon.list,
             isAlbum: isArtist ? false : playlist['isAlbum'],
             playlistData:
                 isArtist ||
@@ -543,7 +543,7 @@ class _LibraryPageState extends State<LibraryPage> {
             shape: BoxShape.circle,
           ),
           child: Icon(
-            LucideIcons.folderPlus,
+            AppIcon.folderPlus,
             color: colorScheme.primary,
             size: 32,
           ),
@@ -560,7 +560,7 @@ class _LibraryPageState extends State<LibraryPage> {
             labelText: context.l10n!.folderName,
             hintText: context.l10n!.newFolder,
             prefixIcon: Icon(
-              LucideIcons.folder,
+              AppIcon.folder,
               color: colorScheme.onSurfaceVariant,
             ),
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
@@ -593,7 +593,7 @@ class _LibraryPageState extends State<LibraryPage> {
               }
               Navigator.pop(context);
             },
-            icon: const Icon(LucideIcons.plus),
+            icon: const Icon(AppIcon.add),
             label: Text(context.l10n!.create),
           ),
         ],

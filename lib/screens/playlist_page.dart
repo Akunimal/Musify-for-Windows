@@ -22,7 +22,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:musify/utilities/app_icon.dart';
 import 'package:flutter/services.dart';
 import 'package:musify/constants/app_constants.dart';
 import 'package:musify/extensions/l10n.dart';
@@ -58,7 +58,7 @@ class PlaylistPage extends StatefulWidget {
     super.key,
     this.playlistId,
     this.playlistData,
-    this.cubeIcon = LucideIcons.list,
+    this.cubeIcon = AppIcon.list,
     this.isArtist = false,
   });
 
@@ -197,7 +197,7 @@ class _PlaylistPageState extends State<PlaylistPage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(LucideIcons.arrowLeft),
+          icon: const Icon(AppIcon.backward),
           onPressed: () =>
               Navigator.pop(context, widget.playlistData == _playlist),
           tooltip: context.l10n!.back,
@@ -308,7 +308,7 @@ class _PlaylistPageState extends State<PlaylistPage> {
               children: [
                 Expanded(
                   child: FilledButton.icon(
-                    icon: const Icon(LucideIcons.play),
+                    icon: const Icon(AppIcon.play),
                     label: Text(context.l10n!.play),
                     onPressed: () => audioHandler.playPlaylistSong(
                       playlist: _playlist,
@@ -323,7 +323,7 @@ class _PlaylistPageState extends State<PlaylistPage> {
                       backgroundColor: colorScheme.secondaryContainer,
                       foregroundColor: colorScheme.onSecondaryContainer,
                     ),
-                    icon: const Icon(LucideIcons.shuffle),
+                    icon: const Icon(AppIcon.shuffle),
                     label: Text(context.l10n!.shuffle),
                     onPressed: () async {
                       final songs = _playlist['list'] as List? ?? [];
@@ -397,7 +397,7 @@ class _PlaylistPageState extends State<PlaylistPage> {
 
   Widget _buildShareButton() {
     return IconButton.filledTonal(
-      icon: const Icon(LucideIcons.share2),
+      icon: const Icon(AppIcon.share),
       iconSize: 24,
       onPressed: () async {
         try {
@@ -429,8 +429,8 @@ class _PlaylistPageState extends State<PlaylistPage> {
       valueListenable: playlistLikeStatus,
       builder: (_, value, __) {
         final icon = value
-            ? LucideIcons.heart
-            : LucideIcons.heart;
+            ? AppIcon.heart
+            : AppIcon.heart;
 
         return value
             ? IconButton.filled(
@@ -469,7 +469,7 @@ class _PlaylistPageState extends State<PlaylistPage> {
 
   Widget _buildSyncButton() {
     return IconButton.filledTonal(
-      icon: const Icon(LucideIcons.refreshCw),
+      icon: const Icon(AppIcon.syncIcon),
       iconSize: 24,
       onPressed: _handleSyncPlaylist,
       tooltip: context.l10n!.update,
@@ -478,7 +478,7 @@ class _PlaylistPageState extends State<PlaylistPage> {
 
   Widget _buildAddToPlaylistButton() {
     return IconButton.filledTonal(
-      icon: const Icon(LucideIcons.album),
+      icon: const Icon(AppIcon.album),
       iconSize: 24,
       onPressed: _handleAddFullPlaylistToPlaylist,
       tooltip: context.l10n!.addToPlaylist,
@@ -500,7 +500,7 @@ class _PlaylistPageState extends State<PlaylistPage> {
 
   Widget _buildEditButton() {
     return IconButton.filledTonal(
-      icon: const Icon(LucideIcons.pencil),
+      icon: const Icon(AppIcon.edit),
       iconSize: 24,
       onPressed: () async {
         final result = await showDialog<Map?>(
@@ -598,7 +598,7 @@ class _PlaylistPageState extends State<PlaylistPage> {
             if (playlistOfflineStatus) {
               return IconButton.filled(
                 icon: Icon(
-                  LucideIcons.downloadCloud,
+                  AppIcon.downloadCloud,
                   color: Theme.of(context).colorScheme.onPrimary,
                 ),
                 iconSize: 24,
@@ -638,7 +638,7 @@ class _PlaylistPageState extends State<PlaylistPage> {
                         if (!progress.isCancelled)
                           IconButton(
                             icon: const Icon(
-                              LucideIcons.x,
+                              AppIcon.close,
                               size: 16,
                             ),
                             onPressed: () => offlinePlaylistService
@@ -655,7 +655,7 @@ class _PlaylistPageState extends State<PlaylistPage> {
                 }
 
                 return IconButton.filledTonal(
-                  icon: const Icon(LucideIcons.download),
+                  icon: const Icon(AppIcon.download),
                   iconSize: 24,
                   onPressed: () => offlinePlaylistService.downloadPlaylist(
                     context,

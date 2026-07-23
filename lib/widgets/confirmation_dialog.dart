@@ -20,7 +20,7 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:musify/utilities/app_icon.dart';
 import 'package:musify/extensions/l10n.dart';
 
 class ConfirmationDialog extends StatelessWidget {
@@ -45,8 +45,8 @@ class ConfirmationDialog extends StatelessWidget {
     return AlertDialog(
       icon: Icon(
         isDangerous
-            ? LucideIcons.alertTriangle
-            : LucideIcons.helpCircle,
+            ? AppIcon.warning
+            : AppIcon.help,
         color: isDangerous ? colorScheme.error : colorScheme.primary,
         size: 32,
       ),

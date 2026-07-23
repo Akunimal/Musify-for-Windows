@@ -21,7 +21,7 @@
 
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:musify/utilities/app_icon.dart';
 import 'package:flutter_flip_card/flutter_flip_card.dart';
 import 'package:musify/extensions/l10n.dart';
 import 'package:musify/services/common_services.dart';
@@ -107,7 +107,7 @@ class NowPlayingArtwork extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  LucideIcons.quote,
+                  AppIcon.quote,
                   size: 48,
                   color: colorScheme.onSecondaryContainer.withValues(
                     alpha: 0.5,
@@ -131,7 +131,7 @@ class NowPlayingArtwork extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  LucideIcons.quote,
+                  AppIcon.quote,
                   size: 48,
                   color: colorScheme.onSecondaryContainer.withValues(
                     alpha: 0.5,

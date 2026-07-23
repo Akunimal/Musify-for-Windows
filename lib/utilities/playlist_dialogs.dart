@@ -20,7 +20,7 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:musify/utilities/app_icon.dart';
 import 'package:musify/constants/app_constants.dart';
 import 'package:musify/extensions/l10n.dart';
 import 'package:musify/services/playlists_manager.dart';
@@ -72,7 +72,7 @@ void showCreatePlaylistDialog(
                 shape: BoxShape.circle,
               ),
               child: Icon(
-                LucideIcons.plus,
+                AppIcon.add,
                 color: colorScheme.primary,
                 size: 32,
               ),
@@ -130,7 +130,7 @@ void showCreatePlaylistDialog(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Icon(
-                                      LucideIcons.globe,
+                                      AppIcon.globe,
                                       size: 20,
                                       color: isYouTubeMode
                                           ? colorScheme.onPrimaryContainer
@@ -179,7 +179,7 @@ void showCreatePlaylistDialog(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Icon(
-                                      LucideIcons.user,
+                                      AppIcon.person,
                                       size: 20,
                                       color: !isYouTubeMode
                                           ? colorScheme.onPrimaryContainer
@@ -211,7 +211,7 @@ void showCreatePlaylistDialog(
                       decoration: InputDecoration(
                         labelText: context.l10n!.youtubePlaylistLinkOrId,
                         prefixIcon: Icon(
-                          LucideIcons.link,
+                          AppIcon.link,
                           color: colorScheme.onSurfaceVariant,
                         ),
                         border: OutlineInputBorder(
@@ -229,7 +229,7 @@ void showCreatePlaylistDialog(
                       decoration: InputDecoration(
                         labelText: context.l10n!.customPlaylistName,
                         prefixIcon: Icon(
-                          LucideIcons.type,
+                          AppIcon.textField,
                           color: colorScheme.onSurfaceVariant,
                         ),
                         border: OutlineInputBorder(
@@ -249,7 +249,7 @@ void showCreatePlaylistDialog(
                         decoration: InputDecoration(
                           labelText: context.l10n!.customPlaylistImgUrl,
                           prefixIcon: Icon(
-                            LucideIcons.image,
+                            AppIcon.image,
                             color: colorScheme.onSurfaceVariant,
                           ),
                           border: OutlineInputBorder(
@@ -333,7 +333,7 @@ void showCreatePlaylistDialog(
                     );
                   }
                 },
-                icon: const Icon(LucideIcons.plus),
+                icon: const Icon(AppIcon.add),
                 label: Text(context.l10n!.add),
               ),
             ],
@@ -362,7 +362,7 @@ void showAddToPlaylistDialog(
             shape: BoxShape.circle,
           ),
           child: Icon(
-            LucideIcons.album,
+            AppIcon.album,
             color: colorScheme.secondary,
             size: 28,
           ),
@@ -444,7 +444,7 @@ void showAddToPlaylistDialog(
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Icon(
-                            LucideIcons.folder,
+                            AppIcon.folder,
                             color: colorScheme.secondary,
                             size: 22,
                           ),
@@ -465,7 +465,7 @@ void showAddToPlaylistDialog(
                                 right: 16,
                               ),
                               child: DialogItem(
-                                icon: LucideIcons.list,
+                                icon: AppIcon.list,
                                 iconColor: colorScheme.tertiary,
                                 iconBgColor: colorScheme.tertiaryContainer,
                                 label: p['title'] ?? '',
@@ -505,7 +505,7 @@ void showAddToPlaylistDialog(
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 6),
                     child: DialogItem(
-                      icon: LucideIcons.list,
+                      icon: AppIcon.list,
                       iconColor: colorScheme.tertiary,
                       iconBgColor: colorScheme.tertiaryContainer,
                       label: playlist['title'] ?? '',
@@ -553,7 +553,7 @@ void showAddToPlaylistDialog(
                 songsToAdd: songs,
               );
             },
-            icon: const Icon(LucideIcons.plus, size: 18),
+            icon: const Icon(AppIcon.add, size: 18),
             label: Text(context.l10n!.addPlaylist),
           ),
         ],

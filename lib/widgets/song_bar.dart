@@ -25,7 +25,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:musify/utilities/app_icon.dart';
 import 'package:go_router/go_router.dart';
 import 'package:musify/extensions/l10n.dart';
 import 'package:musify/main.dart';
@@ -68,21 +68,21 @@ List<PopupMenuEntry<String>> _buildSongMenuItems({
     if (showQueueActions)
       buildPopupMenuItem<String>(
         value: 'play_next',
-        icon: LucideIcons.listMusic,
+        icon: AppIcon.listMusic,
         label: playNextText,
         colorScheme: colorScheme,
       ),
     if (showGoToArtist)
       buildPopupMenuItem<String>(
         value: 'go_to_artist',
-        icon: LucideIcons.user,
+        icon: AppIcon.person,
         label: l10n.goToArtist,
         colorScheme: colorScheme,
       ),
     if (showQueueActions)
       buildPopupMenuItem<String>(
         value: 'add_to_queue',
-        icon: LucideIcons.listPlus,
+        icon: AppIcon.listPlus,
         label: addToQueueText,
         colorScheme: colorScheme,
       ),
@@ -111,28 +111,28 @@ List<PopupMenuEntry<String>> _buildSongMenuItems({
     if (canRename)
       buildPopupMenuItem<String>(
         value: 'rename',
-        icon: LucideIcons.pencil,
+        icon: AppIcon.edit,
         label: renameSongText,
         colorScheme: colorScheme,
       ),
     if (canRemove)
       buildPopupMenuItem<String>(
         value: 'remove',
-        icon: LucideIcons.trash2,
+        icon: AppIcon.delete,
         label: removeFromPlaylistText,
         colorScheme: colorScheme,
       ),
     if (!offlineMode.value)
       buildPopupMenuItem<String>(
         value: 'add_to_playlist',
-        icon: LucideIcons.album,
+        icon: AppIcon.album,
         label: addToPlaylistText,
         colorScheme: colorScheme,
       ),
     if (isRecentSong)
       buildPopupMenuItem<String>(
         value: 'remove_from_recents',
-        icon: LucideIcons.trash2,
+        icon: AppIcon.delete,
         label: removeFromRecentlyPlayedText,
         colorScheme: colorScheme,
       ),
@@ -146,8 +146,8 @@ List<PopupMenuEntry<String>> _buildSongMenuItems({
               children: [
                 Icon(
                   value
-                      ? LucideIcons.cloudOff
-                      : LucideIcons.cloudDownload,
+                      ? AppIcon.cloudOff
+                      : AppIcon.cloudDownload,
                   color: colorScheme.primary,
                 ),
                 const SizedBox(width: 8),
@@ -317,8 +317,8 @@ class SongBar extends StatefulWidget {
 
 class _SongBarState extends State<SongBar> {
   static const likeStatusToIconMapper = {
-    true: LucideIcons.heartOff,
-    false: LucideIcons.heart,
+    true: AppIcon.heartOff,
+    false: AppIcon.heart,
   };
 
   late final ValueNotifier<bool> _songLikeStatus;
@@ -619,7 +619,7 @@ class _SongInfo extends StatelessWidget {
                 ),
               ),
               Icon(
-                LucideIcons.headphones,
+                AppIcon.volume,
                 size: 12,
                 color: colorScheme.primary,
               ),
@@ -679,7 +679,7 @@ class _OfflineArtwork extends StatelessWidget {
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
-                  LucideIcons.cloudOff,
+                  AppIcon.cloudOff,
                   size: 11,
                   color: colorScheme.onTertiaryContainer,
                 ),
@@ -753,7 +753,7 @@ class _OnlineArtwork extends StatelessWidget {
                           shape: BoxShape.circle,
                         ),
                         child: Icon(
-                          LucideIcons.cloudOff,
+                          AppIcon.cloudOff,
                           size: 11,
                           color: colorScheme.onTertiaryContainer,
                         ),
@@ -771,7 +771,7 @@ class _OnlineArtwork extends StatelessWidget {
                           shape: BoxShape.circle,
                         ),
                         child: Icon(
-                          LucideIcons.heart,
+                          AppIcon.heart,
                           size: 11,
                           color: colorScheme.onPrimaryContainer,
                         ),

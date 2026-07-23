@@ -20,7 +20,7 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:musify/utilities/app_icon.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:musify/constants/app_constants.dart';
 import 'package:musify/extensions/l10n.dart';
@@ -199,7 +199,7 @@ class _EqualizerPageState extends State<EqualizerPage> {
         title: Text(context.l10n!.equalizer),
         actions: [
           IconButton(
-            icon: const Icon(LucideIcons.refreshCw),
+            icon: const Icon(AppIcon.syncIcon),
             tooltip: context.l10n!.equalizerResetBands,
             onPressed: () async {
               await audioHandler.resetEqualizerBands();

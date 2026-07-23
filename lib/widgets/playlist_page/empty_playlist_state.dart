@@ -20,12 +20,12 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:musify/utilities/app_icon.dart';
 
 class EmptyPlaylistState extends StatelessWidget {
   const EmptyPlaylistState({
     super.key,
-    this.icon = LucideIcons.list,
+    this.icon = AppIcon.list,
     required this.message,
   });
 

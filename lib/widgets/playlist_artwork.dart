@@ -20,7 +20,7 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:musify/utilities/app_icon.dart';
 import 'package:musify/utilities/artwork_provider.dart';
 import 'package:musify/widgets/no_artwork_cube.dart';
 
@@ -29,7 +29,7 @@ class PlaylistArtwork extends StatelessWidget {
     super.key,
     required this.playlistArtwork,
     this.playlistTitle,
-    this.cubeIcon = LucideIcons.list,
+    this.cubeIcon = AppIcon.list,
     this.iconSize,
     this.size = 220,
   });

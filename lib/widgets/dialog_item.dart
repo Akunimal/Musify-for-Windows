@@ -20,7 +20,7 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:musify/utilities/app_icon.dart';
 import 'package:musify/constants/app_constants.dart';
 
 class DialogItem extends StatelessWidget {
@@ -91,7 +91,7 @@ class DialogItem extends StatelessWidget {
                 ),
                 if (showChevron)
                   Icon(
-                    LucideIcons.chevronRight,
+                    AppIcon.forward,
                     color: colorScheme.onSurfaceVariant,
                     size: 18,
                   ),

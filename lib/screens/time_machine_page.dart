@@ -23,7 +23,7 @@ import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:musify/utilities/app_icon.dart';
 import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
 import 'package:musify/constants/app_constants.dart';
@@ -101,7 +101,7 @@ class _TimeMachinePageState extends State<TimeMachinePage> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
-              LucideIcons.clock,
+              AppIcon.clock,
               size: 42,
               color: colorScheme.primary,
             ),
@@ -449,7 +449,7 @@ class _PeriodSection extends StatelessWidget {
                   tooltip: context.l10n!.shareRecap,
                   onPressed: onShare,
                   icon: Icon(
-                    LucideIcons.share2,
+                    AppIcon.share,
                     color: theme.colorScheme.primary,
                   ),
                 ),
@@ -477,7 +477,7 @@ class _ViewMoreButton extends StatelessWidget {
         width: double.infinity,
         child: FilledButton.tonalIcon(
           onPressed: onPressed,
-          icon: const Icon(LucideIcons.moreHorizontal),
+          icon: const Icon(AppIcon.more),
           label: Text(context.l10n!.tapToView),
         ),
       ),

@@ -20,7 +20,7 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:musify/utilities/app_icon.dart';
 
 class OverflowMenuButton<T> extends StatelessWidget {
   const OverflowMenuButton({
@@ -51,7 +51,7 @@ class OverflowMenuButton<T> extends StatelessWidget {
       onSelected: onSelected,
       itemBuilder: itemBuilder,
       icon: Icon(
-        icon ?? LucideIcons.moreVertical,
+        icon ?? AppIcon.more,
         size: iconSize,
         color: color ?? colorScheme.onSurfaceVariant,
       ),

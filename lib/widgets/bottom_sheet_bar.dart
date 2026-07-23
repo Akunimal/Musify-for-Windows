@@ -20,7 +20,7 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:musify/utilities/app_icon.dart';
 
 class BottomSheetBar extends StatelessWidget {
   const BottomSheetBar(
@@ -90,7 +90,7 @@ class BottomSheetBar extends StatelessWidget {
                 if (isSelected) ...[
                   const SizedBox(width: 8),
                   Icon(
-                    LucideIcons.checkCircle,
+                    AppIcon.checkCircle,
                     color: colorScheme.onSecondaryContainer,
                     size: 22,
                   ),

@@ -23,7 +23,7 @@ import 'dart:async';
 
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:musify/utilities/app_icon.dart';
 import 'package:go_router/go_router.dart';
 import 'package:musify/extensions/l10n.dart';
 import 'package:musify/main.dart';
@@ -328,8 +328,8 @@ class PlayerControlButtons extends StatelessWidget {
         return IconButton(
           icon: Icon(
             value
-                ? LucideIcons.shuffle
-                : LucideIcons.shuffle,
+                ? AppIcon.shuffle
+                : AppIcon.shuffle,
             color: value ? colorScheme.onPrimary : colorScheme.onSurfaceVariant,
           ),
           tooltip: context.l10n!.shuffle,
@@ -375,10 +375,10 @@ class PlayerControlButtons extends StatelessWidget {
             return IconButton(
               icon: Icon(
                 repeatMode == AudioServiceRepeatMode.one
-                    ? LucideIcons.repeat1
+                    ? AppIcon.repeatAll1
                     : isActive
-                    ? LucideIcons.repeat
-                    : LucideIcons.repeat,
+                    ? AppIcon.repeatAll
+                    : AppIcon.repeatAll,
                 color: isActive
                     ? colorScheme.onPrimary
                     : colorScheme.onSurfaceVariant,
@@ -450,7 +450,7 @@ class _PlaybackControlsRow extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   _PlaybackControlButton(
-                    icon: LucideIcons.skipBack,
+                    icon: AppIcon.previous,
                     isEnabled:
                         audioHandler.hasPrevious ||
                         repeatMode != AudioServiceRepeatMode.none,
@@ -471,7 +471,7 @@ class _PlaybackControlsRow extends StatelessWidget {
                   ),
                   SizedBox(width: buttonSpacing),
                   _PlaybackControlButton(
-                    icon: LucideIcons.skipForward,
+                    icon: AppIcon.next,
                     isEnabled:
                         audioHandler.hasNext ||
                         repeatMode == AudioServiceRepeatMode.one,

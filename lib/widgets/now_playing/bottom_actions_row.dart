@@ -21,7 +21,7 @@
 
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:musify/utilities/app_icon.dart';
 import 'package:musify/extensions/l10n.dart';
 import 'package:musify/main.dart';
 import 'package:musify/services/common_services.dart';
@@ -135,8 +135,8 @@ class _BottomActionsRowState extends State<BottomActionsRow> {
           if (!isRadioStation)
             _buildActionButton(
               context: context,
-              icon: LucideIcons.cloudDownload,
-              activeIcon: LucideIcons.cloudOff,
+              icon: AppIcon.cloudDownload,
+              activeIcon: AppIcon.cloudOff,
               colorScheme: colorScheme,
               size: responsiveIconSize,
               statusNotifier: _songOfflineStatus,
@@ -153,7 +153,7 @@ class _BottomActionsRowState extends State<BottomActionsRow> {
           if (!offlineMode.value && !isRadioStation)
             _buildSimpleActionButton(
               context: context,
-              icon: LucideIcons.album,
+              icon: AppIcon.album,
               colorScheme: colorScheme,
               size: responsiveIconSize,
               onPressed: () => showAddToPlaylistDialog(
@@ -165,7 +165,7 @@ class _BottomActionsRowState extends State<BottomActionsRow> {
           if (queue.isNotEmpty && !isRadioStation && !widget.isLargeScreen)
             _buildSimpleActionButton(
               context: context,
-              icon: LucideIcons.list,
+              icon: AppIcon.list,
               colorScheme: colorScheme,
               size: responsiveIconSize,
               onPressed: () => showCustomBottomSheet(
@@ -178,7 +178,7 @@ class _BottomActionsRowState extends State<BottomActionsRow> {
             if (!isRadioStation)
               _buildSimpleActionButton(
                 context: context,
-                icon: LucideIcons.quote,
+                icon: AppIcon.quote,
                 colorScheme: colorScheme,
                 size: responsiveIconSize,
                 onPressed: widget.lyricsController.flipcard,
@@ -186,8 +186,8 @@ class _BottomActionsRowState extends State<BottomActionsRow> {
               ),
             _buildActionButton(
               context: context,
-              icon: LucideIcons.heart,
-              activeIcon: LucideIcons.heart,
+              icon: AppIcon.heart,
+              activeIcon: AppIcon.heart,
               colorScheme: colorScheme,
               size: responsiveIconSize,
               statusNotifier: _songLikeStatus,
@@ -308,8 +308,8 @@ class _BottomActionsRowState extends State<BottomActionsRow> {
         return IconButton(
           icon: Icon(
             isActive
-                ? LucideIcons.timer
-                : LucideIcons.timer,
+                ? AppIcon.timer
+                : AppIcon.timer,
             color: isActive
                 ? colorScheme.primary
                 : colorScheme.onSurfaceVariant,
@@ -384,7 +384,7 @@ void _showSleepTimerDialog(BuildContext context) {
             title: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(LucideIcons.timer, color: colorScheme.primary),
+                Icon(AppIcon.timer, color: colorScheme.primary),
                 const SizedBox(width: 12),
                 Text(
                   context.l10n!.sleepTimer,
@@ -551,7 +551,7 @@ Widget _buildTimeSelector({
           children: [
             IconButton(
               icon: Icon(
-                LucideIcons.minus,
+                AppIcon.more,
                 color: colorScheme.onSurfaceVariant,
               ),
               style: IconButton.styleFrom(
@@ -576,7 +576,7 @@ Widget _buildTimeSelector({
             ),
             IconButton(
               icon: Icon(
-                LucideIcons.plus,
+                AppIcon.add,
                 color: colorScheme.onSurfaceVariant,
               ),
               style: IconButton.styleFrom(
