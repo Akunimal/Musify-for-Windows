@@ -626,7 +626,7 @@ class SettingsPage extends StatelessWidget {
             crossAxisSpacing: 12,
           ),
           shrinkWrap: true,
-          physics: const BouncingScrollPhysics(),
+          physics: const ClampingScrollPhysics(),
           itemCount: availableColors.length,
           itemBuilder: (context, index) {
             final color = availableColors[index];

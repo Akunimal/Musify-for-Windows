@@ -307,7 +307,7 @@ class _HomePageState extends State<HomePage> {
         ),
         ListView.builder(
           shrinkWrap: true,
-          physics: const BouncingScrollPhysics(),
+          physics: const ClampingScrollPhysics(),
           itemCount: data.length,
           padding: commonListViewBottomPadding,
           itemBuilder: (context, index) {

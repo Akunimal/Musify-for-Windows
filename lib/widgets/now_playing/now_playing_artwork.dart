@@ -152,7 +152,7 @@ class NowPlayingArtwork extends StatelessWidget {
           ),
           builder: (context, lyrics) => SingleChildScrollView(
             padding: const EdgeInsets.all(24),
-            physics: const BouncingScrollPhysics(),
+            physics: const ClampingScrollPhysics(),
             child: Text(
               lyrics ?? context.l10n!.lyricsNotAvailable,
               style: TextStyle(

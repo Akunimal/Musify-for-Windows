@@ -263,6 +263,9 @@ ThemeData getAppTheme(ColorScheme colorScheme) {
     pageTransitionsTheme: PageTransitionsTheme(
       builders: <TargetPlatform, PageTransitionsBuilder>{
         TargetPlatform.android: transitionsBuilder,
+        TargetPlatform.windows: transitionsBuilder,
+        TargetPlatform.linux: transitionsBuilder,
+        TargetPlatform.macOS: transitionsBuilder,
       },
     ),
   );

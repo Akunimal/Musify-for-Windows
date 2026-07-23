@@ -19,6 +19,8 @@
  *     please visit: https://github.com/gokadzev/Musify
  */
 
+import 'dart:io' show Platform;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
@@ -62,7 +64,10 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
         if (currentIndex != 0) {
           widget.child.goBranch(0);
         } else {
-          SystemNavigator.pop();
+          // SystemNavigator.pop() is a no-op on Windows — close via X or Alt+F4.
+          if (Platform.isAndroid) {
+            SystemNavigator.pop();
+          }
         }
       },
       child: ValueListenableBuilder<bool>(
