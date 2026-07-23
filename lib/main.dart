@@ -254,13 +254,18 @@ class _MusifyState extends State<Musify> with WidgetsBindingObserver {
                       ? Brightness.light
                       : Brightness.dark,
                 ),
-          child: Stack(
-            children: [
-              const AnimatedBackground(),
-              MaterialApp.router(
+          child: MaterialApp.router(
             themeMode: themeMode,
             darkTheme: getAppTheme(colorScheme),
             theme: getAppTheme(colorScheme),
+            builder: (context, child) {
+              return Stack(
+                children: [
+                  const AnimatedBackground(),
+                  if (child != null) child!,
+                ],
+              );
+            },
             localizationsDelegates: const [
               AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,
@@ -270,8 +275,6 @@ class _MusifyState extends State<Musify> with WidgetsBindingObserver {
             supportedLocales: appSupportedLocales,
             locale: languageSetting,
             routerConfig: NavigationManager.router,
-          ),
-            ],
           ),
         );
       },
