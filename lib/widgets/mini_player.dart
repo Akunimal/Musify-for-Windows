@@ -28,6 +28,8 @@ import 'package:musify/main.dart';
 import 'package:musify/models/full_player_state.dart';
 import 'package:musify/models/position_data.dart';
 import 'package:musify/screens/now_playing_page.dart';
+import 'package:musify/services/data_manager.dart';
+import 'package:musify/services/settings_manager.dart';
 import 'package:musify/widgets/marquee.dart';
 import 'package:musify/widgets/song_artwork.dart';
 import 'package:rxdart/rxdart.dart';
@@ -229,6 +231,38 @@ class _MiniPlayerBodyState extends State<_MiniPlayerBody>
                             ),
                           ),
                         ),
+                      ),
+                      // Video toggle — visible on every screen
+                      ValueListenableBuilder<bool>(
+                        valueListenable: videoModeEnabled,
+                        builder: (context, isVideo, _) {
+                          return GestureDetector(
+                            onTap: () {
+                              final newMode = !isVideo;
+                              videoModeEnabled.value = newMode;
+                              if (newMode) audioHandler.stop();
+                              addOrUpdateData<bool>('settings', 'videoModeEnabled', newMode);
+                            },
+                            child: Container(
+                              width: 32,
+                              height: 32,
+                              margin: const EdgeInsets.only(right: 4),
+                              decoration: BoxDecoration(
+                                color: isVideo
+                                    ? colorScheme.primaryContainer
+                                    : Colors.transparent,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Icon(
+                                isVideo ? AppIcon.video : AppIcon.play,
+                                size: 18,
+                                color: isVideo
+                                    ? colorScheme.onPrimaryContainer
+                                    : colorScheme.onSurfaceVariant,
+                              ),
+                            ),
+                          );
+                        },
                       ),
                       _ControlsWidget(
                         colorScheme: colorScheme,
