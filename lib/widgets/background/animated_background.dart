@@ -66,13 +66,12 @@ class _AnimatedBackgroundState extends State<AnimatedBackground>
     if (_current.isEmpty) return const SizedBox.shrink();
     final c = Theme.of(context).colorScheme.primary;
     final s = Theme.of(context).colorScheme;
-    return Positioned.fill(
+    return SizedBox.expand(
       child: RepaintBoundary(
         child: AnimatedBuilder(
           animation: _ctrl,
           builder: (_, __) => CustomPaint(
             painter: _makePainter(_current, _ctrl.value, c, s),
-            size: Size.infinite,
             isComplex: true,
             willChange: false,
           ),

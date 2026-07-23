@@ -39,32 +39,36 @@ import 'package:rxdart/rxdart.dart';
 
 class MusifyAudioHandler extends BaseAudioHandler {
   MusifyAudioHandler() {
-    _androidEqualizer = AndroidEqualizer();
-    audioPlayer = AudioPlayer(
-      audioPipeline: AudioPipeline(androidAudioEffects: [_androidEqualizer]),
-      audioLoadConfiguration: const AudioLoadConfiguration(
-        androidLoadControl: AndroidLoadControl(
-          maxBufferDuration: Duration(seconds: 60),
-          bufferForPlaybackDuration: Duration(milliseconds: 500),
-          bufferForPlaybackAfterRebufferDuration: Duration(seconds: 3),
+    if (Platform.isAndroid) {
+      _androidEqualizer = AndroidEqualizer();
+      audioPlayer = AudioPlayer(
+        audioPipeline: AudioPipeline(androidAudioEffects: [_androidEqualizer!]),
+        audioLoadConfiguration: const AudioLoadConfiguration(
+          androidLoadControl: AndroidLoadControl(
+            maxBufferDuration: Duration(seconds: 60),
+            bufferForPlaybackDuration: Duration(milliseconds: 500),
+            bufferForPlaybackAfterRebufferDuration: Duration(seconds: 3),
+          ),
         ),
-      ),
-    );
+      );
+
+      audioPlayer.setAndroidAudioAttributes(
+        const AndroidAudioAttributes(
+          contentType: AndroidAudioContentType.music,
+          usage: AndroidAudioUsage.media,
+        ),
+      );
+    } else {
+      audioPlayer = AudioPlayer();
+    }
 
     _setupEventSubscriptions();
     _updatePlaybackState();
 
-    audioPlayer.setAndroidAudioAttributes(
-      const AndroidAudioAttributes(
-        contentType: AndroidAudioContentType.music,
-        usage: AndroidAudioUsage.media,
-      ),
-    );
-
     _initialize();
   }
 
-  late final AndroidEqualizer _androidEqualizer;
+  AndroidEqualizer? _androidEqualizer;
   late final AudioPlayer audioPlayer;
   bool _equalizerInitialized = false;
   Future<bool>? _equalizerInitFuture;
@@ -402,8 +406,10 @@ class MusifyAudioHandler extends BaseAudioHandler {
   }
 
   Future<bool> _configureEqualizer() async {
+    if (!Platform.isAndroid || _androidEqualizer == null) return false;
     try {
-      final params = await _androidEqualizer.parameters.timeout(
+      final eq = _androidEqualizer!;
+      final params = await eq.parameters.timeout(
         const Duration(seconds: 3),
       );
 
@@ -418,7 +424,7 @@ class MusifyAudioHandler extends BaseAudioHandler {
         }
       }
 
-      await _androidEqualizer.setEnabled(equalizerEnabled.value);
+      await eq.setEnabled(equalizerEnabled.value);
       _equalizerInitialized = true;
       _equalizerRetryNotBefore = DateTime.fromMillisecondsSinceEpoch(0);
       return true;
@@ -436,10 +442,11 @@ class MusifyAudioHandler extends BaseAudioHandler {
   }
 
   Future<AndroidEqualizerParameters?> getEqualizerParameters() async {
+    if (!Platform.isAndroid || _androidEqualizer == null) return null;
     final initialized = await _ensureEqualizerConfigured();
     if (!initialized) return null;
     try {
-      return await _androidEqualizer.parameters.timeout(
+      return await _androidEqualizer!.parameters.timeout(
         const Duration(seconds: 2),
       );
     } catch (e, stackTrace) {
@@ -453,10 +460,10 @@ class MusifyAudioHandler extends BaseAudioHandler {
   }
 
   Future<void> setEqualizerEnabled(bool enabled) async {
-    final initialized = await _ensureEqualizerConfigured(force: true);
-    if (!initialized) return;
+    if (!Platform.isAndroid || _androidEqualizer == null) return;
+    await _ensureEqualizerConfigured(force: true);
     try {
-      await _androidEqualizer.setEnabled(enabled);
+      await _androidEqualizer!.setEnabled(enabled);
       equalizerEnabled.value = enabled;
       unawaited(addOrUpdateData<bool>('settings', 'equalizerEnabled', enabled));
     } catch (e, stackTrace) {
@@ -469,11 +476,12 @@ class MusifyAudioHandler extends BaseAudioHandler {
   }
 
   Future<void> setEqualizerBandGain(int index, double gain) async {
+    if (!Platform.isAndroid || _androidEqualizer == null) return;
     final initialized = await _ensureEqualizerConfigured(force: true);
     if (!initialized) return;
 
     try {
-      final params = await _androidEqualizer.parameters;
+      final params = await _androidEqualizer!.parameters;
       if (index < 0 || index >= params.bands.length) {
         return;
       }
@@ -496,11 +504,12 @@ class MusifyAudioHandler extends BaseAudioHandler {
   }
 
   Future<void> resetEqualizerBands() async {
+    if (!Platform.isAndroid || _androidEqualizer == null) return;
     final initialized = await _ensureEqualizerConfigured(force: true);
     if (!initialized) return;
 
     try {
-      final params = await _androidEqualizer.parameters;
+      final params = await _androidEqualizer!.parameters;
       for (final band in params.bands) {
         await band.setGain(0);
       }
