@@ -33,6 +33,7 @@ final listeningStatsService = ListeningStatsService();
 
 class ListeningStatsService {
   static const storageKey = 'wrappedListeningStats';
+  static const _flushInterval = Duration(seconds: 30);
 
   Map<String, dynamic>? _stats;
   // Stats are accumulated in memory and only written to Hive at meaningful
@@ -51,6 +52,8 @@ class ListeningStatsService {
   DateTime? _sessionLastTick;
   bool _sessionQualified = false;
   bool _sessionLastAudioPlayerPlaying = false;
+
+  Timer? _periodicFlushTimer;
 
   bool get hasStats {
     final now = DateTime.now();
@@ -495,5 +498,21 @@ class ListeningStatsService {
           : int.tryParse(song['playCount']?.toString() ?? '') ?? 0;
       return playCount <= 0;
     });
+  }
+
+  /// Start a periodic flush timer so stats survive abrupt termination on
+  /// platforms where the app lifecycle events are not guaranteed (Windows).
+  void startPeriodicFlush() {
+    _periodicFlushTimer?.cancel();
+    _periodicFlushTimer = Timer.periodic(_flushInterval, (_) async {
+      await flush();
+    });
+  }
+
+  /// Stop the periodic flush timer. Call this when the app shuts down
+  /// gracefully to avoid unnecessary timer callbacks.
+  void stopPeriodicFlush() {
+    _periodicFlushTimer?.cancel();
+    _periodicFlushTimer = null;
   }
 }

@@ -58,6 +58,30 @@ late StreamSubscription<String?> sharingIntentSubscription;
 
 final logger = Logger();
 final appLinks = AppLinks();
+Timer? _hiveFlushTimer;
+
+/// Periodically flush Hive boxes so data survives abrupt process termination
+/// (e.g. closing the window on Windows, where widget dispose() is unreliable).
+void _startHiveFlushTimer() {
+  _hiveFlushTimer?.cancel();
+  _hiveFlushTimer = Timer.periodic(const Duration(seconds: 30), (_) async {
+    try {
+      await Future.wait([
+        Hive.box('settings').flush(),
+        Hive.box('user').flush(),
+        Hive.box('userNoBackup').flush(),
+        Hive.box('cache').flush(),
+      ]);
+    } catch (_) {
+      // Silently ignore flush failures — next tick will retry.
+    }
+  });
+}
+
+void _stopHiveFlushTimer() {
+  _hiveFlushTimer?.cancel();
+  _hiveFlushTimer = null;
+}
 
 bool isFdroidBuild = false;
 bool isUpdateChecked = false;
@@ -199,13 +223,15 @@ class _MusifyState extends State<Musify> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
-    // Persist listening stats when the app leaves the foreground. This is the
-    // reliable moment to snapshot and flush: unlike widget dispose, these
-    // callbacks are delivered before the OS suspends or terminates the process.
+    // On Windows, `hidden` and `paused` can fire in the same transition,
+    // leading to a redundant flush. Skip when we already handled this cycle.
+    final isWindowsTermination = !Platform.isAndroid &&
+        !Platform.isIOS &&
+        state == AppLifecycleState.detached;
     if (state == AppLifecycleState.inactive ||
         state == AppLifecycleState.paused ||
         state == AppLifecycleState.hidden ||
-        state == AppLifecycleState.detached) {
+        isWindowsTermination) {
       listeningStatsService.recordListeningSessionProgress(
         wasPlaying: audioHandler.audioPlayer.playing,
       );
@@ -217,6 +243,8 @@ class _MusifyState extends State<Musify> with WidgetsBindingObserver {
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     offlineMode.removeListener(_onOfflineModeChanged);
+    _stopHiveFlushTimer();
+    listeningStatsService.stopPeriodicFlush();
 
     Hive.close();
     sharingIntentSubscription.cancel();
@@ -347,6 +375,11 @@ Future<void> initialisation() async {
 
   applicationDirPath = (await getApplicationDocumentsDirectory()).path;
   await FilePaths.ensureDirectoriesExist();
+
+  // Start periodic flush timers so data survives abrupt termination
+  // on platforms where widget dispose() is not guaranteed (Windows desktop).
+  _startHiveFlushTimer();
+  listeningStatsService.startPeriodicFlush();
 }
 
 void handleIncomingLink(Uri? uri) async {
