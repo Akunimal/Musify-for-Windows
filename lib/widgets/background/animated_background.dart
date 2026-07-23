@@ -33,14 +33,14 @@ class _AnimatedBackgroundState extends State<AnimatedBackground>
     super.initState();
     _ctrl = AnimationController(vsync: this, duration: const Duration(seconds: 60))
       ..repeat();
-    // Show a pattern immediately on startup, then change with music
+    // Show a pattern immediately on startup
     _pick();
     audioHandler.playbackState.listen((s) {
-      if (s.playing != _playing) {
-        if (mounted) setState(() => _playing = s.playing);
-        _ctrl
-          ..duration = s.playing ? const Duration(seconds: 60) : const Duration(seconds: 120)
-          ..repeat();
+      final nowPlaying = s.playing;
+      if (nowPlaying != _playing) {
+        if (mounted) setState(() => _playing = nowPlaying);
+        // Smooth speed change: just change the duration, don't restart the controller
+        _ctrl.duration = nowPlaying ? const Duration(seconds: 60) : const Duration(seconds: 120);
       }
     });
     audioHandler.mediaItem.listen((item) {
@@ -64,14 +64,19 @@ class _AnimatedBackgroundState extends State<AnimatedBackground>
   @override
   Widget build(BuildContext context) {
     if (_current.isEmpty) return const SizedBox.shrink();
-    final c = Theme.of(context).colorScheme.primary;
-    final s = Theme.of(context).colorScheme;
+    final cs = Theme.of(context).colorScheme;
+    // Use the surface color as particle color for visibility on dark themes.
+    // On a "total black" theme the surface is dark, so particles use a contrasting
+    // accent derived from the primary color mixed with white.
+    final c = cs.primary.computeLuminance() > 0.3
+        ? cs.primary
+        : Color.lerp(cs.primary, Colors.white, 0.3)!;
     return SizedBox.expand(
       child: RepaintBoundary(
         child: AnimatedBuilder(
           animation: _ctrl,
           builder: (_, __) => CustomPaint(
-            painter: _makePainter(_current, _ctrl.value, c, s),
+            painter: _makePainter(_current, _ctrl.value, c, cs),
             isComplex: true,
             willChange: false,
           ),

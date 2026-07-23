@@ -261,8 +261,9 @@ class _MusifyState extends State<Musify> with WidgetsBindingObserver {
             builder: (context, child) {
               return Stack(
                 children: [
-                  const AnimatedBackground(),
                   if (child != null) child!,
+                  // Animated background overlays on top as semi-transparent particles
+                  const AnimatedBackground(),
                 ],
               );
             },
