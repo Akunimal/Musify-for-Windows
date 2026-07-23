@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io' show Platform;
 
 import 'package:flutter/services.dart';
 
@@ -17,6 +18,10 @@ class ReceiveSharingIntent {
   static Stream<List<SharedMediaFile>>? _streamMedia;
   static Stream<String>? _streamLink;
 
+  /// Whether the platform supports receive sharing intent (Android/iOS only)
+  static bool get _isSupported =>
+      Platform.isAndroid || Platform.isIOS;
+
   /// Returns a [Future], which completes to one of the following:
   ///
   ///   * the initially stored media uri (possibly null), on successful invocation;
@@ -25,10 +30,15 @@ class ReceiveSharingIntent {
   /// NOTE. The returned media on iOS (iOS ONLY) is already copied to a temp folder.
   /// So, you need to delete the file after you finish using it
   static Future<List<SharedMediaFile>> getInitialMedia() async {
-    final json = await _mChannel.invokeMethod('getInitialMedia');
-    if (json == null) return [];
-    final encoded = jsonDecode(json);
-    return encoded.map<SharedMediaFile>(SharedMediaFile.fromJson).toList();
+    if (!_isSupported) return [];
+    try {
+      final json = await _mChannel.invokeMethod('getInitialMedia');
+      if (json == null) return [];
+      final encoded = jsonDecode(json);
+      return encoded.map<SharedMediaFile>(SharedMediaFile.fromJson).toList();
+    } on MissingPluginException {
+      return [];
+    }
   }
 
   /// Returns a [Future], which completes to one of the following:
@@ -36,7 +46,12 @@ class ReceiveSharingIntent {
   ///   * the initially stored link (possibly null), on successful invocation;
   ///   * a [PlatformException], if the invocation failed in the platform plugin.
   static Future<String?> getInitialText() async {
-    return _mChannel.invokeMethod('getInitialText');
+    if (!_isSupported) return null;
+    try {
+      return await _mChannel.invokeMethod('getInitialText');
+    } on MissingPluginException {
+      return null;
+    }
   }
 
   /// A convenience method that returns the initially stored link
@@ -67,6 +82,9 @@ class ReceiveSharingIntent {
   /// If the app was started by a link intent or user activity the stream will
   /// not emit that initial one - query either the `getInitialMedia` instead.
   static Stream<List<SharedMediaFile>> getMediaStream() {
+    if (!_isSupported) {
+      return const Stream<List<SharedMediaFile>>.empty();
+    }
     if (_streamMedia == null) {
       final stream = _eChannelMedia
           .receiveBroadcastStream('media')
@@ -106,6 +124,9 @@ class ReceiveSharingIntent {
   /// If the app was started by a link intent or user activity the stream will
   /// not emit that initial one - query either the `getInitialText` instead.
   static Stream<String> getTextStream() {
+    if (!_isSupported) {
+      return const Stream<String>.empty();
+    }
     _streamLink ??= _eChannelLink.receiveBroadcastStream('text').cast<String>();
     return _streamLink!;
   }
@@ -132,6 +153,7 @@ class ReceiveSharingIntent {
   /// Call this method if you already consumed the callback
   /// and don't want the same callback again
   static void reset() {
+    if (!_isSupported) return;
     _mChannel.invokeMethod('reset').then((_) {});
   }
 }

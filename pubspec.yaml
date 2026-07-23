@@ -19,6 +19,8 @@ dependencies:
   dynamic_color: ^1.8.1
   file_picker: ^11.0.2
   fluentui_system_icons: ^1.1.273
+  font_awesome_flutter: ^11.0.0
+  lucide_icons_flutter: ^3.1.15
   flutter:
     sdk: flutter
   flutter_flip_card: ^0.0.6
@@ -31,6 +33,7 @@ dependencies:
   http: ^1.6.0
   intl: ^0.20.2
   just_audio: ^0.10.6
+  just_audio_windows: ^0.2.2
   path_provider: ^2.1.6
   receive_sharing_intent:
     path: ./packages/receive_sharing_intent

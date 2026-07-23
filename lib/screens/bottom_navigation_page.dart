@@ -19,11 +19,11 @@
  *     please visit: https://github.com/gokadzev/Musify
  */
 
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:musify/constants/app_constants.dart';
 import 'package:musify/extensions/l10n.dart';
 import 'package:musify/main.dart';
@@ -170,8 +170,8 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
   List<_NavigationItem> _getNavigationItems(bool isOfflineMode) {
     final items = <_NavigationItem>[
       _NavigationItem(
-        icon: FluentIcons.home_24_regular,
-        selectedIcon: FluentIcons.home_24_filled,
+        icon: LucideIcons.home,
+        selectedIcon: LucideIcons.home,
         label: context.l10n?.home ?? 'Home',
         route: '/home',
         shellIndex: 0,
@@ -182,8 +182,8 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
     if (!isOfflineMode) {
       items.add(
         _NavigationItem(
-          icon: FluentIcons.search_24_regular,
-          selectedIcon: FluentIcons.search_24_filled,
+          icon: LucideIcons.search,
+          selectedIcon: LucideIcons.search,
           label: context.l10n?.search ?? 'Search',
           route: '/search',
           shellIndex: 1,
@@ -193,15 +193,15 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
 
     items.addAll([
       _NavigationItem(
-        icon: FluentIcons.book_24_regular,
-        selectedIcon: FluentIcons.book_24_filled,
+        icon: LucideIcons.library,
+        selectedIcon: LucideIcons.library,
         label: context.l10n?.library ?? 'Library',
         route: '/library',
         shellIndex: 2,
       ),
       _NavigationItem(
-        icon: FluentIcons.settings_24_regular,
-        selectedIcon: FluentIcons.settings_24_filled,
+        icon: LucideIcons.settings,
+        selectedIcon: LucideIcons.settings,
         label: context.l10n?.settings ?? 'Settings',
         route: '/settings',
         shellIndex: 3,

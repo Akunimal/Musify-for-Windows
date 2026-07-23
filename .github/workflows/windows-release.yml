@@ -1,0 +1,42 @@
+name: Build & Release (Windows)
+
+on:
+  push:
+    branches: [master, main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.44.x'
+          channel: 'stable'
+          cache: true
+
+      - name: Enable Windows desktop
+        run: flutter config --enable-windows-desktop
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Build Windows release
+        run: flutter build windows --release
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: musify-windows-x64
+          path: build\windows\x64\runner\Release\
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/v')
+        with:
+          files: build\windows\x64\runner\Release\musify.exe
+          generate_release_notes: true
