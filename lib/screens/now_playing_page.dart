@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
+import 'package:musify/widgets/adaptive_safe_area.dart';
 import 'package:flutter_flip_card/flutter_flip_card.dart';
 import 'package:go_router/go_router.dart';
 import 'package:musify/extensions/l10n.dart';
@@ -42,7 +43,7 @@ class _NowPlayingPageState extends State<NowPlayingPage> {
 
     return Scaffold(
       backgroundColor: colorScheme.surface,
-      body: SafeArea(
+      body: AdaptiveSafeArea(
         child: StreamBuilder<MediaItem?>(
           stream: audioHandler.mediaItem,
           builder: (ctx, snapshot) {

@@ -217,6 +217,14 @@ Win32Window::MessageHandler(HWND hwnd,
       UpdateTheme(hwnd);
       return 0;
 
+    case WM_GETMINMAXINFO: {
+      auto mmi = reinterpret_cast<MINMAXINFO*>(lparam);
+      const double scale = GetDpiForWindow(hwnd) / 96.0;
+      mmi->ptMinTrackSize.x = Scale(360, scale);
+      mmi->ptMinTrackSize.y = Scale(480, scale);
+      return 0;
+    }
+
     case WM_APPCOMMAND: {
       const auto cmd = GET_APPCOMMAND_LPARAM(lparam);
       // Forward multimedia keys to Flutter as synthetic key events so the Dart

@@ -24,6 +24,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:musify/utilities/app_icon.dart';
+import 'package:musify/widgets/adaptive_safe_area.dart';
 import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
 import 'package:musify/constants/app_constants.dart';
@@ -332,7 +333,7 @@ class _TimeMachinePageState extends State<TimeMachinePage> {
           initialChildSize: 0.72,
           maxChildSize: 0.92,
           minChildSize: 0.45,
-          builder: (context, scrollController) => SafeArea(
+          builder: (context, scrollController) => AdaptiveSafeArea(
             child: ListView.builder(
               controller: scrollController,
               padding: commonListViewBottomPadding,

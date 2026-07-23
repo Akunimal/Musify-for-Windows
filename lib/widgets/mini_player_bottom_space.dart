@@ -20,6 +20,7 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:musify/widgets/adaptive_safe_area.dart';
 
 /// Adds the current bottom [MediaQuery] padding as scrollable space for the
 /// floating mini player.
@@ -28,7 +29,7 @@ class MiniPlayerBottomSpace extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
+    return const AdaptiveSafeArea(
       top: false,
       left: false,
       right: false,
@@ -44,7 +45,7 @@ class SliverMiniPlayerBottomSpace extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SliverSafeArea(
+    return const AdaptiveSliverSafeArea(
       top: false,
       left: false,
       right: false,

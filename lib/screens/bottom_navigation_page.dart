@@ -32,6 +32,7 @@ import 'package:musify/services/settings_manager.dart';
 import 'package:musify/utilities/app_icon.dart';
 import 'package:musify/utilities/flutter_bottom_sheet.dart'
     show closeCurrentBottomSheet;
+import 'package:musify/widgets/adaptive_safe_area.dart';
 import 'package:musify/widgets/mini_player.dart';
 
 class BottomNavigationPage extends StatefulWidget {
@@ -83,16 +84,20 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
 
           return LayoutBuilder(
             builder: (context, constraints) {
-              final isLargeScreen = MediaQuery.of(context).size.width >= 600;
+              final isDesktop = !Platform.isAndroid && !Platform.isIOS;
+              final isLargeScreen =
+                  MediaQuery.of(context).size.width >= 600 || isDesktop;
               final items = _getNavigationItems(isOfflineMode);
 
               return Scaffold(
-                body: SafeArea(
+                body: AdaptiveSafeArea(
                   child: Row(
                     children: [
                       if (isLargeScreen)
                         NavigationRail(
-                          labelType: NavigationRailLabelType.selected,
+                          labelType: isDesktop
+                              ? NavigationRailLabelType.all
+                              : NavigationRailLabelType.selected,
                           destinations: items
                               .map(
                                 (item) => NavigationRailDestination(
