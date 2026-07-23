@@ -42,6 +42,10 @@ class _YoutubeVideoPlayerState extends State<YoutubeVideoPlayer> {
 
   Future<void> _initPlayer() async {
     try {
+      // Create controller first so texture is ready
+      _videoController = VideoController(_player);
+      if (mounted) setState(() => _initialized = true);
+
       // Try both muxed and video-only streams for maximum compatibility
       final manifest = await ytClient.videos.streamsClient
           .getManifest(widget.ytid);
@@ -65,8 +69,6 @@ class _YoutubeVideoPlayerState extends State<YoutubeVideoPlayer> {
       }
       await _player.open(Media(selected.url.toString()));
       if (widget.playing) _player.play();
-      _videoController = VideoController(_player);
-      if (mounted) setState(() => _initialized = true);
     } catch (e) {
       if (mounted) setState(() => _error = e.toString());
     }
