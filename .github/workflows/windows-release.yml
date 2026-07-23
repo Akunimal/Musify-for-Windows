@@ -49,4 +49,3 @@ jobs:
           files: Musify-for-Windows-*.zip
           generate_release_notes: false
           make_latest: true
-          fail_on_unmatched_files: false

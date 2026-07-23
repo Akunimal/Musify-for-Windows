@@ -143,7 +143,7 @@ class _DesktopLayout extends StatelessWidget {
                   flex: 5,
                   child: Center(
                     child: hasVideo
-                        ? YoutubeVideoPlayer(ytid: ytid!, playing: true)
+                        ? YoutubeVideoPlayer(ytid: ytid!, key: ValueKey(ytid), playing: true)
                         : NowPlayingArtwork(
                             size: size,
                             metadata: metadata,

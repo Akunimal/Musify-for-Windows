@@ -17,13 +17,13 @@ class AppIcon {
   static const IconData play = IconData(0xE768, fontFamily: 'Segoe Fluent Icons');
   static const IconData pause = IconData(0xE769, fontFamily: 'Segoe Fluent Icons');
   static const IconData stop = IconData(0xE76C, fontFamily: 'Segoe Fluent Icons');
-  static const IconData previous = IconData(0xE892, fontFamily: 'Segoe Fluent Icons');
-  static const IconData next = IconData(0xE893, fontFamily: 'Segoe Fluent Icons');
+  static const IconData previous = IconData(0xF242, fontFamily: 'Segoe Fluent Icons');
+  static const IconData next = IconData(0xF243, fontFamily: 'Segoe Fluent Icons');
   static const IconData shuffle = IconData(0xE8B1, fontFamily: 'Segoe Fluent Icons');
   static const IconData repeatAll = IconData(0xE8ED, fontFamily: 'Segoe Fluent Icons');
   static const IconData repeatOne = IconData(0xE8EE, fontFamily: 'Segoe Fluent Icons');
-  static const IconData forward = IconData(0xE8A3, fontFamily: 'Segoe Fluent Icons');
-  static const IconData backward = IconData(0xE892, fontFamily: 'Segoe Fluent Icons');
+  static const IconData forward = IconData(0xF243, fontFamily: 'Segoe Fluent Icons');
+  static const IconData backward = IconData(0xF242, fontFamily: 'Segoe Fluent Icons');
 
   // Actions
   static const IconData heart = IconData(0xE1D8, fontFamily: 'Segoe Fluent Icons');
