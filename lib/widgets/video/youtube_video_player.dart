@@ -27,7 +27,6 @@ class _YoutubeVideoPlayerState extends State<YoutubeVideoPlayer> {
   final Player _player = Player(
     configuration: const PlayerConfiguration(
       osc: false,
-      vo: 'gpu-api',
       title: 'Musify',
     ),
   );
@@ -43,18 +42,28 @@ class _YoutubeVideoPlayerState extends State<YoutubeVideoPlayer> {
 
   Future<void> _initPlayer() async {
     try {
+      // Try both muxed and video-only streams for maximum compatibility
       final manifest = await ytClient.videos.streamsClient
           .getManifest(widget.ytid);
       final muxed = manifest.muxed;
-      if (muxed == null || muxed.isEmpty) {
+      dynamic selected;
+      if (muxed != null && muxed.isNotEmpty) {
+        // Use the MOST COMMON resolution (not lowest, not highest) to avoid
+        // streams with embedded YouTube UI
+        final sorted = muxed.toList()
+          ..sort((a, b) => b.bitrate.compareTo(a.bitrate));
+        selected = sorted[sorted.length ~/ 2];
+      } else if (manifest.videoOnly != null && manifest.videoOnly.isNotEmpty) {
+        // Fallback to video-only stream + play just_audio simultaneously
+        final vids = manifest.videoOnly.toList()
+          ..sort((a, b) => a.bitrate.compareTo(b.bitrate));
+        selected = vids.first;
+      }
+      if (selected == null) {
         if (mounted) setState(() => _error = 'No video stream available');
         return;
       }
-      // Pick lowest bitrate muxed stream (360p) for compatibility
-      final streams = muxed.toList()
-        ..sort((a, b) => a.bitrate.compareTo(b.bitrate));
-      final stream = streams.first;
-      await _player.open(Media(stream.url.toString()));
+      await _player.open(Media(selected.url.toString()));
       if (widget.playing) _player.play();
       _videoController = VideoController(_player);
       if (mounted) setState(() => _initialized = true);
@@ -107,10 +116,12 @@ class _YoutubeVideoPlayerState extends State<YoutubeVideoPlayer> {
     }
     return ClipRRect(
       borderRadius: BorderRadius.circular(12),
-      child: Video(
-        controller: _videoController!,
-        fill: Colors.black,
-        controls: (state) => const SizedBox.shrink(),
+      child: SizedBox.expand(
+        child: Video(
+          controller: _videoController!,
+          fill: Colors.black,
+          controls: (state) => const SizedBox.shrink(),
+        ),
       ),
     );
   }
