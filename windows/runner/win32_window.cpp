@@ -216,6 +216,26 @@ Win32Window::MessageHandler(HWND hwnd,
     case WM_DWMCOLORIZATIONCOLORCHANGED:
       UpdateTheme(hwnd);
       return 0;
+
+    case WM_APPCOMMAND: {
+      const auto cmd = GET_APPCOMMAND_LPARAM(lparam);
+      // Forward multimedia keys to Flutter as synthetic key events so the Dart
+      // Shortcuts widget can handle them (Space=play/pause, etc.)
+      UINT vk = 0;
+      switch (cmd) {
+        case APPCOMMAND_MEDIA_PLAY_PAUSE: vk = VK_MEDIA_PLAY_PAUSE; break;
+        case APPCOMMAND_MEDIA_NEXT_TRACK: vk = VK_MEDIA_NEXT_TRACK; break;
+        case APPCOMMAND_MEDIA_PREV_TRACK: vk = VK_MEDIA_PREV_TRACK; break;
+        case APPCOMMAND_MEDIA_STOP:       vk = VK_MEDIA_STOP;       break;
+      }
+      if (vk != 0 && child_content_ != nullptr) {
+        // Send the key down + up so the Flutter key event system picks it up.
+        PostMessage(child_content_, WM_KEYDOWN, vk, 0);
+        PostMessage(child_content_, WM_KEYUP, vk, 0);
+        return TRUE;
+      }
+      return DefWindowProc(window_handle_, message, wparam, lparam);
+    }
   }
 
   return DefWindowProc(window_handle_, message, wparam, lparam);

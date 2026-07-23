@@ -288,13 +288,40 @@ class _MusifyState extends State<Musify> with WidgetsBindingObserver {
             darkTheme: getAppTheme(colorScheme),
             theme: getAppTheme(colorScheme),
             builder: (context, child) {
-              return Stack(
-                children: [
-                  if (child != null) child!,
-                  // Animated background overlays on top as semi-transparent particles
-                  const AnimatedBackground(),
-                ],
-              );
+              final shortcuts = !Platform.isAndroid && !Platform.isIOS
+                  ? CallbackShortcuts(
+                      bindings: <ShortcutActivator, VoidCallback>{
+                        const SingleActivator(LogicalKeyboardKey.space):
+                            () {
+                          if (audioHandler.audioPlayer.playing) {
+                            audioHandler.pause();
+                          } else {
+                            audioHandler.play();
+                          }
+                        },
+                        const SingleActivator(
+                          LogicalKeyboardKey.arrowRight,
+                          control: true,
+                        ): () => audioHandler.skipToNext(),
+                        const SingleActivator(
+                          LogicalKeyboardKey.arrowLeft,
+                          control: true,
+                        ): () => audioHandler.skipToPrevious(),
+                      },
+                      child: Stack(
+                        children: [
+                          if (child != null) child!,
+                          const AnimatedBackground(),
+                        ],
+                      ),
+                    )
+                  : Stack(
+                      children: [
+                        if (child != null) child!,
+                        const AnimatedBackground(),
+                      ],
+                    );
+              return shortcuts;
             },
             localizationsDelegates: const [
               AppLocalizations.delegate,
