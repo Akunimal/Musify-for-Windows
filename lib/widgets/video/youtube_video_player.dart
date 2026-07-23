@@ -74,15 +74,24 @@ class _YoutubeVideoPlayerState extends State<YoutubeVideoPlayer> {
   @override
   Widget build(BuildContext context) {
     if (_error != null) {
+      final isNetworkError = _error!.contains('SocketException') ||
+          _error!.contains('10057') || _error!.contains('No se permitió');
       return Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.warning_amber_rounded, size: 48,
-                color: Theme.of(context).colorScheme.error),
+            Icon(
+              isNetworkError ? Icons.wifi_off_rounded : Icons.warning_amber_rounded,
+              size: 48,
+              color: Theme.of(context).colorScheme.error.withOpacity(0.6),
+            ),
             const SizedBox(height: 8),
-            Text('Video unavailable',
-                style: Theme.of(context).textTheme.bodyMedium),
+            Text(
+              isNetworkError ? 'Video unavailable (network)' : 'Video unavailable',
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
+            ),
           ],
         ),
       );
