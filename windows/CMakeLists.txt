@@ -6,7 +6,13 @@ project(musify LANGUAGES CXX)
 # the on-disk name of your application.
 set(BINARY_NAME "musify")
 
-# Explicitly opt in to modern CMake behaviors to avoid warnings with recent
+# Silence deprecated <experimental/coroutine> in newer MSVC (VS 2022 17.14+).
+# Required by just_audio_windows until it migrates to <coroutine>.
+if(MSVC)
+  add_compile_definitions(_SILENCE_EXPERIMENTAL_COROUTINE_DEPRECATION_WARNINGS)
+endif()
+
+# Explicitly opt in to modern CMake behaviors
 # versions of CMake.
 cmake_policy(VERSION 3.14...3.25)
 
