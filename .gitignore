@@ -52,3 +52,4 @@ lib/localization/app_*.dart
 lib/localization/untranslated.json
 dist/
 *.exe
+libmpv-2.dll
