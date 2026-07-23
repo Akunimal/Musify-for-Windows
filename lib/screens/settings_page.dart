@@ -19,6 +19,8 @@
  *     please visit: https://github.com/gokadzev/Musify
  */
 
+import 'dart:io' show Platform;
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:musify/utilities/app_icon.dart';
@@ -135,7 +137,8 @@ class SettingsPage extends StatelessWidget {
               onChanged: (value) => _togglePureBlack(context, value),
             ),
           ),
-        ValueListenableBuilder<bool>(
+        if (Platform.isAndroid)
+          ValueListenableBuilder<bool>(
           valueListenable: predictiveBack,
           builder: (_, value, __) {
             return CustomBar(

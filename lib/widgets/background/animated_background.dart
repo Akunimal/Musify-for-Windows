@@ -33,9 +33,11 @@ class _AnimatedBackgroundState extends State<AnimatedBackground>
     super.initState();
     _ctrl = AnimationController(vsync: this, duration: const Duration(seconds: 60))
       ..repeat();
+    // Show a pattern immediately on startup, then change with music
+    _pick();
     audioHandler.playbackState.listen((s) {
       if (s.playing != _playing) {
-        setState(() => _playing = s.playing);
+        if (mounted) setState(() => _playing = s.playing);
         _ctrl
           ..duration = s.playing ? const Duration(seconds: 60) : const Duration(seconds: 120)
           ..repeat();
