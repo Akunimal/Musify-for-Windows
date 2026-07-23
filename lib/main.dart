@@ -303,16 +303,25 @@ Future<void> initialisation() async {
       Hive.openBox('cache'),
     ]);
 
-    audioHandler = await AudioService.init(
-      builder: MusifyAudioHandler.new,
-      config: const AudioServiceConfig(
-        androidNotificationChannelId: 'com.gokadzev.musify',
-        androidNotificationChannelName: 'Musify',
-        androidNotificationIcon: 'drawable/ic_launcher_foreground',
-        androidShowNotificationBadge: true,
-        androidStopForegroundOnPause: false,
-      ),
-    );
+    try {
+      audioHandler = await AudioService.init(
+        builder: MusifyAudioHandler.new,
+        config: AudioServiceConfig(
+          androidNotificationChannelId: 'com.gokadzev.musify',
+          androidNotificationChannelName: 'Musify',
+          androidNotificationIcon: 'drawable/ic_launcher_foreground',
+          androidShowNotificationBadge: true,
+          androidStopForegroundOnPause: false,
+        ),
+      );
+    } catch (e, stackTrace) {
+      logger.log(
+        'AudioService.init failed, using direct fallback',
+        error: e,
+        stackTrace: stackTrace,
+      );
+      audioHandler = MusifyAudioHandler();
+    }
 
     // Init router
     NavigationManager.instance;

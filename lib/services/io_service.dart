@@ -21,6 +21,8 @@
 
 import 'dart:io';
 
+import 'package:path/path.dart' as p;
+
 late String applicationDirPath;
 
 class FilePaths {
@@ -34,17 +36,17 @@ class FilePaths {
 
   // Get full paths for various file types
   static String getAudioPath(String songId) {
-    return '$applicationDirPath/$tracksDir/$songId$audioExtension';
+    return p.join(applicationDirPath, tracksDir, '$songId$audioExtension');
   }
 
   static String getArtworkPath(String songId) {
-    return '$applicationDirPath/$artworksDir/$songId$artworkExtension';
+    return p.join(applicationDirPath, artworksDir, '$songId$artworkExtension');
   }
 
   // Ensure directories exist
   static Future<void> ensureDirectoriesExist() async {
-    final tracksDirectory = Directory('$applicationDirPath/$tracksDir');
-    final artworksDirectory = Directory('$applicationDirPath/$artworksDir');
+    final tracksDirectory = Directory(p.join(applicationDirPath, tracksDir));
+    final artworksDirectory = Directory(p.join(applicationDirPath, artworksDir));
 
     if (!await tracksDirectory.exists()) {
       await tracksDirectory.create(recursive: true);

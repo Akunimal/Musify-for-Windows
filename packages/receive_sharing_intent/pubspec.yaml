@@ -31,6 +31,8 @@ flutter:
         pluginClass: ReceiveSharingIntentPlugin
       ios:
         pluginClass: ReceiveSharingIntentPlugin
+      windows:
+        pluginClass: ReceiveSharingIntentPlugin
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:

@@ -41,7 +41,12 @@ const String releasesUrl =
     'https://api.github.com/repos/gokadzev/Musify/releases/latest';
 const String downloadUrlKey = 'url';
 const String downloadUrlArm64Key = 'arm64url';
-const String downloadFilename = 'Musify.apk';
+String get downloadFilename {
+  if (Platform.isWindows) return 'Musify.msix';
+  if (Platform.isMacOS) return 'Musify.dmg';
+  if (Platform.isLinux) return 'Musify.AppImage';
+  return 'Musify.apk';
+}
 
 Future<void> checkAppUpdates() async {
   try {
@@ -254,6 +259,13 @@ bool isLatestVersionHigher(String appVersion, String latestVersion) {
 }
 
 Future<String> getCPUArchitecture() async {
+  if (Platform.isWindows) {
+    final arch = Platform.environment['PROCESSOR_ARCHITECTURE'] ?? 'AMD64';
+    // Common values: AMD64, ARM64, x86
+    if (arch == 'ARM64') return 'aarch64';
+    return 'x86_64';
+  }
+
   final info = await Process.run('uname', ['-m']);
   final cpu = info.stdout.toString().replaceAll('\n', '');
 
@@ -262,7 +274,31 @@ Future<String> getCPUArchitecture() async {
 
 Future<String> getDownloadUrl(Map<String, dynamic> map) async {
   final cpuArchitecture = await getCPUArchitecture();
-  final url = cpuArchitecture == 'aarch64'
+  final isArm = cpuArchitecture == 'aarch64' || cpuArchitecture == 'arm64';
+
+  if (!Platform.isAndroid && !Platform.isIOS) {
+    // Desktop: build the release asset URL directly from the GitHub API body
+    final body = map['body']?.toString() ?? '';
+    if (Platform.isWindows) {
+      final assetMatch = RegExp(r'href="[^"]*Musify\.msix[^"]*"')
+          .firstMatch(body);
+      if (assetMatch != null) {
+        final href = assetMatch.group(0)!;
+        return href.substring(6, href.length - 1);
+      }
+      // Fallback: try .exe
+      final exeMatch = RegExp(r'href="[^"]*Musify\.exe[^"]*"')
+          .firstMatch(body);
+      if (exeMatch != null) {
+        final href = exeMatch.group(0)!;
+        return href.substring(6, href.length - 1);
+      }
+    }
+    // Linux/macOS: return the generic release URL
+    return releasesUrl;
+  }
+
+  final url = isArm
       ? map[downloadUrlArm64Key].toString()
       : map[downloadUrlKey].toString();
 

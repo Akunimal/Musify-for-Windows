@@ -47,7 +47,10 @@ class ArtworkProvider {
         final bytes = base64Decode(artwork.substring(commaIdx + 1));
         provider = MemoryImage(bytes);
       } else if (!kIsWeb &&
-          (artwork.startsWith('file://') || artwork.startsWith('/'))) {
+          (artwork.startsWith('file://') ||
+           artwork.startsWith('/') ||
+           // Windows drive-letter paths like C:\...
+           (artwork.length > 2 && artwork[1] == ':'))) {
         final path = artwork.replaceFirst('file://', '');
         provider = FileImage(File(path));
       } else {
