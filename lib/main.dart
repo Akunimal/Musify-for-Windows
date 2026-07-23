@@ -310,14 +310,14 @@ class _MusifyState extends State<Musify> with WidgetsBindingObserver {
                       },
                       child: Stack(
                         children: [
-                          if (child != null) child!,
+                          if (child != null) child,
                           const AnimatedBackground(),
                         ],
                       ),
                     )
                   : Stack(
                       children: [
-                        if (child != null) child!,
+                        if (child != null) child,
                         const AnimatedBackground(),
                       ],
                     );
