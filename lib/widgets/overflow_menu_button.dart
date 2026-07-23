@@ -20,6 +20,7 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:musify/extensions/l10n.dart';
 import 'package:musify/utilities/app_icon.dart';
 
 class OverflowMenuButton<T> extends StatelessWidget {
@@ -45,15 +46,18 @@ class OverflowMenuButton<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
-    return PopupMenuButton<T>(
-      borderRadius: borderRadius ?? BorderRadius.circular(12),
-      padding: EdgeInsets.zero,
-      onSelected: onSelected,
-      itemBuilder: itemBuilder,
-      icon: Icon(
-        icon ?? AppIcon.more,
-        size: iconSize,
-        color: color ?? colorScheme.onSurfaceVariant,
+    return Tooltip(
+      message: context.l10n?.moreOptions ?? 'More options',
+      child: PopupMenuButton<T>(
+        borderRadius: borderRadius ?? BorderRadius.circular(12),
+        padding: EdgeInsets.zero,
+        onSelected: onSelected,
+        itemBuilder: itemBuilder,
+        icon: Icon(
+          icon ?? AppIcon.more,
+          size: iconSize,
+          color: color ?? colorScheme.onSurfaceVariant,
+        ),
       ),
     );
   }

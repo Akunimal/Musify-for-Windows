@@ -20,6 +20,7 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
 import 'package:musify/main.dart';
 import 'package:musify/models/position_data.dart';
 import 'package:musify/utilities/formatter.dart';
@@ -61,23 +62,37 @@ class _PositionSliderState extends State<PositionSlider> {
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Slider(
-              value: currentValue.clamp(0.0, maxDuration),
-              onChanged: (value) {
-                setState(() {
-                  _isDragging = true;
-                  _dragValue = value;
-                });
+            Listener(
+              onPointerSignal: (event) {
+                if (event is PointerScrollEvent) {
+                  final delta = -event.scrollDelta.dy.sign;
+                  final currentPos =
+                      positionData.position.inSeconds.toDouble();
+                  final newPos =
+                      (currentPos + delta * 5).clamp(0.0, maxDuration);
+                  audioHandler.seek(
+                    Duration(seconds: newPos.toInt()),
+                  );
+                }
               },
-              onChangeEnd: (value) {
-                audioHandler.seek(Duration(seconds: value.toInt()));
-                setState(() {
-                  _isDragging = false;
-                });
-              },
-              max: maxDuration,
-              semanticFormatterCallback: (value) =>
-                  formatDuration(value.toInt()),
+              child: Slider(
+                value: currentValue.clamp(0.0, maxDuration),
+                onChanged: (value) {
+                  setState(() {
+                    _isDragging = true;
+                    _dragValue = value;
+                  });
+                },
+                onChangeEnd: (value) {
+                  audioHandler.seek(Duration(seconds: value.toInt()));
+                  setState(() {
+                    _isDragging = false;
+                  });
+                },
+                max: maxDuration,
+                semanticFormatterCallback: (value) =>
+                    formatDuration(value.toInt()),
+              ),
             ),
             _buildPositionRow(context, positionData),
           ],

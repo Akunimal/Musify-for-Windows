@@ -27,6 +27,7 @@ class CustomBar extends StatelessWidget {
     this.tileIcon, {
     this.description,
     this.onTap,
+    this.onSecondaryTap,
     this.onLongPress,
     this.trailing,
     this.backgroundColor,
@@ -40,6 +41,7 @@ class CustomBar extends StatelessWidget {
   final IconData tileIcon;
   final String? description;
   final VoidCallback? onTap;
+  final VoidCallback? onSecondaryTap;
   final VoidCallback? onLongPress;
   final Widget? trailing;
   final Color? backgroundColor;
@@ -58,6 +60,7 @@ class CustomBar extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: onTap,
+        onSecondaryTap: onSecondaryTap,
         onLongPress: onLongPress,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),

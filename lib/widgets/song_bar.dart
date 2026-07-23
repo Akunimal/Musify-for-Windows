@@ -401,9 +401,11 @@ class _SongBarState extends State<SongBar> {
       color: widget.backgroundColor ?? colorScheme.surfaceContainerLow,
       borderRadius: widget.borderRadius,
       clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: _handleSongTap,
-        child: Padding(
+      child: Focus(
+        child: InkWell(
+          onTap: _handleSongTap,
+          onSecondaryTap: () => _showSecondaryMenu(context, colorScheme),
+          child: Padding(
           padding:
               widget.barPadding ??
               const EdgeInsetsDirectional.symmetric(
@@ -456,6 +458,7 @@ class _SongBarState extends State<SongBar> {
             ],
           ),
         ),
+      ),
       ),
     );
   }
@@ -544,6 +547,33 @@ class _SongBarState extends State<SongBar> {
         showToast(context, context.l10n!.error);
       }
     }
+  }
+
+  void _showSecondaryMenu(BuildContext context, ColorScheme colorScheme) {
+    final box = context.findRenderObject() as RenderBox?;
+    if (box == null || !box.hasSize) return;
+    final pos = box.localToGlobal(Offset.zero);
+    final items = _buildMenuItems(context, colorScheme);
+    showMenu<String>(
+      context: context,
+      position: RelativeRect.fromLTRB(
+        pos.dx, pos.dy, pos.dx + box.size.width, pos.dy + box.size.height,
+      ),
+      items: items,
+    ).then((value) {
+      if (value != null && context.mounted) {
+        _handleSongMenuAction(
+          context: context,
+          value: value,
+          song: widget.song,
+          ytid: _ytid,
+          songLikeStatus: _songLikeStatus,
+          songOfflineStatus: _songOfflineStatus,
+          onRemove: widget.onRemove,
+          onRename: () => _handleRenameSong(context),
+        );
+      }
+    });
   }
 
   List<PopupMenuEntry<String>> _buildMenuItems(

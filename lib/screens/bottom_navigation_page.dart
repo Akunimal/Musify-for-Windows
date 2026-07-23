@@ -132,7 +132,9 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
                                       bottom: bottomPadding,
                                     ),
                                   ),
-                                  child: widget.child,
+                                  child: FocusTraversalGroup(
+                                    child: widget.child,
+                                  ),
                                 ),
                                 const Padding(
                                   padding: EdgeInsets.symmetric(
