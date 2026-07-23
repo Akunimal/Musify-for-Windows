@@ -1255,11 +1255,21 @@ class MusifyAudioHandler extends BaseAudioHandler {
         mediaId: uniqueId,
       );
 
-      final success = await playSong(
-        _queueList[index],
-        mediaId: uniqueId,
-        transitionId: currentTransitionId,
-      );
+      final bool success;
+      if (videoModeEnabled.value) {
+        // Video mode active: only update metadata so the UI and video
+        // player (media_kit) receive the new song.  Skipping just_audio
+        // playback prevents audio duplication — the video stream carries
+        // its own audio track.
+        success = true;
+        _updatePlaybackState();
+      } else {
+        success = await playSong(
+          _queueList[index],
+          mediaId: uniqueId,
+          transitionId: currentTransitionId,
+        );
+      }
 
       // Only process result if this is still the current transition
       if (currentTransitionId == _currentLoadingTransitionId) {
@@ -1680,6 +1690,12 @@ class MusifyAudioHandler extends BaseAudioHandler {
 
   @override
   Future<void> play() async {
+    // Video mode: audio handled by media_kit player.  Skip just_audio to
+    // prevent audio duplication.
+    if (videoModeEnabled.value) {
+      _updatePlaybackState();
+      return;
+    }
     try {
       if (audioPlayer.audioSource == null) {
         final recentSong = _latestResumableSong();
@@ -1710,6 +1726,9 @@ class MusifyAudioHandler extends BaseAudioHandler {
 
   @override
   Future<void> pause() async {
+    // Video mode: audio handled by media_kit player.  Skip just_audio to
+    // prevent audio duplication.
+    if (videoModeEnabled.value) return;
     try {
       listeningStatsService.recordListeningSessionProgress(
         wasPlaying: audioPlayer.playing,
