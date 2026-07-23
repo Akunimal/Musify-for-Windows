@@ -24,7 +24,13 @@ class YoutubeVideoPlayer extends StatefulWidget {
 }
 
 class _YoutubeVideoPlayerState extends State<YoutubeVideoPlayer> {
-  final Player _player = Player();
+  final Player _player = Player(
+    configuration: const PlayerConfiguration(
+      osc: false,
+      vo: 'gpu-api',
+      title: 'Musify',
+    ),
+  );
   VideoController? _videoController;
   bool _initialized = false;
   String? _error;
@@ -104,6 +110,7 @@ class _YoutubeVideoPlayerState extends State<YoutubeVideoPlayer> {
       child: Video(
         controller: _videoController!,
         fill: Colors.black,
+        controls: (state) => const SizedBox.shrink(),
       ),
     );
   }
