@@ -44,8 +44,9 @@ class _YoutubeVideoPlayerState extends State<YoutubeVideoPlayer> {
         if (mounted) setState(() => _error = 'No video stream available');
         return;
       }
+      // Pick lowest bitrate muxed stream (360p) for compatibility
       final streams = muxed.toList()
-        ..sort((a, b) => b.bitrate.compareTo(a.bitrate));
+        ..sort((a, b) => a.bitrate.compareTo(b.bitrate));
       final stream = streams.first;
       await _player.open(Media(stream.url.toString()));
       if (widget.playing) _player.play();
