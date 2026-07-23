@@ -71,14 +71,16 @@ class _AnimatedBackgroundState extends State<AnimatedBackground>
     final c = cs.primary.computeLuminance() > 0.3
         ? cs.primary
         : Color.lerp(cs.primary, Colors.white, 0.3)!;
-    return SizedBox.expand(
-      child: RepaintBoundary(
-        child: AnimatedBuilder(
-          animation: _ctrl,
-          builder: (_, __) => CustomPaint(
-            painter: _makePainter(_current, _ctrl.value, c, cs),
-            isComplex: true,
-            willChange: false,
+    return IgnorePointer(
+      child: SizedBox.expand(
+        child: RepaintBoundary(
+          child: AnimatedBuilder(
+            animation: _ctrl,
+            builder: (_, __) => CustomPaint(
+              painter: _makePainter(_current, _ctrl.value, c, cs),
+              isComplex: true,
+              willChange: false,
+            ),
           ),
         ),
       ),
