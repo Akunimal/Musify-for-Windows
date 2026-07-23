@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
 import 'package:musify/services/proxy_manager.dart';
+import 'package:musify/services/video_bridge.dart';
 
 /// Lightweight video player that streams a YouTube muxed (audio+video) stream.
 ///
@@ -37,6 +38,7 @@ class _YoutubeVideoPlayerState extends State<YoutubeVideoPlayer> {
   @override
   void initState() {
     super.initState();
+    VideoPlayerBridge.instance.register(_player);
     _initPlayer();
   }
 
@@ -84,6 +86,7 @@ class _YoutubeVideoPlayerState extends State<YoutubeVideoPlayer> {
 
   @override
   void dispose() {
+    VideoPlayerBridge.instance.unregister();
     _player.dispose();
     super.dispose();
   }

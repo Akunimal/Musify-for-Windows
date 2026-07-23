@@ -33,6 +33,7 @@ import 'package:musify/services/data_manager.dart';
 import 'package:musify/services/listening_stats_service.dart';
 import 'package:musify/services/settings_manager.dart';
 import 'package:musify/utilities/map_utils.dart';
+import 'package:musify/services/video_bridge.dart';
 import 'package:musify/utilities/mediaitem.dart';
 import 'package:musify/utilities/queue_entry_utils.dart';
 import 'package:rxdart/rxdart.dart';
@@ -64,6 +65,19 @@ class MusifyAudioHandler extends BaseAudioHandler {
 
     _setupEventSubscriptions();
     _updatePlaybackState();
+
+    // Keep the video-mode stream controller in sync with the setting
+    _videoModeController.add(videoModeEnabled.value);
+    videoModeEnabled.addListener(() {
+      _videoModeController.add(videoModeEnabled.value);
+    });
+
+    // Pause just_audio when entering video mode (media_kit handles audio)
+    videoModeEnabled.addListener(() {
+      if (videoModeEnabled.value && audioPlayer.playing) {
+        audioPlayer.pause();
+      }
+    });
 
     _initialize();
   }
@@ -97,6 +111,9 @@ class MusifyAudioHandler extends BaseAudioHandler {
 
   bool _completionEventPending = false;
 
+  final StreamController<bool> _videoModeController =
+      StreamController<bool>.broadcast();
+
   String? _lastError;
   int _consecutiveErrors = 0;
   static const int _maxConsecutiveErrors = 3;
@@ -116,7 +133,7 @@ class MusifyAudioHandler extends BaseAudioHandler {
   final Set<String> _preloadingYtIds = <String>{};
   final Set<String> _preloadedYtIds = <String>{};
 
-  late final Stream<PositionData> _positionDataStream =
+  late final Stream<PositionData> _audioPositionDataStream =
       Rx.combineLatest3<Duration, Duration, Duration?, PositionData>(
         audioPlayer.positionStream,
         audioPlayer.bufferedPositionStream,
@@ -130,7 +147,23 @@ class MusifyAudioHandler extends BaseAudioHandler {
                 _positionDataThreshold;
       }).asBroadcastStream();
 
-  Stream<PositionData> get positionDataStream => _positionDataStream;
+  Stream<PositionData> get positionDataStream =>
+      _videoModeController.stream.switchMap((isVideo) {
+        if (isVideo && VideoPlayerBridge.instance.isRegistered) {
+          return Rx.combineLatest3<Duration, Duration, Duration?, PositionData>(
+            VideoPlayerBridge.instance.positionStream,
+            VideoPlayerBridge.instance.durationStream,
+            VideoPlayerBridge.instance.durationStream,
+            (position, buffered, duration) =>
+                PositionData(position, buffered, duration ?? Duration.zero),
+          ).distinct((prev, curr) {
+            return (prev.position - curr.position).abs() <
+                    _positionDataThreshold &&
+                prev.duration == curr.duration;
+          });
+        }
+        return _audioPositionDataStream;
+      }).asBroadcastStream();
 
   late final Stream<PlaybackState> _playbackStateStream = playbackState
       .distinct((prev, curr) {
@@ -242,6 +275,13 @@ class MusifyAudioHandler extends BaseAudioHandler {
             _logStreamError('Current index stream error', error, stackTrace);
           },
         );
+
+    // Video completion → next song
+    VideoPlayerBridge.instance.completedStream.listen((_) {
+      if (videoModeEnabled.value) {
+        _handleSongCompletion();
+      }
+    });
   }
 
   void _debouncedStateUpdate() {
@@ -551,13 +591,31 @@ class MusifyAudioHandler extends BaseAudioHandler {
 
     try {
       final now = DateTime.now();
-      final currentPosition = audioPlayer.position;
-      final isPlaying = audioPlayer.playing;
       final currentState = playbackState.valueOrNull;
-      final newProcessingState =
-          _processingStateMap[audioPlayer.processingState] ??
-          AudioProcessingState.idle;
-      final bufferedPosition = audioPlayer.bufferedPosition;
+      final isVideoMode = videoModeEnabled.value &&
+          VideoPlayerBridge.instance.isRegistered;
+
+      final Duration currentPosition;
+      final bool isPlaying;
+      final Duration bufferedPosition;
+      final AudioProcessingState newProcessingState;
+      final double speed;
+
+      if (isVideoMode) {
+        currentPosition = VideoPlayerBridge.instance.currentPosition;
+        isPlaying = VideoPlayerBridge.instance.isActuallyPlaying;
+        bufferedPosition = VideoPlayerBridge.instance.currentDuration;
+        newProcessingState = AudioProcessingState.ready;
+        speed = 1.0;
+      } else {
+        currentPosition = audioPlayer.position;
+        isPlaying = audioPlayer.playing;
+        bufferedPosition = audioPlayer.bufferedPosition;
+        newProcessingState =
+            _processingStateMap[audioPlayer.processingState] ??
+            AudioProcessingState.idle;
+        speed = audioPlayer.speed;
+      }
 
       final shouldEmitProgressTick =
           currentState != null &&
@@ -573,7 +631,7 @@ class MusifyAudioHandler extends BaseAudioHandler {
           currentState.playing != isPlaying ||
           currentState.processingState != newProcessingState ||
           currentState.queueIndex != _currentQueueIndex ||
-          currentState.speed != audioPlayer.speed ||
+          currentState.speed != speed ||
           shouldEmitProgressTick ||
           hasBufferedPositionChange ||
           (_hasSignificantPositionChange(
@@ -598,7 +656,7 @@ class MusifyAudioHandler extends BaseAudioHandler {
             playing: isPlaying,
             updatePosition: currentPosition,
             bufferedPosition: bufferedPosition,
-            speed: audioPlayer.speed,
+            speed: speed,
             queueIndex:
                 _currentQueueIndex >= 0 &&
                     _currentQueueIndex < _queueList.length
@@ -1690,9 +1748,9 @@ class MusifyAudioHandler extends BaseAudioHandler {
 
   @override
   Future<void> play() async {
-    // Video mode: audio handled by media_kit player.  Skip just_audio to
-    // prevent audio duplication.
+    // Video mode: route to media_kit player, skip just_audio
     if (videoModeEnabled.value) {
+      unawaited(VideoPlayerBridge.instance.play());
       _updatePlaybackState();
       return;
     }
@@ -1726,9 +1784,12 @@ class MusifyAudioHandler extends BaseAudioHandler {
 
   @override
   Future<void> pause() async {
-    // Video mode: audio handled by media_kit player.  Skip just_audio to
-    // prevent audio duplication.
-    if (videoModeEnabled.value) return;
+    // Video mode: route to media_kit player, skip just_audio
+    if (videoModeEnabled.value) {
+      unawaited(VideoPlayerBridge.instance.pause());
+      _updatePlaybackState();
+      return;
+    }
     try {
       listeningStatsService.recordListeningSessionProgress(
         wasPlaying: audioPlayer.playing,
@@ -1753,7 +1814,11 @@ class MusifyAudioHandler extends BaseAudioHandler {
         countCurrentTick: true,
         wasPlaying: audioPlayer.playing,
       );
+      if (videoModeEnabled.value) {
+        unawaited(VideoPlayerBridge.instance.pause());
+      }
       await audioPlayer.stop();
+      _resetPreloadingState();
       _resetPreloadingState();
     } catch (e, stackTrace) {
       logger.log('Error in stop()', error: e, stackTrace: stackTrace);
@@ -1780,6 +1845,11 @@ class MusifyAudioHandler extends BaseAudioHandler {
 
   @override
   Future<void> seek(Duration position) async {
+    // Video mode: route to media_kit player
+    if (videoModeEnabled.value) {
+      await VideoPlayerBridge.instance.seek(position);
+      return;
+    }
     try {
       listeningStatsService.recordListeningSessionProgress(
         wasPlaying: audioPlayer.playing,
@@ -2433,6 +2503,12 @@ class MusifyAudioHandler extends BaseAudioHandler {
   }
 
   Future<void> playAgain() async {
+    // Video mode: seek bridge player to zero and play
+    if (videoModeEnabled.value) {
+      await VideoPlayerBridge.instance.seek(Duration.zero);
+      unawaited(VideoPlayerBridge.instance.play());
+      return;
+    }
     try {
       listeningStatsService.finishListeningSession(
         countCurrentTick: true,
