@@ -20,8 +20,8 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:musify/utilities/app_icon.dart';
 import 'package:musify/extensions/l10n.dart';
+import 'package:musify/utilities/app_icon.dart';
 import 'package:musify/utilities/url_launcher.dart';
 
 class AnnouncementBox extends StatelessWidget {

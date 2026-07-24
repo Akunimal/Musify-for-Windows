@@ -20,9 +20,9 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:musify/utilities/app_icon.dart';
 import 'package:musify/extensions/l10n.dart';
 import 'package:musify/services/artist_service.dart';
+import 'package:musify/utilities/app_icon.dart';
 import 'package:musify/utilities/artwork_provider.dart';
 
 class ArtistBar extends StatelessWidget {

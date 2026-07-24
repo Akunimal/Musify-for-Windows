@@ -21,8 +21,8 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:musify/utilities/app_icon.dart';
 import 'package:musify/extensions/l10n.dart';
+import 'package:musify/utilities/app_icon.dart';
 
 class PlaylistActionButtons extends StatelessWidget {
   const PlaylistActionButtons({

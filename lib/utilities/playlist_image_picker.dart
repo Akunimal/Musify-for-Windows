@@ -20,10 +20,11 @@
  */
 
 import 'dart:convert';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:musify/utilities/app_icon.dart';
 import 'package:musify/extensions/l10n.dart';
+import 'package:musify/utilities/app_icon.dart';
 
 Future<String?> pickImage() async {
   final result = await FilePicker.pickFiles(

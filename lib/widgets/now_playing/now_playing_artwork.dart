@@ -21,11 +21,11 @@
 
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
-import 'package:musify/utilities/app_icon.dart';
 import 'package:flutter_flip_card/flutter_flip_card.dart';
 import 'package:musify/extensions/l10n.dart';
 import 'package:musify/services/common_services.dart';
 import 'package:musify/services/settings_manager.dart';
+import 'package:musify/utilities/app_icon.dart';
 import 'package:musify/utilities/async_loader.dart';
 import 'package:musify/widgets/song_artwork.dart';
 

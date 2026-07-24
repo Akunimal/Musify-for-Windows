@@ -12,11 +12,11 @@ void main() async {
   print('      ');
 
   try {
-    YoutubeExplode? ytClient = await YoutubeExplode();
+    final ytClient = YoutubeExplode();
 
     for (final playlist in playlists) {
       try {
-        final plist = await ytClient!.playlists.get(playlist['ytid']);
+        final plist = await ytClient.playlists.get(playlist['ytid']);
 
         if (plist.videoCount == null) {
           if (playlist['isAlbum'] != null && playlist['isAlbum']) {

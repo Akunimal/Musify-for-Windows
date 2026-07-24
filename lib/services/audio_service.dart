@@ -33,8 +33,8 @@ import 'package:musify/services/common_services.dart';
 import 'package:musify/services/data_manager.dart';
 import 'package:musify/services/listening_stats_service.dart';
 import 'package:musify/services/settings_manager.dart';
-import 'package:musify/utilities/map_utils.dart';
 import 'package:musify/services/video_bridge.dart';
+import 'package:musify/utilities/map_utils.dart';
 import 'package:musify/utilities/mediaitem.dart';
 import 'package:musify/utilities/queue_entry_utils.dart';
 import 'package:rxdart/rxdart.dart';
@@ -443,10 +443,11 @@ class MusifyAudioHandler extends BaseAudioHandler {
   void _saveQueueState() {
     try {
       final box = Hive.box('settings');
-      box.put('queue_list', jsonEncode(_queueList.map((e) => Map<String, dynamic>.from(e)).toList()));
-      box.put('queue_current_index', _currentQueueIndex);
-      box.put('queue_history', jsonEncode(_historyList.map((e) => Map<String, dynamic>.from(e)).toList()));
-      box.put('queue_original', jsonEncode(_originalQueueList.map((e) => Map<String, dynamic>.from(e)).toList()));
+      box
+        ..put('queue_list', jsonEncode(_queueList.map(Map<String, dynamic>.from).toList()))
+        ..put('queue_current_index', _currentQueueIndex)
+        ..put('queue_history', jsonEncode(_historyList.map(Map<String, dynamic>.from).toList()))
+        ..put('queue_original', jsonEncode(_originalQueueList.map(Map<String, dynamic>.from).toList()));
     } catch (e, stackTrace) {
       logger.log('Error saving queue state', error: e, stackTrace: stackTrace);
     }

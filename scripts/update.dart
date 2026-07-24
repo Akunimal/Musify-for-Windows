@@ -27,7 +27,7 @@ void main() {
       _fail('Could not parse version from pubspec.yaml');
     }
 
-    final prefix = match!.group(1)!; // "version: "
+    final prefix = match.group(1)!; // "version: "
     final semver = match.group(2)!; // "10.1.2"
     final buildStr = match.group(3)!; // "177"
     final suffix = match.group(4)!; // " # run update.sh..."
@@ -71,7 +71,7 @@ void main() {
 void _writeAtomically(String path, String content) {
   final file = File(path);
   final dir = file.parent;
-  final tempPath = '${dir.path}${Platform.pathSeparator}${path}.tmp';
+  final tempPath = '${dir.path}${Platform.pathSeparator}$path.tmp';
 
   // Overwrite any stale .tmp from a previous failed run.
   File(tempPath).writeAsStringSync(content, flush: true);

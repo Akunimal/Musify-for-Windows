@@ -20,8 +20,8 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:musify/utilities/app_icon.dart';
 import 'package:musify/constants/app_constants.dart';
+import 'package:musify/utilities/app_icon.dart';
 
 class DialogItem extends StatelessWidget {
   const DialogItem({

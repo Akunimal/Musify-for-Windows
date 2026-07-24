@@ -20,8 +20,8 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:musify/utilities/app_icon.dart';
 import 'package:musify/extensions/l10n.dart';
+import 'package:musify/utilities/app_icon.dart';
 
 class ConfirmationDialog extends StatelessWidget {
   const ConfirmationDialog({

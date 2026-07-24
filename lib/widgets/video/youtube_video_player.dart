@@ -27,7 +27,6 @@ class YoutubeVideoPlayer extends StatefulWidget {
 class _YoutubeVideoPlayerState extends State<YoutubeVideoPlayer> {
   final Player _player = Player(
     configuration: const PlayerConfiguration(
-      osc: false,
       title: 'Musify',
     ),
   );
@@ -53,13 +52,13 @@ class _YoutubeVideoPlayerState extends State<YoutubeVideoPlayer> {
           .getManifest(widget.ytid);
       final muxed = manifest.muxed;
       dynamic selected;
-      if (muxed != null && muxed.isNotEmpty) {
+      if (muxed.isNotEmpty) {
         // Use the MOST COMMON resolution (not lowest, not highest) to avoid
         // streams with embedded YouTube UI
         final sorted = muxed.toList()
           ..sort((a, b) => b.bitrate.compareTo(a.bitrate));
         selected = sorted[sorted.length ~/ 2];
-      } else if (manifest.videoOnly != null && manifest.videoOnly.isNotEmpty) {
+      } else if (manifest.videoOnly.isNotEmpty) {
         // Fallback to video-only stream + play just_audio simultaneously
         final vids = manifest.videoOnly.toList()
           ..sort((a, b) => a.bitrate.compareTo(b.bitrate));
@@ -103,7 +102,7 @@ class _YoutubeVideoPlayerState extends State<YoutubeVideoPlayer> {
             Icon(
               isNetworkError ? Icons.wifi_off_rounded : Icons.warning_amber_rounded,
               size: 48,
-              color: Theme.of(context).colorScheme.error.withOpacity(0.6),
+              color: Theme.of(context).colorScheme.error.withValues(alpha: 0.6),
             ),
             const SizedBox(height: 8),
             Text(
@@ -124,7 +123,6 @@ class _YoutubeVideoPlayerState extends State<YoutubeVideoPlayer> {
       child: SizedBox.expand(
         child: Video(
           controller: _videoController!,
-          fill: Colors.black,
           controls: (state) => const SizedBox.shrink(),
         ),
       ),

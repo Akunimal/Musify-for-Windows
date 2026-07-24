@@ -20,8 +20,8 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:musify/utilities/app_icon.dart';
 import 'package:musify/main.dart';
+import 'package:musify/utilities/app_icon.dart';
 
 class ShufflePlayButton extends StatelessWidget {
   const ShufflePlayButton({super.key, required this.songs});

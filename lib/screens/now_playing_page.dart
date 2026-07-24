@@ -1,16 +1,13 @@
 /* license header — same as original */
-import 'dart:async';
-
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
-import 'package:musify/widgets/adaptive_safe_area.dart';
 import 'package:flutter_flip_card/flutter_flip_card.dart';
 import 'package:go_router/go_router.dart';
-import 'package:musify/extensions/l10n.dart';
 import 'package:musify/main.dart';
 import 'package:musify/services/data_manager.dart';
 import 'package:musify/services/settings_manager.dart';
 import 'package:musify/utilities/app_icon.dart';
+import 'package:musify/widgets/adaptive_safe_area.dart';
 import 'package:musify/widgets/now_playing/bottom_actions_row.dart';
 import 'package:musify/widgets/now_playing/now_playing_artwork.dart';
 import 'package:musify/widgets/now_playing/now_playing_controls.dart';
@@ -144,7 +141,7 @@ class _DesktopLayout extends StatelessWidget {
                   flex: 5,
                   child: Center(
                     child: hasVideo
-                        ? YoutubeVideoPlayer(ytid: ytid!, key: ValueKey(ytid), playing: true)
+                        ? YoutubeVideoPlayer(ytid: ytid, key: ValueKey(ytid))
                         : NowPlayingArtwork(
                             size: size,
                             metadata: metadata,
@@ -221,7 +218,7 @@ class _MobileLayout extends StatelessWidget {
             flex: 5,
             child: Center(
               child: hasVideo
-                  ? YoutubeVideoPlayer(ytid: ytid!, playing: true)
+                  ? YoutubeVideoPlayer(ytid: ytid)
                   : NowPlayingArtwork(
                       size: size,
                       metadata: metadata,
@@ -265,7 +262,7 @@ class _MobileLayout extends StatelessWidget {
             flex: 4,
             child: Center(
               child: hasVideo
-                  ? YoutubeVideoPlayer(ytid: ytid!, playing: true)
+                  ? YoutubeVideoPlayer(ytid: ytid)
                   : NowPlayingArtwork(
                       size: size,
                       metadata: metadata,

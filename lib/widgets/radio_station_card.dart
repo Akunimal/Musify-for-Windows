@@ -20,9 +20,9 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:musify/utilities/app_icon.dart';
 import 'package:musify/models/radio_model.dart';
 import 'package:musify/services/common_services.dart';
+import 'package:musify/utilities/app_icon.dart';
 import 'package:musify/utilities/artwork_provider.dart';
 
 class RadioStationCard extends StatefulWidget {

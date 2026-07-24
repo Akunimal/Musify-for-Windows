@@ -268,7 +268,7 @@ class _MusifyState extends State<Musify> with WidgetsBindingObserver {
 
         return AnnotatedRegion<SystemUiOverlayStyle>(
           value: isDesktop
-              ? SystemUiOverlayStyle()
+              ? const SystemUiOverlayStyle()
               : SystemUiOverlayStyle(
                   statusBarColor: Colors.transparent,
                   systemNavigationBarColor: Colors.transparent,
@@ -361,7 +361,7 @@ Future<void> initialisation() async {
     try {
       audioHandler = await AudioService.init(
         builder: MusifyAudioHandler.new,
-        config: AudioServiceConfig(
+        config: const AudioServiceConfig(
           androidNotificationChannelId: 'com.gokadzev.musify',
           androidNotificationChannelName: 'Musify',
           androidNotificationIcon: 'drawable/ic_launcher_foreground',
@@ -391,11 +391,11 @@ Future<void> initialisation() async {
       );
 
       // Also handle cold-start URI
-      appLinks.getInitialLink().then((uri) {
+      unawaited(appLinks.getInitialLink().then((uri) {
         if (uri != null) {
           handleIncomingLink(uri);
         }
-      });
+      }));
     } on PlatformException {
       logger.log('Failed to get initial uri');
     }
