@@ -1,9 +1,6 @@
-name: Build & Release (Windows)
+name: Build & Pre-Release (Windows)
 
 on:
-  push:
-    branches: [master, main]
-    tags: ['v*']
   workflow_dispatch:
 
 jobs:
@@ -34,20 +31,25 @@ jobs:
       - name: Package portable bundle
         shell: pwsh
         run: |
-          $zip = "Musify-for-Windows-$env:GITHUB_REF_NAME.zip"
+          $zip = "Musify-for-Windows-pre-$env:GITHUB_RUN_ID.zip"
           Compress-Archive -Path "build\windows\x64\runner\Release\*" -DestinationPath $zip
           echo "ZIP=$zip" >> $env:GITHUB_ENV
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: musify-windows
-          path: Musify-for-Windows-*.zip
+          name: musify-windows-pre
+          path: Musify-for-Windows-pre-*.zip
 
-      - name: Create/Update Release
+      - name: Create Pre-Release
         uses: softprops/action-gh-release@v2
-        if: startsWith(github.ref, 'refs/tags/v')
         with:
-          files: Musify-for-Windows-*.zip
-          generate_release_notes: false
-          make_latest: true
+          files: Musify-for-Windows-pre-*.zip
+          generate_release_notes: true
+          prerelease: true
+          make_latest: false
+          body: |
+            **Windows Pre-Release Build**
+
+            This is a pre-release build for testing purposes.
+            May contain bugs or incomplete features.
