@@ -32,8 +32,8 @@ class _VideoTestWidgetState extends State<VideoTestWidget> {
       _player.stream.error.listen((e) {
         if (mounted) setState(() => _error = e);
       });
-      _player.stream.frame.listen((_) {
-        // A frame was rendered — video works!
+      _player.stream.playing.listen((_) {
+        // Video started playing — rendering works!
         if (mounted && !_ready) setState(() => _ready = true);
       });
       _controller = VideoController(_player);
