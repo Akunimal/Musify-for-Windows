@@ -38,6 +38,7 @@ target_include_directories(flutter INTERFACE
 )
 target_link_libraries(flutter INTERFACE "${FLUTTER_LIBRARY}.lib")
 add_dependencies(flutter flutter_assemble)
+add_library(flutter::flutter ALIAS flutter)
 
 # === Wrapper ===
 list(APPEND CPP_WRAPPER_SOURCES_CORE

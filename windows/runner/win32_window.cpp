@@ -232,8 +232,8 @@ Win32Window::MessageHandler(HWND hwnd,
       UINT vk = 0;
       switch (cmd) {
         case APPCOMMAND_MEDIA_PLAY_PAUSE: vk = VK_MEDIA_PLAY_PAUSE; break;
-        case APPCOMMAND_MEDIA_NEXT_TRACK: vk = VK_MEDIA_NEXT_TRACK; break;
-        case APPCOMMAND_MEDIA_PREV_TRACK: vk = VK_MEDIA_PREV_TRACK; break;
+        case APPCOMMAND_MEDIA_NEXTTRACK: vk = VK_MEDIA_NEXT_TRACK; break;
+        case APPCOMMAND_MEDIA_PREVIOUSTRACK: vk = VK_MEDIA_PREV_TRACK; break;
         case APPCOMMAND_MEDIA_STOP:       vk = VK_MEDIA_STOP;       break;
       }
       if (vk != 0 && child_content_ != nullptr) {

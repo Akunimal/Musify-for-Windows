@@ -10,12 +10,13 @@ add_library(${PLUGIN_NAME} SHARED
 )
 
 # Use same include dirs as other plugins
-target_include_directories(${PLUGIN_NAME} PRIVATE
+target_include_directories(${PLUGIN_NAME} INTERFACE
   "${CMAKE_CURRENT_SOURCE_DIR}/include"
 )
 
-target_link_libraries(${PLUGIN_NAME} PRIVATE flutter::flutter)
+target_link_libraries(${PLUGIN_NAME} PRIVATE flutter::flutter flutter_wrapper_plugin)
 
+apply_standard_settings(${PLUGIN_NAME})
 set_target_properties(${PLUGIN_NAME} PROPERTIES
   CXX_VISIBILITY_PRESET hidden
   VISIBILITY_INLINES_HIDDEN 1
