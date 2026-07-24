@@ -110,6 +110,8 @@ class MusifyAudioHandler extends BaseAudioHandler {
   bool _isRemovingFromQueue = false;
   int? _pendingRemoveIndex;
 
+  _AddPlaylistRequest? _pendingAddPlaylistRequest;
+
   bool _completionEventPending = false;
 
   final StreamController<bool> _videoModeController =
@@ -1019,6 +1021,13 @@ class MusifyAudioHandler extends BaseAudioHandler {
     bool replace = false,
     int? startIndex,
   }) async {
+    // Guard: if a replace request arrives while a transition is in flight,
+    // store it for processing after the current transition completes.
+    // Prevents double-click/stuck-queue corruption on Windows.
+    if (_isTransitioning && replace) {
+      _pendingAddPlaylistRequest = _AddPlaylistRequest(songs, replace, startIndex);
+      return;
+    }
     try {
       final manuallyAddedSongs = replace ? _getUnplayedManualSongs() : <Map>[];
       if (replace) {
@@ -1412,6 +1421,10 @@ class MusifyAudioHandler extends BaseAudioHandler {
         final nextIndex = _pendingTransitionIndex!;
         _pendingTransitionIndex = null;
         unawaited(_playFromQueue(nextIndex));
+      } else if (_pendingAddPlaylistRequest != null) {
+        final pending = _pendingAddPlaylistRequest!;
+        _pendingAddPlaylistRequest = null;
+        unawaited(addPlaylistToQueue(pending.songs, replace: pending.replace, startIndex: pending.startIndex));
       }
     }
   }
@@ -2803,4 +2816,12 @@ class _PlaybackSource {
 
   final String songUrl;
   final bool isOffline;
+}
+
+class _AddPlaylistRequest {
+  const _AddPlaylistRequest(this.songs, this.replace, this.startIndex);
+
+  final List<Map> songs;
+  final bool replace;
+  final int? startIndex;
 }
