@@ -3,7 +3,7 @@
 
 > **⚠️ WORK IN PROGRESS** — Este port está en desarrollo activo. Podés encontrar bugs, features faltantes o comportamiento inesperado. Si descargás el .exe, esperá updates frecuentes.
 
-# Musify for Windows 🪟
+# Musify for Windows 🪟 WIP! (work in progress)
 
 **Portable native Windows app** — No installation required. Download, extract and run.
 
