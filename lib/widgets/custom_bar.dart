@@ -20,6 +20,7 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:musify/widgets/hover_effect.dart';
 
 class CustomBar extends StatelessWidget {
   CustomBar(
@@ -62,9 +63,10 @@ class CustomBar extends StatelessWidget {
         onTap: onTap,
         onSecondaryTap: onSecondaryTap,
         onLongPress: onLongPress,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-          child: Row(
+        child: HoverEffect(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+            child: Row(
             children: [
               Container(
                 width: 52,
@@ -107,6 +109,7 @@ class CustomBar extends StatelessWidget {
             ],
           ),
         ),
+      ),
       ),
     );
   }

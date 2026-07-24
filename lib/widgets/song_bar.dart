@@ -36,6 +36,7 @@ import 'package:musify/services/settings_manager.dart';
 import 'package:musify/utilities/flutter_toast.dart';
 import 'package:musify/utilities/formatter.dart';
 import 'package:musify/utilities/playlist_dialogs.dart';
+import 'package:musify/widgets/hover_effect.dart';
 import 'package:musify/widgets/no_artwork_cube.dart';
 import 'package:musify/widgets/overflow_menu_button.dart';
 import 'package:musify/widgets/popup_menu_item.dart';
@@ -401,7 +402,8 @@ class _SongBarState extends State<SongBar> {
       color: widget.backgroundColor ?? colorScheme.surfaceContainerLow,
       borderRadius: widget.borderRadius,
       clipBehavior: Clip.antiAlias,
-      child: Focus(
+      child: HoverEffect(
+        child: Focus(
         child: InkWell(
           onTap: _handleSongTap,
           onSecondaryTap: () => _showSecondaryMenu(context, colorScheme),
@@ -458,6 +460,7 @@ class _SongBarState extends State<SongBar> {
             ],
           ),
         ),
+      ),
       ),
       ),
     );

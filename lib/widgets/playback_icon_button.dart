@@ -21,9 +21,10 @@
 
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
-import 'package:musify/utilities/app_icon.dart';
 import 'package:musify/extensions/l10n.dart';
 import 'package:musify/main.dart';
+import 'package:musify/widgets/hover_effect.dart';
+import 'package:musify/utilities/app_icon.dart';
 
 DateTime _lastPlayPauseAction = DateTime.fromMillisecondsSinceEpoch(0);
 
@@ -102,7 +103,8 @@ Widget buildPlaybackIconButton(
 
       return Tooltip(
         message: semanticLabel ?? context.l10n!.play,
-        child: RawMaterialButton(
+        child: HoverEffect(
+          child: RawMaterialButton(
           elevation: 0,
           onPressed: onPressed,
           fillColor: backgroundColor,
@@ -116,6 +118,7 @@ Widget buildPlaybackIconButton(
           materialTapTargetSize: MaterialTapTargetSize.padded,
           child: Semantics(label: semanticLabel, button: true, child: iconWidget),
         ),
+      ),
       );
     },
   );
