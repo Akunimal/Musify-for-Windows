@@ -51,5 +51,3 @@ lib/localization/app_*.dart
 # Generated untranslated messages file
 lib/localization/untranslated.json
 dist/
-*.exe
-libmpv-2.dll

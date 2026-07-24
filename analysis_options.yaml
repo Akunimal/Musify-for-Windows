@@ -1,7 +1,6 @@
 analyzer:
   exclude:
     - packages/**
-    - scripts/**
     - test/**
 
 linter:

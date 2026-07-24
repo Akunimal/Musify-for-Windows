@@ -389,6 +389,13 @@ Future<void> initialisation() async {
           logger.log('URI link error:', error: err);
         },
       );
+
+      // Also handle cold-start URI
+      appLinks.getInitialLink().then((uri) {
+        if (uri != null) {
+          handleIncomingLink(uri);
+        }
+      });
     } on PlatformException {
       logger.log('Failed to get initial uri');
     }

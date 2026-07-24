@@ -71,7 +71,7 @@ void main() {
 void _writeAtomically(String path, String content) {
   final file = File(path);
   final dir = file.parent;
-  final tempPath = dir.resolveFileUri(Uri.file('${file.name}.tmp')).path;
+  final tempPath = '${dir.path}${Platform.pathSeparator}${path}.tmp';
 
   // Overwrite any stale .tmp from a previous failed run.
   File(tempPath).writeAsStringSync(content, flush: true);

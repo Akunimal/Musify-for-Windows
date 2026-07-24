@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 /// IconData constants using 'Segoe Fluent Icons' — the modern Windows 11
-/// icon font built into every Windows 11 system. No custom fonts needed.
+/// icon font. Bundled as fallback for Windows 10/11 compatibility.
 ///
 /// Codepoints are in the Private Use Area (0xE000-0xF8FF).
 class AppIcon {

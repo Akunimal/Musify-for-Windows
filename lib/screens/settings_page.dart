@@ -685,7 +685,7 @@ class SettingsPage extends StatelessWidget {
       context,
       ListView.builder(
         shrinkWrap: true,
-        physics: const BouncingScrollPhysics(),
+        physics: const ClampingScrollPhysics(),
         padding: commonListViewBottomPadding,
         itemCount: availableModes.length,
         itemBuilder: (context, index) {
@@ -723,7 +723,7 @@ class SettingsPage extends StatelessWidget {
       context,
       ListView.builder(
         shrinkWrap: true,
-        physics: const BouncingScrollPhysics(),
+        physics: const ClampingScrollPhysics(),
         padding: commonListViewBottomPadding,
         itemCount: availableLanguages.length,
         itemBuilder: (context, index) {
@@ -769,7 +769,7 @@ class SettingsPage extends StatelessWidget {
       context,
       ListView.builder(
         shrinkWrap: true,
-        physics: const BouncingScrollPhysics(),
+        physics: const ClampingScrollPhysics(),
         padding: commonListViewBottomPadding,
         itemCount: availableQualities.length,
         itemBuilder: (context, index) {

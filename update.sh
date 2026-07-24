@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Note: On Windows, use 'dart run scripts/update.dart' for cross-platform support
+
 # Read the version from pubspec.yaml
 version=$(grep version pubspec.yaml | awk -F'[ +]' '{print $2}' | tr -d "'")
 

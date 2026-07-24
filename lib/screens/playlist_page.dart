@@ -194,6 +194,12 @@ class _PlaylistPageState extends State<PlaylistPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.playlistId == null || widget.playlistId!.isEmpty) {
+      return Scaffold(
+        appBar: AppBar(title: const Text('Invalid Playlist')),
+        body: const Center(child: Text('Playlist ID is missing')),
+      );
+    }
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(

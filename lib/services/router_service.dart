@@ -377,7 +377,7 @@ class NavigationManager {
           opacity: CurvedAnimation(parent: animation, curve: Curves.easeOut),
           child: SlideTransition(
             position: Tween<Offset>(
-              begin: const Offset(0.06, 0),
+              begin: Offset(MediaQuery.of(context).size.width * 0.06, 0),
               end: Offset.zero,
             ).animate(curvedAnimation),
             child: child,
