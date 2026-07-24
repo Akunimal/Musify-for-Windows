@@ -475,7 +475,19 @@ class _SongBarState extends State<SongBar> {
     if (widget.clearPlaylist) {
       audioHandler.addPlaylistToQueue([widget.song], replace: true);
     } else {
-      audioHandler.playSong(widget.song);
+      final result = audioHandler.playSong(widget.song);
+      if (mounted) {
+        result.then((success) {
+          if (mounted && !success && context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: const Text('Playback failed - could not load stream'),
+                duration: const Duration(seconds: 3),
+              ),
+            );
+          }
+        });
+      }
     }
   }
 
