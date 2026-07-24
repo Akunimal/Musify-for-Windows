@@ -472,21 +472,32 @@ class _SongBarState extends State<SongBar> {
       return;
     }
 
-    if (widget.clearPlaylist) {
-      audioHandler.addPlaylistToQueue([widget.song], replace: true);
-    } else {
-      final result = audioHandler.playSong(widget.song);
-      if (mounted) {
-        result.then((success) {
-          if (mounted && !success && context.mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: const Text('Playback failed - could not load stream'),
-                duration: const Duration(seconds: 3),
-              ),
-            );
-          }
-        });
+    unawaited(_doPlaySong());
+  }
+
+  Future<void> _doPlaySong() async {
+    try {
+      if (widget.clearPlaylist) {
+        await audioHandler.addPlaylistToQueue([widget.song], replace: true);
+      } else {
+        final success = await audioHandler.playSong(widget.song);
+        if (mounted && !success && context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Text('Playback failed: could not load stream'),
+              duration: const Duration(seconds: 4),
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      if (mounted && context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error: $e'),
+            duration: const Duration(seconds: 4),
+          ),
+        );
       }
     }
   }

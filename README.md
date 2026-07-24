@@ -1,6 +1,8 @@
 <div align="center">
 <img src="https://github.com/gokadzev/Musify/raw/master/.github/assets/Musify-banner.png" width="100%">
 
+> **⚠️ WORK IN PROGRESS** — Este port está en desarrollo activo. Podés encontrar bugs, features faltantes o comportamiento inesperado. Si descargás el .exe, esperá updates frecuentes.
+
 # Musify for Windows 🪟
 
 **Portable native Windows app** — No installation required. Download, extract and run.
