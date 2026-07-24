@@ -81,7 +81,6 @@ class MusifyAudioHandler extends BaseAudioHandler {
     });
 
     _initialize();
-    _restoreQueueState();
   }
 
   AndroidEqualizer? _androidEqualizer;
@@ -422,6 +421,7 @@ class MusifyAudioHandler extends BaseAudioHandler {
         stackTrace: stackTrace,
       );
     }
+    _restoreQueueState();
   }
 
   void _saveQueueState() {
