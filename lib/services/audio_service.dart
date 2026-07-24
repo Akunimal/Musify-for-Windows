@@ -91,6 +91,8 @@ class MusifyAudioHandler extends BaseAudioHandler {
 
   Timer? _sleepTimer;
   Timer? _debounceTimer;
+  Timer? _queueSaveTimer;
+  bool _queueNeedsSave = false;
   bool sleepTimerExpired = false;
   bool sleepTimerEndOfSong = false;
 
@@ -424,6 +426,18 @@ class MusifyAudioHandler extends BaseAudioHandler {
       );
     }
     _restoreQueueState();
+    _queueNeedsSave = false; // Don't save restored state as-if it mutated
+    _startQueueSaveTimer();
+  }
+
+  void _startQueueSaveTimer() {
+    _queueSaveTimer?.cancel();
+    _queueSaveTimer = Timer.periodic(const Duration(seconds: 30), (_) {
+      if (_queueNeedsSave) {
+        _saveQueueState();
+        _queueNeedsSave = false;
+      }
+    });
   }
 
   void _saveQueueState() {
@@ -1257,6 +1271,7 @@ class MusifyAudioHandler extends BaseAudioHandler {
   }
 
   void _updateQueueMediaItems() {
+    _queueNeedsSave = true;
     try {
       _queueEntryIds.ensureIds(_queueList);
 
@@ -1801,6 +1816,7 @@ class MusifyAudioHandler extends BaseAudioHandler {
   Future<void> onTaskRemoved() async {
     try {
       await stop();
+      _queueSaveTimer?.cancel();
       final session = await AudioSession.instance;
       await session.setActive(false);
     } catch (e, stackTrace) {
