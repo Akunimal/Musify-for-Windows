@@ -25,10 +25,16 @@
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
+.metadata
 .packages
 .pub-cache/
 .pub/
 /build/
+
+# IDE
+.claude/
+.idea/
+.hermes/
 
 # Web related
 lib/generated_plugin_registrant.dart

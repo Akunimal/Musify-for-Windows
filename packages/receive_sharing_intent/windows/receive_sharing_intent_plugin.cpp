@@ -13,3 +13,12 @@ ReceiveSharingIntentPlugin::ReceiveSharingIntentPlugin() {}
 ReceiveSharingIntentPlugin::~ReceiveSharingIntentPlugin() {}
 
 }  // namespace receive_sharing_intent
+
+extern "C" {
+void ReceiveSharingIntentPluginRegisterWithRegistrar(
+    FlutterDesktopPluginRegistrarRef registrar) {
+  receive_sharing_intent::ReceiveSharingIntentPlugin::RegisterWithRegistrar(
+      flutter::PluginRegistrarManager::GetInstance()
+          ->GetRegistrar<flutter::PluginRegistrarWindows>(registrar));
+}
+}
