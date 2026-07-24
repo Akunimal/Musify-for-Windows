@@ -1800,7 +1800,6 @@ class MusifyAudioHandler extends BaseAudioHandler {
   @override
   Future<void> onTaskRemoved() async {
     try {
-      _saveQueueState();
       await stop();
       final session = await AudioSession.instance;
       await session.setActive(false);
