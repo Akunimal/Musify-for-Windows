@@ -1806,6 +1806,16 @@ class MusifyAudioHandler extends BaseAudioHandler {
       return;
     }
     try {
+      // If queue was restored from Hive, play directly without destroying it.
+      // Prevents addPlaylistToQueue(replace:true) from clearing restored queue.
+      if (audioPlayer.audioSource == null &&
+          _queueList.isNotEmpty &&
+          _currentQueueIndex >= 0 &&
+          _currentQueueIndex < _queueList.length) {
+        await _playFromQueue(_currentQueueIndex);
+        return;
+      }
+
       if (audioPlayer.audioSource == null) {
         final recentSong = _latestResumableSong();
         if (recentSong != null) {
