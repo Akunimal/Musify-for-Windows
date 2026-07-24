@@ -23,11 +23,11 @@ import 'dart:math' as math;
 
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:musify/utilities/app_icon.dart';
 import 'package:musify/main.dart';
 import 'package:musify/models/full_player_state.dart';
 import 'package:musify/models/position_data.dart';
-import 'package:musify/screens/now_playing_page.dart';
 import 'package:musify/services/data_manager.dart';
 import 'package:musify/services/settings_manager.dart';
 import 'package:musify/widgets/marquee.dart';
@@ -135,30 +135,14 @@ class _MiniPlayerBodyState extends State<_MiniPlayerBody>
     super.dispose();
   }
 
-  static const double _dragThresholdForNavigation = 10;
-
   void _handleVerticalDrag(DragUpdateDetails details) {
-    if ((details.primaryDelta ?? 0) < -_dragThresholdForNavigation) {
+    if ((details.primaryDelta ?? 0) < -10) {
       _navigateToNowPlaying();
     }
   }
 
   void _navigateToNowPlaying() {
-    Navigator.of(context).push(_createSlideTransition());
-  }
-
-  PageRoute<void> _createSlideTransition() {
-    return PageRouteBuilder<void>(
-      pageBuilder: (context, animation, _) => const NowPlayingPage(),
-      reverseTransitionDuration: const Duration(milliseconds: 250),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        final tween = Tween(
-          begin: const Offset(0, 1),
-          end: Offset.zero,
-        ).chain(CurveTween(curve: Curves.easeInOut));
-        return SlideTransition(position: animation.drive(tween), child: child);
-      },
-    );
+    context.push('/now-playing');
   }
 
   @override

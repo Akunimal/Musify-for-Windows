@@ -20,6 +20,7 @@
  */
 
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:audio_service/audio_service.dart';
@@ -80,6 +81,7 @@ class MusifyAudioHandler extends BaseAudioHandler {
     });
 
     _initialize();
+    _restoreQueueState();
   }
 
   AndroidEqualizer? _androidEqualizer;
@@ -419,6 +421,54 @@ class MusifyAudioHandler extends BaseAudioHandler {
         error: e,
         stackTrace: stackTrace,
       );
+    }
+  }
+
+  void _saveQueueState() {
+    try {
+      final box = Hive.box('settings');
+      box.put('queue_list', jsonEncode(_queueList.map((e) => Map<String, dynamic>.from(e)).toList()));
+      box.put('queue_current_index', _currentQueueIndex);
+      box.put('queue_history', jsonEncode(_historyList.map((e) => Map<String, dynamic>.from(e)).toList()));
+      box.put('queue_original', jsonEncode(_originalQueueList.map((e) => Map<String, dynamic>.from(e)).toList()));
+    } catch (e, stackTrace) {
+      logger.log('Error saving queue state', error: e, stackTrace: stackTrace);
+    }
+  }
+
+  void _restoreQueueState() {
+    try {
+      final box = Hive.box('settings');
+      final savedQueue = box.get('queue_list');
+      if (savedQueue != null && savedQueue is String && savedQueue.isNotEmpty) {
+        final decoded = jsonDecode(savedQueue) as List<dynamic>;
+        _queueList.clear();
+        for (final item in decoded) {
+          _queueList.add(Map<String, dynamic>.from(item as Map));
+        }
+        _queueEntryIds.ensureIds(_queueList);
+      }
+      final savedIndex = box.get('queue_current_index', defaultValue: 0);
+      _currentQueueIndex = (savedIndex is int && savedIndex >= 0 && savedIndex < _queueList.length) ? savedIndex : 0;
+      final savedHistory = box.get('queue_history');
+      if (savedHistory != null && savedHistory is String && savedHistory.isNotEmpty) {
+        final decoded = jsonDecode(savedHistory) as List<dynamic>;
+        _historyList.clear();
+        for (final item in decoded) {
+          _historyList.add(Map<String, dynamic>.from(item as Map));
+        }
+      }
+      final savedOriginal = box.get('queue_original');
+      if (savedOriginal != null && savedOriginal is String && savedOriginal.isNotEmpty) {
+        final decoded = jsonDecode(savedOriginal) as List<dynamic>;
+        _originalQueueList.clear();
+        for (final item in decoded) {
+          _originalQueueList.add(Map<String, dynamic>.from(item as Map));
+        }
+      }
+      _updateQueueMediaItems();
+    } catch (e, stackTrace) {
+      logger.log('Error restoring queue state', error: e, stackTrace: stackTrace);
     }
   }
 
@@ -1737,6 +1787,7 @@ class MusifyAudioHandler extends BaseAudioHandler {
   @override
   Future<void> onTaskRemoved() async {
     try {
+      _saveQueueState();
       await stop();
       final session = await AudioSession.instance;
       await session.setActive(false);
@@ -1803,6 +1854,7 @@ class MusifyAudioHandler extends BaseAudioHandler {
 
   @override
   Future<void> stop() async {
+    _saveQueueState();
     _debounceTimer?.cancel();
     _completionEventPending = false;
     _currentLoadingIndex = -1;

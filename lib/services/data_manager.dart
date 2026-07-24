@@ -36,6 +36,9 @@ const Duration defaultCacheDuration = Duration(days: 7);
 // In-memory cache for frequently accessed items
 final _memoryCache = <String, _CacheEntry>{};
 
+// Reference counting for Hive box lifecycle management
+final _boxRefCounts = <String, int>{};
+
 class _CacheEntry {
   _CacheEntry(this.data, this.timestamp);
   final dynamic data;
@@ -206,10 +209,34 @@ Duration _getCacheDurationForKey(String key) {
 }
 
 Future<Box> _openBox(String category) async {
+  _boxRefCounts[category] = (_boxRefCounts[category] ?? 0) + 1;
   if (Hive.isBoxOpen(category)) {
     return Hive.box(category);
   } else {
     return Hive.openBox(category);
+  }
+}
+
+Future<void> closeBox(String category) async {
+  try {
+    final currentCount = _boxRefCounts[category] ?? 0;
+    if (currentCount <= 1) {
+      _boxRefCounts.remove(category);
+      if (Hive.isBoxOpen(category)) {
+        await Hive.box(category).close();
+      }
+    } else {
+      _boxRefCounts[category] = currentCount - 1;
+    }
+  } catch (e, stackTrace) {
+    logger.log('Error closing Hive box $category', error: e, stackTrace: stackTrace);
+  }
+}
+
+Future<void> closeAllBoxes() async {
+  final categories = List<String>.from(_boxRefCounts.keys);
+  for (final category in categories) {
+    await closeBox(category);
   }
 }
 

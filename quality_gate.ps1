@@ -3,7 +3,7 @@
 param([switch]$Fix)
 
 $ErrorActionPreference = "Stop"
-$root = "C:\Extension\Musify"
+$root = $PSScriptRoot
 $ok = 0; $total = 0
 
 Write-Host "=== Quality Gate ===" -Foreground Cyan
@@ -72,5 +72,5 @@ if (!$pass) { exit 1 }
 # If -Fix passed, rebuild
 if ($Fix) {
     Write-Host "`nRebuilding..." -Foreground Cyan
-    & cmd.exe /c "C:\temp\portable_build.bat"
+    & cmd.exe /c "$root\dist\portable_build.bat"
 }

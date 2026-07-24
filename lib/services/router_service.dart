@@ -29,6 +29,7 @@ import 'package:musify/screens/bottom_navigation_page.dart';
 import 'package:musify/screens/equalizer_page.dart';
 import 'package:musify/screens/home_page.dart';
 import 'package:musify/screens/library_page.dart';
+import 'package:musify/screens/now_playing_page.dart';
 import 'package:musify/screens/playlist_folder_page.dart';
 import 'package:musify/screens/playlist_page.dart';
 import 'package:musify/screens/radio_stations_page.dart';
@@ -60,6 +61,14 @@ class NavigationManager {
             state: state,
           );
         },
+      ),
+      GoRoute(
+        path: '/now-playing',
+        parentNavigatorKey: parentNavigatorKey,
+        pageBuilder: (context, state) => _pushPage(
+          child: const NowPlayingPage(),
+          state: state,
+        ),
       ),
     ];
 
@@ -132,6 +141,7 @@ class NavigationManager {
   static const String settingsPath = '/settings';
   static const String searchPath = '/search';
   static const String libraryPath = '/library';
+  static const String nowPlayingPath = '/now-playing';
 
   /// Refresh the router configuration when offline mode changes
   static void refreshRouter() {
